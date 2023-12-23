@@ -1,0 +1,66 @@
+[
+  {
+    "animal": "dog",
+    "breeds": [
+      "Labrador Retriever",
+      "German Shepherd",
+      "Golden Retriever",
+      "Bulldog",
+      "Beagle",
+      "Poodle",
+      "other"
+    ]
+  },
+  {
+    "animal": "cat",
+    "breeds": [
+      "Siamese",
+      "Persian",
+      "Maine Coon",
+      "Sphynx",
+      "Ragdoll",
+      "Abyssinian",
+      "other"
+    ]
+  },
+  {
+    "animal": "fish",
+    "breeds": ["Goldfish", "Betta", "Guppy", "Angelfish", "Tetra", "other"]
+  },
+  {
+    "animal": "bird",
+    "breeds": [
+      "Budgerigar",
+      "Cockatiel",
+      "Lovebird",
+      "Canary",
+      "African Grey",
+      "other"
+    ]
+  },
+  {
+    "animal": "rabbit",
+    "breeds": [
+      "Holland Lop",
+      "Netherland Dwarf",
+      "Rex Rabbit",
+      "Flemish Giant",
+      "Mini Rex",
+      "other"
+    ]
+  },
+  {
+    "animal": "hamster",
+    "breeds": [
+      "Syrian Hamster",
+      "Dwarf Campbell Russian Hamster",
+      "Roborovski Hamster",
+      "Chinese Hamster",
+      "other"
+    ]
+  },
+  {
+    "animal": "other",
+    "breeds": ["other"]
+  }
+]
