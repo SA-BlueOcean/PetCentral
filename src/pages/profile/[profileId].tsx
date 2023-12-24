@@ -5,22 +5,20 @@ import { api } from "@/utils/api";
 import { Example } from "@/components/Example";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { ProfileHeader } from "@/components/Profile/ProfileHeader";
 
 export default function ProfilePage() {
-  
   const hello = api.example.hello.useQuery({ text: "example hi" });
 
-  const router = useRouter(); 
+  const router = useRouter();
 
   const profileId = router.query.profile;
 
+  console.log(profileId);
+
   return (
     <>
-      <Head>
-        <title>MyApp</title>
-        <meta name="description" content="App description" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <ProfileHeader />
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight  sm:text-[5rem]">
