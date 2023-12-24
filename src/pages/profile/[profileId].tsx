@@ -14,8 +14,6 @@ export default function ProfilePage() {
 
   const profileId = router.query.profile;
 
-  console.log(profileId);
-
   return (
     <>
       <ProfileHeader />
