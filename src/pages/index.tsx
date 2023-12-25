@@ -4,6 +4,7 @@ import Link from "next/link";
 import { api } from "@/utils/api";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Example } from "@/components/Example";
+import Feed from "@/components/Feed";
 
 export default function Home() {
   const hello = api.example.hello.useQuery({ text: "example hi" });
@@ -19,6 +20,7 @@ export default function Home() {
         <p className="text-2xl ">
           {hello.data ? hello.data.greeting : "Loading tRPC query..."}
         </p>
+        <Feed mode="ALL"/>
         <Example />
         <AuthShowcase />
       </div>
