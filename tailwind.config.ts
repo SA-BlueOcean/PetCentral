@@ -16,12 +16,6 @@ export default {
           "base-100": "#F5F9FF",
           "base-200": "#E6EBF8",
           "base-300": "#DADCE3",
-          "base-400": "#A9B4C2",
-          "base-500": "#82919E",
-          "base-600": "#5B6275",
-          "base-700": "#404452",
-          "base-800": "#282B33",
-          "base-900": "#10141A",
           info: "#ffffff",
           success: "#27BB4B",
           warning: "#D4A73F",
@@ -35,6 +29,14 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+      colors: {
+        "base-400": "#A9B4C2",
+        "base-500": "#82919E",
+        "base-600": "#5B6275",
+        "base-700": "#404452",
+        "base-800": "#282B33",
+        "base-900": "#10141A",
+      }
     },
   },
   plugins: [require("daisyui")],
