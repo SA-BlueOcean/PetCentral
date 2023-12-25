@@ -36,7 +36,7 @@ export default function PostText({ text }: PostTextProps) {
       </div>
       {isOverflowing && (
         <button
-          className="text-accent hover:underline focus:outline-none"
+          className="underline focus:outline-none"
           onClick={toggleText}
         >
           {showFullText ? "Show Less" : "Show More"}
