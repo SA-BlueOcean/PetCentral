@@ -12,15 +12,25 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <div className="flex w-screen justify-center ">
-        <nav className=" w-[240px]">Left</nav>
-        <div className="w-[700px]">
-          <div className="bg-primary-content h-20 w-full">SEARCH</div>
-          <main className="bg-base-300 w-full p-3">
+      <div className="pointer-events-none fixed z-10 top-0 flex h-20 w-full justify-center">
+        <div className="pointer-events-auto w-full max-w-xl bg-primary-content ">
+          SEARCH
+        </div>
+      </div>
+      <div className="flex justify-center mx-auto max-w-7xl">
+        <div className="hidden md:block sticky top-0 self-start flex-grow">
+          <nav>navigation</nav>
+          <div>component a</div>
+        </div>
+        <div className="relative w-full max-w-xl">
+          <main className="mt-20 p-3 min-h-[calc(100vh-5rem)] bg-base-300">
             <Component {...pageProps} />
           </main>
         </div>
-        <aside className="w-[340px]">Right</aside>
+        <div className="hidden md:block sticky top-0 self-start flex-grow">
+          <div>component b</div>
+          <div>component c</div>
+        </div>
       </div>
     </SessionProvider>
   );
