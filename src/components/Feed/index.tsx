@@ -1,4 +1,5 @@
 import { api } from "@/utils/api";
+import PostCard from "./PostCard";
 
 type FeedProps = {
   mode: "PROFILE" | "GROUP" | "ALL";
@@ -27,14 +28,10 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
 
   return (
     <div>
-      <ul className="divide-y-2">
+      <ul className="flex flex-col gap-4">
         {flatPosts?.map((p) => (
           <li key={p.id}>
-            <div>{p.createdAt.toDateString()}</div>
-            <p className="line-clamp-3">{p.content}</p>
-            <div>
-              up {p.upvotes} down {p.downvotes}
-            </div>
+            <PostCard data={p} />
           </li>
         ))}
       </ul>

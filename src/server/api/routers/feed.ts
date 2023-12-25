@@ -24,6 +24,15 @@ export const feedRouter = createTRPCRouter({
           groupId: input?.groupId,
           createdById: input?.profileId,
         },
+        include: {
+          createdBy: true,
+          group: true,
+          photos: true,
+          comments: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
         cursor: input?.cursor ? { id: input.cursor } : undefined,
         take: postsPerPage + 1,
       });
