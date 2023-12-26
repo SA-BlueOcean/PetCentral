@@ -164,13 +164,16 @@ Node version is expected to be v20.10.0 or higher
    - `FACEBOOK_CLIENT_SECRET`
    - Check NextAuth.js documentation for more information on how to set up OAuth providers
 1. Run Prisma generate to generate the Prisma client
-   ```sh
-   npm run prisma generate
-   ```
+
+```sh
+npx prisma generate
+```
+
 1. Run the development server
-   ```sh
-   npm run dev
-   ```
+
+```sh
+npm run dev
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
