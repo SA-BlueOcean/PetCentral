@@ -26,16 +26,18 @@ export function ProfileHeader() {
         </div>
         <div>
           {/* PROFILE NAME */}
-          <div style={{ marginLeft: "10rem", marginTop: "-5rem" }}>
+          <div style={{ marginLeft: "11rem", marginTop: "-5rem" }}>
             <p
               style={{ fontSize: "2rem", fontWeight: "bold" }}
               className="pl-5"
             >
               John Doe
             </p>
-            <span className="px-2"> Cleveland, OH </span>|
-            <span className="px-2"> 420 pets </span>|
-            <span className="px-2">69 Pals </span>
+            <div>
+              <span className="px-4"> Cleveland, OH </span>|
+              <span className="px-4"> 420 pets </span>|
+              <span className="px-4">69 Pals </span>
+            </div>
           </div>
         </div>
       </div>
