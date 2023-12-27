@@ -5,13 +5,21 @@ import { api } from "@/utils/api";
 import { Example } from "@/components/Example";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { GroupHeader } from "@/components/Group/GroupHeader.tsx";
 
-export default function GroupPage() {
-  
+const groupData = {
+  id: "123",
+  name: "Whisker Watchers Club",
+  description: "A group dedicated to cat lovers.",
+  photoUrl: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  bannerPhotoUrl: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1460&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+}
+
+export default function GroupPage({ group }) {
+
   const hello = api.example.hello.useQuery({ text: "example hi" });
 
-  const router = useRouter(); 
-
+  const router = useRouter();
   const groupId = router.query.groupId;
 
   return (
@@ -21,6 +29,8 @@ export default function GroupPage() {
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <GroupHeader group={ groupData }/>
+
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight  sm:text-[5rem]">
