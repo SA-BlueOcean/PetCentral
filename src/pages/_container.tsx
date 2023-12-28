@@ -1,3 +1,4 @@
+import SideNav from "@/components/Nav/SideNav";
 import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
@@ -50,23 +51,25 @@ const Container = ({ Component, pageProps }: AppProps) => {
           }}
         />
         <div className="drawer-content">
-          <div className="pointer-events-none fixed top-0 z-10 flex h-16 w-full justify-center">
-            <header className="pointer-events-auto w-full max-w-xl">
-              <TopNav />
-            </header>
-          </div>
-          <div className="mx-auto flex max-w-7xl justify-center">
-            <div className="sticky top-0 hidden flex-grow self-start md:block">
-              <nav>navigation</nav>
-              <div>component a</div>
+          <div className="mx-auto flex max-w-7xl justify-center md:grid md:grid-cols-[1fr,36rem,1fr]">
+            <div className="sticky top-4 hidden items-end self-start p-4 md:flex md:flex-col">
+              <div className=" w-full max-w-56">
+                <SideNav />
+                <div>component a</div>
+              </div>
             </div>
-            <div className="relative w-full max-w-xl">
-              <main className="mt-16 min-h-[calc(100vh-4rem)] bg-base-300 p-3">
+            <div className="relative col-span-1 w-full max-w-xl">
+              <header className="sticky top-0 z-10 h-16 w-full">
+                <TopNav />
+              </header>
+              <main className="min-h-[calc(100vh-4rem)] bg-base-300 p-3">
                 <Component {...pageProps} />
               </main>
             </div>
-            <div className="sticky top-0 hidden flex-grow self-start md:block">
-              <div>component b</div>
+            <div className="sticky top-4 hidden self-start p-4 md:block">
+              <div>
+                component b
+              </div>
               <div>component c</div>
             </div>
           </div>
