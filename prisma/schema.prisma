@@ -50,11 +50,13 @@ model VerificationToken {
 }
 
 model Location {
-  id        String @id @default(cuid())
-  latitude  Float
-  longitude Float
-  userId    String @unique
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(cuid())
+  latitude     Float
+  longitude    Float
+  locationName String?
+  zipCode      String?
+  userId       String @unique
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
