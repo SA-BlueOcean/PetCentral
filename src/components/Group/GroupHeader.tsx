@@ -31,7 +31,7 @@ const { name, description, photoUrl, bannerPhotoUrl } = group;
         ></Image>
 
         {/* GROUP AVATAR */}
-        <div className="avatar w-11/12 mx-auto block sm:-mt-8 max-h-20">
+        <div className="avatar w-11/12 mx-auto block sm:-mt-8 max-h-28">
           <div className="relative overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 sm:w-20 max-h-20 w-full">
             <Image
               src={photoUrl}

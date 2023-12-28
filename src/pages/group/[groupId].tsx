@@ -17,7 +17,6 @@ export default function GroupPage() {
   console.log(data);
   const [groupData, setGroupData] = useState({});
   const [posts, setPosts] = useState([]);
-  // const hello = api.example.hello.useQuery({ text: "example hi" });
 
   const router = useRouter();
   const groupId = router.query.groupId;
@@ -52,9 +51,9 @@ export default function GroupPage() {
         group={ groupData }
         members={members}
       />
-      {/* <CreatePost profileId={data} /> */}
+      <CreatePost/>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+        <div className="container flex flex-col items-center justify-center gap-12 py-16 ">
           <ul className="flex flex-col gap-4">
             {postsQuery.data?.posts.map((p) => (
               <li key={p.id}>

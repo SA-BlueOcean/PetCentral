@@ -55,8 +55,15 @@ export const groupRouter = createTRPCRouter({
       posts: feed,
     };
   }),
-});
 
+  fetchGroups: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.group.findMany({});
+
+    return {
+      groups: groupList,
+    };
+  }),
+});
 
 //   create: protectedProcedure
 //     .input(z.object({ name: z.string().min(1) }))
