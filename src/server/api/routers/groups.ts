@@ -1,29 +1,61 @@
 import { z } from "zod";
 import {
   createTRPCRouter,
-  protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
 
 
 // create tRPC router
-export const fetchGroupData = createTRPCRouter({
+export const groupRouter = createTRPCRouter({
   fetchDetails: publicProcedure
-    .input(z.object({ groupID: z.string() }))
-    .query(async ({ input, ctx }) => {
-      // const groupDetails = await ctx.db.group.findOne({
-      //   id: input.groupID
-      // });
-      const details = await ctx.db.group.findFirst({
-        where: {
-          id: input.groupID
-        },
+  .input(
+    z
+    .object({
+      groupID: z.string()
+    })
+  )
+  .query(
+    async ({ input, ctx }) => {
+    const details = await ctx.db.group.findFirst({
+      where: {
+        id: input.groupID
+      },
+    })
+    return {
+      group: details,
+    };
+  }),
+
+  getGroupPosts: publicProcedure
+  .input(
+    z
+      .object({
+        groupId: z.string(),
+        cursor: z.number().optional(),
       })
-      return {
-        group: details,
-      };
-    }),
-  });
+      .optional(),
+  )
+  .query(async ({ input, ctx }) => {
+    const feed = await ctx.db.post.findMany({
+      where: {
+        groupId: input?.groupId,
+      },
+      include: {
+        createdBy: true,
+        group: true,
+        photos: true,
+        comments: true,
+      },
+      orderBy: {
+        upvotes: "desc",
+      },
+    });
+
+    return {
+      posts: feed,
+    };
+  }),
+});
 
 
 //   create: protectedProcedure

@@ -27,11 +27,11 @@ const { name, description, photoUrl, bannerPhotoUrl } = group;
           width={700}
           height={100}
           unoptimized={true}
-          style={{width: '100%', height: '100px', objectFit: 'cover'}}
+          className="w-full h-20 object-cover"
         ></Image>
 
         {/* GROUP AVATAR */}
-        <div className="avatar w-11/12 mx-auto block -mt-8 max-h-20">
+        <div className="avatar w-11/12 mx-auto block sm:-mt-8 max-h-20">
           <div className="relative overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 sm:w-20 max-h-20 w-full">
             <Image
               src={photoUrl}
@@ -44,10 +44,10 @@ const { name, description, photoUrl, bannerPhotoUrl } = group;
           <div
             className="inline-block -mt-10 ml-24"
           >
-            <p>
-              <span className="text-l font-bold">{name}</span>
-              <span className="float-end">{members} Members</span>
-            </p>
+            <div className="flex flex-row">
+              <span className="basis-4/5 text-l font-bold">{name}</span>
+              <span className="basis-1/5">{members} Members</span>
+            </div>
             <p className="text-sm">{description}</p>
           </div>
         </div>
