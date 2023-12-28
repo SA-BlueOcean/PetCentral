@@ -40,6 +40,9 @@ export default function TopNav() {
       <div className="hidden sm:block">
         <Search />
       </div>
+      <div className="block sm:hidden pr-4">
+        <h2 className="text-xl">Pet Pals</h2>
+      </div>
     </nav>
   );
 }
