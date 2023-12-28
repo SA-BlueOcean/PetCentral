@@ -23,12 +23,14 @@ const Container = ({ Component, pageProps }: AppProps) => {
     }
   }, [displayLoginModal]);
 
-  const [providers, setProviders] = useState([]);
+  // const [providers, setProviders] = useState([]);
+  const [providers, setProviders] = useState<Provider[]>([]);
 
   useEffect(() => {
     (async () => {
       const res = await getProviders();
       setProviders(res);
+      console.log(res);
     })().catch(console.error);
   }, []);
 
