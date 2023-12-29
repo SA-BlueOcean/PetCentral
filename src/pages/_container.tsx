@@ -3,7 +3,6 @@ import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 type Provider = {
@@ -16,7 +15,6 @@ type Provider = {
 
 const Container = ({ Component, pageProps }: AppProps) => {
   const { displayLoginModal, setDisplayLoginModal } = useGlobalContext();
-  const router = useRouter();
   const { data: sessionData } = useSession();
   const [providers, setProviders] = useState<Record<string, Provider>>();
 
@@ -110,19 +108,27 @@ const Container = ({ Component, pageProps }: AppProps) => {
               </main>
             </div>
             <div className="sticky top-4 hidden self-start p-4 md:block">
-              <div>
-                component b
-              </div>
+              <div>component b</div>
               <div>component c</div>
             </div>
           </div>
           {/* TODO: remove this button, for demo only */}
-          <button
-            className="btn btn-ghost fixed bottom-0 right-0"
-            onClick={() => setDisplayLoginModal(true)}
-          >
-            toggle login modal
-          </button>
+          {!sessionData && (
+            <button
+              className="btn btn-ghost fixed bottom-0 right-0"
+              onClick={() => setDisplayLoginModal(true)}
+            >
+              LOGIN
+            </button>
+          )}{" "}
+          {sessionData && (
+            <button
+              className="btn btn-ghost fixed bottom-0 right-0"
+              onClick={() => signOut()}
+            >
+              LOGOUT
+            </button>
+          )}
         </div>
         <div className="drawer-side z-20">
           <label
@@ -130,7 +136,6 @@ const Container = ({ Component, pageProps }: AppProps) => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-
           <ul className="menu min-h-full w-80 bg-base-200 p-4">
             <label
               htmlFor="primary-drawer"
