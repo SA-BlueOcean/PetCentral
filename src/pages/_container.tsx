@@ -7,12 +7,16 @@ import { useEffect, useState } from "react";
 type Provider = {
   id: string;
   name: string;
+  type: string;
+  signinUrl: string;
+  callbackUrl: string;
 };
 
 const Container = ({ Component, pageProps }: AppProps) => {
   const { displayLoginModal, setDisplayLoginModal } = useGlobalContext();
   const router = useRouter();
   const { data: sessionData } = useSession();
+  const [providers, setProviders] = useState<Record<string, Provider>>();
 
   //disables scroll if modal is open
   useEffect(() => {
@@ -23,15 +27,12 @@ const Container = ({ Component, pageProps }: AppProps) => {
     }
   }, [displayLoginModal]);
 
-  // const [providers, setProviders] = useState([]);
-  const [providers, setProviders] = useState<Provider[]>([]);
-
   useEffect(() => {
-    (async () => {
-      const res = await getProviders();
-      setProviders(res);
-      console.log(res);
-    })().catch(console.error);
+    const getProvidersData = async () => {
+      const providersData = await getProviders();
+      setProviders(providersData ?? undefined);
+    };
+    getProvidersData().catch((err) => console.error(err));
   }, []);
 
   return (
@@ -42,26 +43,36 @@ const Container = ({ Component, pageProps }: AppProps) => {
             <div className="card-body items-center text-center">
               <h2 className="card-title">Login</h2>
               <div className="card-actions flex flex-col items-center justify-center">
-                {Object.values(providers).map((provider: Provider) => {
-                  if (provider.name) {
-                    return (
-                      <div key={provider.name} className="flex justify-center">
-                        <button
-                          className="btn btn-primary my-1"
-                          onClick={() =>
-                            signIn(provider.id, {
-                              callbackUrl: `${window.location.origin}`,
-                            })
-                          }
+                {providers &&
+                  Object.values(providers).map((provider: Provider) => {
+                    if (provider.name) {
+                      return (
+                        <div
+                          key={provider.name}
+                          className="flex justify-center"
                         >
-                          Sign in with {provider.name}
-                        </button>
-                      </div>
-                    );
-                  }
-                })}
+                          <button
+                            className="btn btn-primary my-1"
+                            onClick={() =>
+                              signIn(provider.id, {
+                                callbackUrl: `${window.location.origin}`,
+                              })
+                            }
+                          >
+                            Sign in with {provider.name}
+                          </button>
+                        </div>
+                      );
+                    }
+                  })}
               </div>
             </div>
+            <button
+              className="btn btn-accent absolute right-2 top-2"
+              onClick={() => setDisplayLoginModal(false)}
+            >
+              X
+            </button>
           </div>
         </div>
       )}
