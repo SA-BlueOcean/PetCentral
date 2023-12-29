@@ -49,4 +49,26 @@ export const profileRouter = createTRPCRouter({
       });
       return profile;
     }),
+  update: protectedProcedure
+    .input(
+      z.object({
+        firstName: z.string(),
+        lastName: z.string().optional(),
+        about: z.string().optional(),
+        zip: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      console.log("input", input);
+      return await ctx.db.user.update({
+        where: { id: ctx.session?.user.id },
+        data: {
+          firstName: input.firstName,
+          lastName: input.lastName,
+          bio: input.about,
+          // right now there is no zip
+          // zip: input.zip,
+        },
+      });
+    }),
 });

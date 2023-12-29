@@ -12,7 +12,6 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   );
   const router = useRouter();
   const session = useSession();
-  // confirm that this is actually the friends list...
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
 
   session.data?.user?.id === user.data?.id;
@@ -20,9 +19,16 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   return (
     <>
       <div>
-        {/* PROFILE BANNER */}
         {session.data?.user?.id === user.data?.id ? (
-          <button>
+          <button
+            onClick={() =>
+              (
+                document.getElementById(
+                  "my_modal_3",
+                ) as HTMLDialogElement | null
+              )?.showModal?.()
+            }
+          >
             <Camera
               size={25}
               strokeWidth={1}
@@ -41,11 +47,10 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           alt="Background"
           width={700}
           height={200}
-          className="h-auto max-h-[200px] max-w-full max-w-full object-cover"
+          className="h-auto max-h-[200px] max-w-full object-cover"
           unoptimized={true}
         ></Image>
 
-        {/* PROFILE PICTURE */}
         <div className="avatar mt-[-5rem]">
           <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
             <Image
@@ -60,7 +65,6 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           </div>
         </div>
         <div>
-          {/* PROFILE NAME */}
           <div className="ml-44 mt-[-5rem]">
             <p className="pl-5 text-xl font-bold">
               {user.data?.firstName

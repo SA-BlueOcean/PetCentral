@@ -262,9 +262,8 @@ information.
 <h3 align='center'> Thomas </h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in/thomasgharbert/">Linkedin</a> |
-  <a href="https://www.thomas.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.thomasharbert.com/">Portoflio</a> |
+  <a href="https://github.com/tgharbert">Github</a>
 </h4>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

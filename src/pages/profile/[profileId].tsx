@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { ProfileHeader } from "@/components/Profile/ProfileHeader";
 import EditProfileModal from "@/components/Profile/EditProfileModal";
 import Feed from "@/components/Feed";
+import EditPhotosModals from "@/components/Profile/EditPhotosModals";
 
 export default function ProfilePage() {
   const hello = api.example.hello.useQuery({ text: "example hi" });
@@ -20,6 +21,7 @@ export default function ProfilePage() {
   return (
     <>
       <ProfileHeader profileId={profileId} />
+      <EditPhotosModals profileId={profileId} />
       <EditProfileModal profileId={profileId} />
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">

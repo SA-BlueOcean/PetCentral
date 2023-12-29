@@ -1,4 +1,5 @@
 import { api } from "@/utils/api";
+import { Axis3DIcon } from "lucide-react";
 import { HTMLInputTypeAttribute, useState } from "react";
 
 export default function EditProfileModal({ profileId }: { profileId: string }) {
@@ -6,6 +7,20 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
   const [lastName, setLastName] = useState("");
   const [about, setAbout] = useState("");
   const [zip, setZip] = useState("");
+
+  // setup mutations for updating profile at Profile ID
+  // const mutation = api.profile.update.useMutation({
+  //   firstName,
+  //   lastName,
+  //   about,
+  //   zip,
+  // });
+  // const mutation = api.profile.update.useMutation();
+  const onUpdateClick = () => {
+    const mutation = api.profile.update.useMutation();
+    mutation.mutate({ firstName, lastName, about, zip });
+  };
+  // mutation.mutate({ firstName, lastName, about, zip });
 
   return (
     <dialog id="my_modal_4" className="modal">
@@ -62,6 +77,7 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
                 }
               />
             </div>
+            <button onClick={() => onUpdateClick()}>UPDATE INFORMATION</button>
           </form>
         </div>
       </div>
