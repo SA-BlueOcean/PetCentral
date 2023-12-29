@@ -1,12 +1,11 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
 import { PenSquare } from "lucide-react";
+import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-// import { useTransition } from "react";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
-  // const profileId = router.query.profileId as string;
   const user = api.profile.get.useQuery(
     { profileId },
     { enabled: !!profileId },
@@ -22,6 +21,18 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
     <>
       <div>
         {/* PROFILE BANNER */}
+        {session.data?.user?.id === user.data?.id ? (
+          <button>
+            <Camera
+              size={25}
+              strokeWidth={1}
+              absoluteStrokeWidth
+              className="absolute right-4 z-10 mt-1 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+            />
+          </button>
+        ) : (
+          ""
+        )}
         <Image
           src={
             user.data?.profilePhotoUrl ??
@@ -33,6 +44,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           className="h-auto max-h-[200px] max-w-full max-w-full object-cover"
           unoptimized={true}
         ></Image>
+
         {/* PROFILE PICTURE */}
         <div className="avatar mt-[-5rem]">
           <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
@@ -56,7 +68,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
                 : user.data?.name}
               {session.data?.user?.id === user.data?.id ? (
                 <button
-                  className="float-right mr-2 rounded-lg border-none bg-neutral p-1 hover:bg-accent/20"
+                  className="float-right mr-2 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
                   onClick={() =>
                     (
                       document.getElementById(

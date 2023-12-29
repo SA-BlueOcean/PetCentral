@@ -1,13 +1,9 @@
 import { api } from "@/utils/api";
 import { Example } from "@/components/Example";
-// import { GetServerSideProps } from "next";
-import { PenSquare } from "lucide-react";
 import { useRouter } from "next/router";
 import { ProfileHeader } from "@/components/Profile/ProfileHeader";
 import EditProfileModal from "@/components/Profile/EditProfileModal";
 import Feed from "@/components/Feed";
-import { useSession } from "next-auth/react";
-// import { Square } from "lucide-react";
 
 export default function ProfilePage() {
   const hello = api.example.hello.useQuery({ text: "example hi" });
@@ -20,8 +16,6 @@ export default function ProfilePage() {
     { profileId },
     { enabled: !!profileId },
   );
-
-  const session = useSession();
 
   return (
     <>
