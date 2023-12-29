@@ -5,33 +5,19 @@ import { type AppType } from "next/app";
 import { api } from "@/utils/api";
 
 import "@/styles/globals.css";
+import {
+  GlobalContextProvider,
+} from "@/providers/GlobalContext";
+import Container from "./_container";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType<{ session: Session | null }> = (appProps) => {
+
+  const { session } = appProps.pageProps;
   return (
     <SessionProvider session={session}>
-      <div className="pointer-events-none fixed z-10 top-0 flex h-20 w-full justify-center">
-        <div className="pointer-events-auto w-full max-w-xl bg-primary-content ">
-          SEARCH
-        </div>
-      </div>
-      <div className="flex justify-center mx-auto max-w-7xl">
-        <div className="hidden md:block sticky top-0 self-start flex-grow">
-          <nav>navigation</nav>
-          <div>component a</div>
-        </div>
-        <div className="relative w-full max-w-xl">
-          <main className="mt-20 p-3 min-h-[calc(100vh-5rem)] bg-base-300">
-            <Component {...pageProps} />
-          </main>
-        </div>
-        <div className="hidden md:block sticky top-0 self-start flex-grow">
-          <div>component b</div>
-          <div>component c</div>
-        </div>
-      </div>
+      <GlobalContextProvider>
+        <Container {...appProps} />
+      </GlobalContextProvider>
     </SessionProvider>
   );
 };
