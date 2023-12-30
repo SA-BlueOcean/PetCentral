@@ -41,7 +41,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         )}
         <Image
           src={
-            user.data?.profilePhotoUrl ??
+            user.data?.bannerPhotoUrl ??
             "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
           }
           alt="Background"

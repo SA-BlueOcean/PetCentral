@@ -52,7 +52,7 @@ export const profileRouter = createTRPCRouter({
   updateInfo: protectedProcedure
     .input(
       z.object({
-        firstName: z.string(),
+        firstName: z.string().optional(),
         lastName: z.string().optional(),
         about: z.string().optional(),
         zip: z.string().optional(),
@@ -70,6 +70,7 @@ export const profileRouter = createTRPCRouter({
         },
       });
     }),
+  // at the moment the mutation is working updating both, one to empty if both fields are not filled in
   updatePhotos: protectedProcedure
     .input(
       z.object({
@@ -78,6 +79,7 @@ export const profileRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
+      console.log(input);
       return await ctx.db.user.update({
         where: { id: ctx.session?.user.id },
         data: {
