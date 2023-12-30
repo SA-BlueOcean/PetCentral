@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { api } from "@/utils/api";
 
-export default function EditPhotosModals({ profileId }: { profileId: string }) {
+export default function EditPhotosModal({ profileId }: { profileId: string }) {
   const [profilePhotoUrl, setProfilePhotoUrl] = useState("");
   const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
 
   // setup mutations for updating photos at Profile ID
-  api.profile.update.useMutation({ profilePhotoUrl, coverPhotoUrl, profileId });
+  const mutation = api.profile.updatePhotos.useMutation();
+  const onUpdateClick = () => {
+    mutation.mutate({ profilePhotoUrl, coverPhotoUrl });
+  };
 
   return (
     <dialog id="my_modal_3" className="modal">
@@ -44,6 +47,7 @@ export default function EditPhotosModals({ profileId }: { profileId: string }) {
                 }
               />
             </div>
+            <button onClick={() => onUpdateClick()}>Update Photos</button>
           </form>
         </div>
       </div>

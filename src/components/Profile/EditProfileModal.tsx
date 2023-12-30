@@ -9,18 +9,11 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
   const [zip, setZip] = useState("");
 
   // setup mutations for updating profile at Profile ID
-  // const mutation = api.profile.update.useMutation({
-  //   firstName,
-  //   lastName,
-  //   about,
-  //   zip,
-  // });
-  // const mutation = api.profile.update.useMutation();
+
+  const mutation = api.profile.updateInfo.useMutation();
   const onUpdateClick = () => {
-    const mutation = api.profile.update.useMutation();
     mutation.mutate({ firstName, lastName, about, zip });
   };
-  // mutation.mutate({ firstName, lastName, about, zip });
 
   return (
     <dialog id="my_modal_4" className="modal">

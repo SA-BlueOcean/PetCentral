@@ -49,7 +49,7 @@ export const profileRouter = createTRPCRouter({
       });
       return profile;
     }),
-  update: protectedProcedure
+  updateInfo: protectedProcedure
     .input(
       z.object({
         firstName: z.string(),
@@ -59,7 +59,6 @@ export const profileRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      console.log("input", input);
       return await ctx.db.user.update({
         where: { id: ctx.session?.user.id },
         data: {
@@ -68,6 +67,22 @@ export const profileRouter = createTRPCRouter({
           bio: input.about,
           // right now there is no zip
           // zip: input.zip,
+        },
+      });
+    }),
+  updatePhotos: protectedProcedure
+    .input(
+      z.object({
+        profilePhotoUrl: z.string().optional(),
+        coverPhotoUrl: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.db.user.update({
+        where: { id: ctx.session?.user.id },
+        data: {
+          profilePhotoUrl: input.profilePhotoUrl,
+          bannerPhotoUrl: input.coverPhotoUrl,
         },
       });
     }),

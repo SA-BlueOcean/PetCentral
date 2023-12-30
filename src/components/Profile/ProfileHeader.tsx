@@ -66,7 +66,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         </div>
         <div>
           <div className="ml-44 mt-[-5rem]">
-            <p className="pl-5 text-xl font-bold">
+            <p className="pl-5 text-2xl font-bold">
               {user.data?.firstName
                 ? user.data?.firstName + " " + user.data?.lastName
                 : user.data?.name}
