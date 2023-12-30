@@ -59,16 +59,42 @@ export const profileRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      return await ctx.db.user.update({
-        where: { id: ctx.session?.user.id },
-        data: {
-          firstName: input.firstName,
-          lastName: input.lastName,
-          bio: input.about,
-          // right now there is no zip
-          // zip: input.zip,
-        },
-      });
+      // new stuff
+      if (input.firstName !== "") {
+        return await ctx.db.user.update({
+          where: { id: ctx.session?.user.id },
+          data: {
+            firstName: input.firstName,
+          },
+        });
+      }
+      if (input.lastName !== "") {
+        return await ctx.db.user.update({
+          where: { id: ctx.session?.user.id },
+          data: {
+            lastName: input.lastName,
+          },
+        });
+      }
+      if (input.about !== "") {
+        return await ctx.db.user.update({
+          where: { id: ctx.session?.user.id },
+          data: {
+            bio: input.about,
+          },
+        });
+      }
+
+      // return await ctx.db.user.update({
+      //   where: { id: ctx.session?.user.id },
+      //   data: {
+      //     firstName: input.firstName,
+      //     lastName: input.lastName,
+      //     bio: input.about,
+      //     // right now there is no zip
+      //     // zip: input.zip,
+      //   },
+      // });
     }),
   // at the moment the mutation is working updating both, one to empty if both fields are not filled in
   updatePhotos: protectedProcedure
@@ -79,13 +105,29 @@ export const profileRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      console.log(input);
-      return await ctx.db.user.update({
-        where: { id: ctx.session?.user.id },
-        data: {
-          profilePhotoUrl: input.profilePhotoUrl,
-          bannerPhotoUrl: input.coverPhotoUrl,
-        },
-      });
+      // new stuff
+      if (input.profilePhotoUrl !== "") {
+        return await ctx.db.user.update({
+          where: { id: ctx.session?.user.id },
+          data: {
+            profilePhotoUrl: input.profilePhotoUrl,
+          },
+        });
+      }
+      if (input.coverPhotoUrl !== "") {
+        return await ctx.db.user.update({
+          where: { id: ctx.session?.user.id },
+          data: {
+            bannerPhotoUrl: input.coverPhotoUrl,
+          },
+        });
+      }
+      //   return await ctx.db.user.update({
+      //     where: { id: ctx.session?.user.id },
+      //     data: {
+      //       profilePhotoUrl: input.profilePhotoUrl,
+      //       bannerPhotoUrl: input.coverPhotoUrl,
+      //     },
+      //   });
     }),
 });
