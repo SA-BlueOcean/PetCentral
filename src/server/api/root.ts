@@ -12,7 +12,7 @@ import { authRouter } from "./routers/auth";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   feed: feedRouter,
-  profile: profileRouter,,
+  profile: profileRouter,
   auth: authRouter,
 });
 

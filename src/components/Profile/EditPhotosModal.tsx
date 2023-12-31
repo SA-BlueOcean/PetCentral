@@ -32,6 +32,7 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
               <input
                 type="text"
                 value={profilePhotoUrl}
+                className="h-10 w-96"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setProfilePhotoUrl(e.target.value)
                 }
@@ -42,12 +43,18 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
               <input
                 type="text"
                 value={coverPhotoUrl}
+                className="h-10 w-96"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setCoverPhotoUrl(e.target.value)
                 }
               />
             </div>
-            <button onClick={() => onUpdateClick()}>Update Photos</button>
+            <button
+              className="btn mt-6 bg-primary px-3 text-white"
+              onClick={() => onUpdateClick()}
+            >
+              Update Photos
+            </button>
           </form>
         </div>
       </div>
