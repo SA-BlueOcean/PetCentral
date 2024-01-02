@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import PostText from "./PostText";
+import Votes from "./Vote";
+import { MessageSquareText } from "lucide-react";
 
 type PostCardProps = {
   data: {
@@ -105,10 +107,11 @@ export default function PostCard({ data }: PostCardProps) {
       </div>
 
       <div className="border-base-500 flex justify-between border-t p-3">
-        <div>
-          up {data.upvotes} down {data.downvotes}
-        </div>
-        <div>{data.comments.length} comments</div>
+        <Votes upvotes={data.upvotes} downvotes={data.downvotes} />
+        <button className="btn btn-ghost rounded-l-full rounded-r-full h-10 min-h-10">
+          <MessageSquareText />
+          <span>{data.comments.length}</span>
+        </button>
       </div>
     </div>
   );
