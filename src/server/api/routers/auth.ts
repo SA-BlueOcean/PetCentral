@@ -20,11 +20,12 @@ export const authRouter = createTRPCRouter({
         },
       });
 
-      const data = zipcode.lookup(+input.zipCode);
-      const zipCode = data.zip;
-      const locationName = data.city + ", " + data.state;
-      const latitude = data.latitude;
-      const longitude = data.longitude;
+      let data = zipcode.lookup(+input.zipCode);
+      if (!data) data = zipcode.lookup(37660);
+      const zipCode = data?.zip;
+      const locationName = data?.city + ", " + data?.state;
+      const latitude = data?.latitude ?? 0;
+      const longitude = data?.longitude ?? 0;
 
       await ctx.db.location.upsert({
         where: { userId: ctx.session?.user.id },
