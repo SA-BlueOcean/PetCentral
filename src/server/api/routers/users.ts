@@ -24,6 +24,24 @@ export const userRouter = createTRPCRouter({
     })
   }),
 
+  removeUserGroup: protectedProcedure
+  .input(
+    z
+    .object({
+      groupId: z.string(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    await ctx.db.user.update({
+      where: { id: ctx.session.user.id },
+      data: {
+        groups: {
+          disconnect: { id: input.groupId, },
+        }
+      }
+    })
+  }),
+
   fetchUser: protectedProcedure
     .query(async ({ ctx }) => {
       return ctx.db.user.findUnique({

@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { use } from "react";
+import { useEffect } from "react";
 
 type Group = {
   id: string;
@@ -34,10 +34,12 @@ export function GroupHeader({ group, members }: GroupProps) {
 
   const updateUserGroups = async () => {
     if (userIsMember) {
-      const result = await mutation.mutateAsync({ groupId });
+      console.log("user is member");
+      const result = await disconnect.mutateAsync({ groupId });
       console.log(result);
     } else {
-      const result = await disconnect.mutateAsync({ groupId });
+      console.log("user is not member");
+      const result = await mutation.mutateAsync({ groupId });
       console.log(result);
     }
   };
@@ -69,7 +71,7 @@ export function GroupHeader({ group, members }: GroupProps) {
           <div className="-mt-10 ml-24 inline-block">
             <div className="flex flex-row">
               <span className="text-l basis-3/5 font-bold">{name}</span>
-              <span className="basis-2/5 text-center">
+              <span className="basis-2/5 text-right">
                 {members} {members === 1 ? <>Member</> : <>Members</>}
               </span>
             </div>
@@ -77,7 +79,7 @@ export function GroupHeader({ group, members }: GroupProps) {
               <p className="basis-4/5 text-sm">{description}</p>
               {userIsMember ? (
                 <button
-                  className="btn btn-primary btn-xs basis-2/5 rounded-btn uppercase text-white"
+                  className="btn btn-primary btn-xs basis-1/5 rounded-btn uppercase text-white"
                   onClick={() => updateUserGroups()}
                 >
                   Leave
