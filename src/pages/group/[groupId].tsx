@@ -7,8 +7,6 @@ import { GroupHeader } from "@/components/Group/GroupHeader";
 import { useSession } from "next-auth/react";
 import CreatePost from "@/components/Feed/CreatePost";
 
-const members = 2;
-
 export default function GroupPage() {
   const { data } = useSession() || "";
   const [groupData, setGroupData] = useState({});
@@ -27,7 +25,9 @@ export default function GroupPage() {
     { enabled: !!groupId },
   );
 
-  console.log(membersQuery);
+  const members = membersQuery?.data?.members.length || 0;
+  console.log("members: ", members);
+  console.log("members: ", membersQuery);
 
   useEffect(() => {
     if (query.data) {

@@ -42,9 +42,11 @@ export const groupRouter = createTRPCRouter({
     })
   )
   .query(async ({ ctx, input }) => {
-    const userCount = await ctx.db._GroupsToUser.count({
-      where: {
-        groupId: input.groupId,
+    const userCount = await ctx.db.group.findMany({
+      include: {
+        _count: {
+          select: { members: true },
+        },
       },
     });
     return {
