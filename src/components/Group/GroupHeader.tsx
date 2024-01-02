@@ -1,5 +1,6 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 type Group = {
     id: string;
@@ -16,7 +17,22 @@ type GroupProps = {
 
 export function GroupHeader({ group, members } : GroupProps) {
 const { name, description, photoUrl, bannerPhotoUrl } = group;
+const { data } = useSession() || '';
+const groupId = group.id;
+const userId = data?.user?.id;
 
+const mutation = api.users.updateUserGroups.useMutation({});
+
+  const updateUserGroups = async () => {
+    try {
+        const result = await mutation.mutateAsync({ groupId }, { onError(error) {
+          console.log('onError', error);
+        },});
+      console.log('Mutation result:', result);
+    } catch (err) {
+      console.error(err);
+    }
+  }
   return (
     <>
       <div>
@@ -48,10 +64,18 @@ const { name, description, photoUrl, bannerPhotoUrl } = group;
               <span className="basis-4/5 text-l font-bold">{name}</span>
               <span className="basis-1/5">{members} Members</span>
             </div>
-            <p className="text-sm">{description}</p>
+            <div className="flex flex-row">
+              <p className="text-sm basis-4/5">{description}</p>
+              <button
+                className="btn btn-xs btn-primary rounded-btn text-white uppercase basis-1/5"
+                onClick={()=> updateUserGroups()}
+              >
+                Join
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
-}
+};

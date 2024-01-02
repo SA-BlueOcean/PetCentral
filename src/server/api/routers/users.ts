@@ -1,28 +1,35 @@
 import { z } from "zod";
 import {
   createTRPCRouter,
+  protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
-  // create: protectedProcedure
-  // .input(
-  //   z
-  //   .object
-  //   ({
-  //     content: z.string().min(1),
-  //     groupId: z.string().optional()
-  //   }))
-  // .mutation(async ({ ctx, input }) => {
-  //   // simulate a slow db call
-  //   await new Promise((resolve) => setTimeout(resolve, 1000));
+  updateUserGroups: protectedProcedure
+  .input(
+    z
+    .object({
+      groupId: z.string(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    await ctx.db.user.update({
+      where: { id: ctx.session.user.id },
+      data: {
+        groups: {
+          connect: { id: input.groupId, },
+        }
+      }
+    })
+  }),
 
-  //   return ctx.db.post.create({
-  //     data: {
-  //       content: input.content,
-  //       group: input.groupId ? { connect: { id: input.groupId }} : undefined,
-  //       createdBy: { connect: { id: ctx.session.user.id } },
-  //     },
-  //   });
-  // }),
+  fetchUser: protectedProcedure
+    .query(async ({ ctx }) => {
+      return ctx.db.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        }
+      })
+    })
 });

@@ -26,67 +26,29 @@ export const groupRouter = createTRPCRouter({
     };
   }),
 
-  getGroupPosts: publicProcedure
+  fetchGroups: publicProcedure.query(async ({ ctx }) => {
+    const groups = await ctx.db.group.findMany({});
+
+    return {
+      groups: groups,
+    };
+  }),
+
+  fetchGroupMembers: publicProcedure
   .input(
     z
-      .object({
-        groupId: z.string(),
-        cursor: z.number().optional(),
-      })
-      .optional(),
+    .object({
+      groupId: z.string()
+    })
   )
-  .query(async ({ input, ctx }) => {
-    const feed = await ctx.db.post.findMany({
+  .query(async ({ ctx, input }) => {
+    const userCount = await ctx.db._GroupsToUser.count({
       where: {
-        groupId: input?.groupId,
-      },
-      include: {
-        createdBy: true,
-        group: true,
-        photos: true,
-        comments: true,
-      },
-      orderBy: {
-        upvotes: "desc",
+        groupId: input.groupId,
       },
     });
-
     return {
-      posts: feed,
+      members: userCount,
     };
-  }),
-
-  fetchGroups: publicProcedure.query(async ({ ctx }) => {
-    return ctx.db.group.findMany({});
-
-    return {
-      groups: groupList,
-    };
-  }),
+  })
 });
-
-//   create: protectedProcedure
-//     .input(z.object({ name: z.string().min(1) }))
-//     .mutation(async ({ ctx, input }) => {
-//       // simulate a slow db call
-//       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-//       return ctx.db.post.create({
-//         data: {
-//           name: input.name,
-//           createdBy: { connect: { id: ctx.session.user.id } },
-//         },
-//       });
-//     }),
-
-//   getLatest: protectedProcedure.query(({ ctx }) => {
-//     return ctx.db.post.findFirst({
-//       orderBy: { createdAt: "desc" },
-//       where: { createdBy: { id: ctx.session.user.id } },
-//     });
-//   }),
-
-//   getSecretMessage: protectedProcedure.query(() => {
-//     return "you can now see this secret message!";
-//   }),
-
