@@ -1,38 +1,47 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { use } from "react";
 
 type Group = {
-    id: string;
-    name: string;
-    description: string;
-    photoUrl: string;
-    bannerPhotoUrl: string;
+  id: string;
+  name: string;
+  description: string;
+  photoUrl: string;
+  bannerPhotoUrl: string;
 };
 
 type GroupProps = {
-    group: Group;
-    members: number;
+  group: Group;
+  members: number;
 };
 
-export function GroupHeader({ group, members } : GroupProps) {
-const { name, description, photoUrl, bannerPhotoUrl } = group;
-const { data } = useSession() || '';
-const groupId = group.id;
-const userId = data?.user?.id;
+export function GroupHeader({ group, members }: GroupProps) {
+  const { name, description, photoUrl, bannerPhotoUrl } = group;
+  const groupId = group.id;
+  const mutation = api.users.updateUserGroups.useMutation({});
+  const disconnect = api.users.removeUserGroup.useMutation({});
 
-const mutation = api.users.updateUserGroups.useMutation({});
+  const getMemberIds = api.groups.fetchMembers.useQuery(
+    { groupId: groupId },
+    { enabled: !!groupId },
+  );
+
+  const memberIdArr = getMemberIds?.data?.users?.map((user) => user.id);
+  const user = useSession().data?.user?.id;
+
+  const userIsMember = memberIdArr?.includes(user ?? "");
 
   const updateUserGroups = async () => {
-    try {
-        const result = await mutation.mutateAsync({ groupId }, { onError(error) {
-          console.log('onError', error);
-        },});
-      console.log('Mutation result:', result);
-    } catch (err) {
-      console.error(err);
+    if (userIsMember) {
+      const result = await mutation.mutateAsync({ groupId });
+      console.log(result);
+    } else {
+      const result = await disconnect.mutateAsync({ groupId });
+      console.log(result);
     }
-  }
+  };
+
   return (
     <>
       <div>
@@ -43,12 +52,12 @@ const mutation = api.users.updateUserGroups.useMutation({});
           width={700}
           height={100}
           unoptimized={true}
-          className="w-full h-20 object-cover"
+          className="h-20 w-full object-cover"
         ></Image>
 
         {/* GROUP AVATAR */}
-        <div className="avatar w-11/12 mx-auto block sm:-mt-8 max-h-28">
-          <div className="relative overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 sm:w-20 max-h-20 w-full">
+        <div className="avatar mx-auto block max-h-28 w-11/12 sm:-mt-8">
+          <div className="relative max-h-20 w-full overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 sm:w-20">
             <Image
               src={photoUrl}
               alt="group avatar"
@@ -57,25 +66,34 @@ const mutation = api.users.updateUserGroups.useMutation({});
             />
           </div>
           {/* GROUP META */}
-          <div
-            className="inline-block -mt-10 ml-24"
-          >
+          <div className="-mt-10 ml-24 inline-block">
             <div className="flex flex-row">
-              <span className="basis-4/5 text-l font-bold">{name}</span>
-              <span className="basis-1/5">{members} Members</span>
+              <span className="text-l basis-3/5 font-bold">{name}</span>
+              <span className="basis-2/5 text-center">
+                {members} {members === 1 ? <>Member</> : <>Members</>}
+              </span>
             </div>
             <div className="flex flex-row">
-              <p className="text-sm basis-4/5">{description}</p>
-              <button
-                className="btn btn-xs btn-primary rounded-btn text-white uppercase basis-1/5"
-                onClick={()=> updateUserGroups()}
-              >
-                Join
-              </button>
+              <p className="basis-4/5 text-sm">{description}</p>
+              {userIsMember ? (
+                <button
+                  className="btn btn-primary btn-xs basis-2/5 rounded-btn uppercase text-white"
+                  onClick={() => updateUserGroups()}
+                >
+                  Leave
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-xs basis-1/5 rounded-btn uppercase text-white"
+                  onClick={() => updateUserGroups()}
+                >
+                  Join
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
     </>
   );
-};
+}

@@ -34,7 +34,7 @@ export const groupRouter = createTRPCRouter({
     };
   }),
 
-  fetchGroupMembers: publicProcedure
+  fetchMemberCount: publicProcedure
   .input(
     z
     .object({
@@ -42,15 +42,43 @@ export const groupRouter = createTRPCRouter({
     })
   )
   .query(async ({ ctx, input }) => {
-    const userCount = await ctx.db.group.findMany({
+    const userCount = await ctx.db.group.findUnique({
+      where: {
+        id: input.groupId
+      },
       include: {
         _count: {
           select: { members: true },
         },
       },
     });
+
+    const memberCount = userCount?._count?.members ?? 0;
+
     return {
-      members: userCount,
+      memberCount: memberCount,
     };
-  })
+  }),
+
+  fetchMembers: publicProcedure
+  .input(
+    z
+    .object({
+      groupId: z.string()
+    })
+  )
+  .query(async ({ ctx, input }) => {
+    const groupUsers = await ctx.db.group.findUnique({
+      where: {
+        id: input.groupId,
+      },
+      include: {
+        members: true,
+      },
+    });
+
+    return {
+      users: groupUsers?.members ?? [],
+    };
+  }),
 });

@@ -12,7 +12,7 @@ export default function GroupPage() {
   const [groupData, setGroupData] = useState({});
 
   const router = useRouter();
-  const groupId = router.query.groupId;
+  const groupId = router.query.groupId! as string;
 
   // Fetch Group Details
   const query = api.groups.fetchDetails.useQuery({
@@ -20,14 +20,12 @@ export default function GroupPage() {
   });
 
   // Fetch Group Members
-  const membersQuery = api.groups.fetchGroupMembers.useQuery(
+  const membersQuery = api.groups.fetchMemberCount.useQuery(
     { groupId: groupId },
     { enabled: !!groupId },
   );
 
-  const members = membersQuery?.data?.members.length || 0;
-  console.log("members: ", members);
-  console.log("members: ", membersQuery);
+  const members = membersQuery?.data?.memberCount;
 
   useEffect(() => {
     if (query.data) {

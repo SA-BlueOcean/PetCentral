@@ -17,7 +17,7 @@ export default function CreatePost() {
   // Fetch User Details & Session Info
   const query = api.users.fetchUser.useQuery(
     {
-      userId: data?.user?.id as string,
+      userId: data?.user?.id!,
     },
     { enabled: !!data?.user?.id },
   );
@@ -26,14 +26,38 @@ export default function CreatePost() {
   const groupsQuery = api.groups.fetchGroups.useQuery();
 
   return (
-    <div className="rounded-lg bg-base-100 ring-1 ring-base-500">
+    <form
+      className="rounded-lg bg-base-100 ring-1 ring-base-500"
+      onSubmit={(e) => {
+        e.preventDefault();
+        console.log(post);
+      }}
+    >
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
             <div className="relative h-10 w-10 overflow-clip rounded-full ">
               <div className="avatar">
                 <div className="rounded-full">
-                  <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  {query?.data?.profilePhotoUrl ? (
+                    <>
+                      <Image
+                        src={query?.data?.profilePhotoUrl}
+                        alt="user avatar"
+                        unoptimized={true}
+                        fill={true}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Image
+                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                        alt="user avatar"
+                        unoptimized={true}
+                        fill={true}
+                      />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -79,6 +103,6 @@ export default function CreatePost() {
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
