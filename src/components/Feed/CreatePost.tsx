@@ -22,7 +22,7 @@ export default function CreatePost() {
     { enabled: !!data?.user?.id },
   );
 
-  // Fetch Groups
+  // Fetch User Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
 
   return (
@@ -49,14 +49,12 @@ export default function CreatePost() {
                       />
                     </>
                   ) : (
-                    <>
-                      <Image
-                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                        alt="user avatar"
-                        unoptimized={true}
-                        fill={true}
-                      />
-                    </>
+                    <Image
+                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                      alt="user avatar"
+                      unoptimized={true}
+                      fill={true}
+                    />
                   )}
                 </div>
               </div>
@@ -98,7 +96,10 @@ export default function CreatePost() {
               />
             </label>
           </div>
-          <button className="btn btn-primary btn-sm rounded-btn uppercase text-white">
+          <button
+            className="btn btn-primary btn-sm rounded-btn uppercase text-white"
+            type="submit"
+          >
             Post
           </button>
         </div>

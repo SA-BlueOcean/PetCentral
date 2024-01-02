@@ -27,10 +27,17 @@ export const groupRouter = createTRPCRouter({
   }),
 
   fetchGroups: publicProcedure.query(async ({ ctx }) => {
-    const groups = await ctx.db.group.findMany({});
+    const groups = await ctx.db.user.findUnique({
+      where: {
+        id: ctx.session?.user?.id,
+      },
+      include: {
+        groups: true,
+      },
+    });
 
     return {
-      groups: groups,
+      groups: groups?.groups ?? [],
     };
   }),
 
