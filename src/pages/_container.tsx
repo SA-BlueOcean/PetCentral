@@ -3,7 +3,10 @@ import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
+
+const inter = Inter({ subsets: ["latin"] });
 
 type Provider = {
   id: string;
@@ -36,7 +39,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <>
+    <body className={inter.className}>
       {displayLoginModal && (
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
           <div className="card absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 bg-base-100 shadow-xl">
@@ -148,7 +151,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
           </ul>
         </div>
       </div>
-    </>
+    </body>
   );
 };
 
