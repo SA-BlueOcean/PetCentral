@@ -104,7 +104,7 @@ export default function PostCard({ data }: PostCardProps) {
       </div>
       {displayComments && (
         <div className="border-base-500 border-t p-3 max-h-[50vh] overflow-y-auto">
-          <Comments postId={data.id} />
+          <Comments postId={data.id} initialCount={data.numComments} />
         </div>
       )}
     </div>

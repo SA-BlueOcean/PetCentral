@@ -1,8 +1,15 @@
 import { api } from "@/utils/api";
 import { Fragment } from "react";
 import Comment from "./Comment";
+import PlaceholderComment from "./PlaceholderComment";
 
-export default function Comments({ postId }: { postId: number }) {
+export default function Comments({
+  postId,
+  initialCount = 0,
+}: {
+  postId: number;
+  initialCount?: number;
+}) {
   const comments = api.comments.get.useInfiniteQuery(
     {
       postId,
@@ -14,16 +21,26 @@ export default function Comments({ postId }: { postId: number }) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <ul className="flex flex-col gap-4">
-        {comments.data?.pages.map((page, i) => (
-          <Fragment key={page.nextCursor}>
-            {page.comments.map((c) => (
-              <li key={c.id}>
-                <Comment data={c} />
-              </li>
+      <ul className="flex flex-col gap-4 w-full">
+        {(comments.isInitialLoading) ? (
+          <>
+            {new Array(Math.min(5, initialCount)).fill(0).map((_, i) => (
+              <PlaceholderComment key={i} />
             ))}
-          </Fragment>
-        ))}
+          </>
+        ) : (
+          <>
+            {comments.data?.pages.map((page, i) => (
+              <Fragment key={page.nextCursor}>
+                {page.comments.map((c) => (
+                  <li key={c.id}>
+                    <Comment data={c} />
+                  </li>
+                ))}
+              </Fragment>
+            ))}
+          </>
+        )}
       </ul>
       {comments.hasNextPage && (
         <button
