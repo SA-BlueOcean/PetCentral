@@ -96,7 +96,7 @@ Some of our key features are:
       Forums: Dive into dedicated forums tailored to your pet's specific needs and characteristics.
     </li>
     <li>
-      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners! 
+      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
     </li>
   </ol>
 </p>
@@ -221,36 +221,36 @@ information.
 <h3 align='center'> Burhan</h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.burhan.com/">Portoflio</a> | 
-  <a href="https://www.twitter.com/">Twitter</a> | 
+  <a href="https://www.burhan.com/">Portoflio</a> |
+  <a href="https://www.twitter.com/">Twitter</a> |
   <a href="https://www.github.com/">Github</a>
 </h4>
 <h3 align='center'> Clay</h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in//">Linkedin</a> |
   <a href="https://www.clay.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> | 
+  <a href="https://www.twitter.com/">Twitter</a> |
   <a href="https://www.github.com/">Github</a>
 </h4>
 <h3 align='center'> Derek</h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in//">Linkedin</a> |
   <a href="https://www.derek.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> | 
+  <a href="https://www.twitter.com/">Twitter</a> |
   <a href="https://www.github.com/">Github</a>
 </h4>
 <h3 align='center'> Hazel</h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in//">Linkedin</a> |
   <a href="https://www.hazel.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> | 
+  <a href="https://www.twitter.com/">Twitter</a> |
   <a href="https://www.github.com/">Github</a>
 </h4>
 <h3 align='center'> Mallory</h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.mallory.com/">Portoflio</a> | 
-  <a href="https://www.twitter.com/">Twitter</a> | 
+  <a href="https://www.mallory.com/">Portoflio</a> |
+  <a href="https://www.twitter.com/">Twitter</a> |
   <a href="https://www.github.com/">Github</a>
 </h4>
 <h3 align='center'> Ming Lee Ng</h3>
@@ -259,12 +259,11 @@ information.
   <a href="https://linkedin.com/in/MingLeeNg">Linkedin</a> |
   <a href="https://minglee.me">Portoflio</a>
 </h4>
-<h3 align='center'> Thomas </h3>
+<h3 align='center'> Thomas Harbert </h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.thomas.com/">Portoflio</a> | 
-  <a href="https://www.twitter.com/">Twitter</a> | 
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/thomasgharbert/">Linkedin</a> |
+  <a href="https://www.thomasharbert.com/">Portoflio</a> |
+  <a href="https://github.com/tgharbert">Github</a>
 </h4>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
