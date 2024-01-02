@@ -39,7 +39,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <body className={inter.className}>
+    <div className={inter.className}>
       {displayLoginModal && (
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
           <div className="card absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 bg-base-100 shadow-xl">
@@ -151,7 +151,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
           </ul>
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 
