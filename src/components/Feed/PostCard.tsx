@@ -4,6 +4,8 @@ import PostText from "./PostText";
 import Votes from "./Vote";
 import { MessageSquareText } from "lucide-react";
 import AvatarHeader from "./AvatarHeader";
+import { useState } from "react";
+import Comments from "./Comments";
 
 type PostCardProps = {
   data: {
@@ -31,16 +33,19 @@ type PostCardProps = {
       id: string;
       url: string;
     }[];
-    votes?: {
-      id: number;
-      userId: string;
-      postId: number;
-      vote: number;
-    }[] | null;
+    votes?:
+      | {
+          id: number;
+          userId: string;
+          postId: number;
+          vote: number;
+        }[]
+      | null;
   };
 };
 
 export default function PostCard({ data }: PostCardProps) {
+  const [displayComments, setDisplayComments] = useState(false);
   return (
     <div className="ring-base-500 rounded-lg bg-base-100 ring-1">
       <div className="p-3">
@@ -89,11 +94,19 @@ export default function PostCard({ data }: PostCardProps) {
           downvotes={data.downvotes}
           vote={data.votes?.[0]?.vote}
         />
-        <button className="btn btn-ghost h-10 min-h-10 rounded-l-full rounded-r-full">
-          <MessageSquareText  />
+        <button
+          className="btn btn-ghost h-10 min-h-10 rounded-l-full rounded-r-full"
+          onClick={() => setDisplayComments((d) => !d)}
+        >
+          <MessageSquareText />
           <span>{data.numComments ?? 0}</span>
         </button>
       </div>
+      {displayComments && (
+        <div className="border-base-500 border-t p-3 max-h-[50vh] overflow-y-auto">
+          <Comments postId={data.id} />
+        </div>
+      )}
     </div>
   );
 }

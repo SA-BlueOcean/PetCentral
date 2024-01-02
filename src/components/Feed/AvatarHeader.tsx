@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,6 +7,7 @@ type AvatarHeaderProps = {
   createdAt: Date;
   name?: string | null;
   profilePhotoUrl?: string | null;
+  mode?: "POST" | "COMMENT";
 };
 
 export default function AvatarHeader({
@@ -13,11 +15,17 @@ export default function AvatarHeader({
   name,
   profilePhotoUrl,
   createdAt,
+  mode,
 }: AvatarHeaderProps) {
   return (
     <>
       <Link href={`/profile/${id}`}>
-        <div className="relative h-10 w-10 overflow-clip rounded-full bg-secondary ring-1 ring-base-200">
+        <div
+          className={cn(
+            mode === "COMMENT" ? "w-6 h-6" : "h-10 w-10",
+            "relative overflow-clip rounded-full bg-secondary ring-1 ring-base-200",
+          )}
+        >
           {/* TODO remove true & placeholder for demo purposes */}
           <Image
             src={
@@ -32,7 +40,7 @@ export default function AvatarHeader({
         </div>
       </Link>
 
-      <div className="flex flex-col">
+      <div className={cn("flex", mode === "COMMENT" ? "items-baseline gap-2" : "flex-col")}>
         <Link href={`/profile/${id}`} className="hover:underline">
           {name}
         </Link>
