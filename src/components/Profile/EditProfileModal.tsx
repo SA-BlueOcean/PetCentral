@@ -34,6 +34,7 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
             <div>
               <input
                 type="text"
+                className="h-10 w-96"
                 value={firstName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setFirstName(e.target.value)
@@ -45,6 +46,7 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
               <input
                 type="text"
                 value={lastName}
+                className="h-10 w-96"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setLastName(e.target.value)
                 }
@@ -54,6 +56,7 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
             <div>
               <textarea
                 value={about}
+                className="h-40 w-96"
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                   setAbout(e.target.value)
                 }
@@ -64,12 +67,18 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
               <input
                 type="text"
                 value={zip}
+                className="h-10 w-96"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setZip(e.target.value)
                 }
               />
             </div>
-            <button onClick={() => onUpdateClick()}>UPDATE INFORMATION</button>
+            <button
+              className="btn mt-6 bg-primary px-3 text-white"
+              onClick={() => onUpdateClick()}
+            >
+              UPDATE INFORMATION
+            </button>
           </form>
         </div>
       </div>

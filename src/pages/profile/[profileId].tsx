@@ -30,7 +30,7 @@ export default function ProfilePage() {
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p> */}
           <Example />
-          <Feed mode="PROFILE" />
+          <Feed mode="PROFILE" profileId={profileId} />
         </div>
       </main>
     </>
