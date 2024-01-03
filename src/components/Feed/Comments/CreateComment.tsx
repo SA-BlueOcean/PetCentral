@@ -1,9 +1,11 @@
 import { useGlobalContext } from "@/providers/GlobalContext";
-import { api } from "@/utils/api";
+import { type RouterOutputs, api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Avatar from "../Avatar";
 import { cn } from "@/utils/cn";
+import { getQueryKey } from "@trpc/react-query";
+import { type InfiniteData, useQueryClient } from "@tanstack/react-query";
 
 export default function CreateComment({
   postId,
@@ -20,6 +22,9 @@ export default function CreateComment({
   );
   const mutate = api.comments.create.useMutation();
   const utils = api.useUtils();
+  type FeedQuery = RouterOutputs["feed"]["get"];
+  const queryKey = getQueryKey(api.feed.get, undefined, "infinite");
+  const queryClient = useQueryClient();
   const { setDisplayLoginModal } = useGlobalContext();
   const handleSubmit = () => {
     mutate.mutate(
@@ -37,6 +42,27 @@ export default function CreateComment({
           setComment("");
           onAddComment && onAddComment();
           void utils.comments.get.invalidate({ postId });
+          queryClient.setQueriesData<InfiniteData<FeedQuery>>(
+            queryKey,
+            (prev) => {
+              const update = prev?.pages.map((page) => ({
+                ...page,
+                posts: page.posts.map((post) => {
+                  if (post.id === postId) {
+                    return {
+                      ...post,
+                      numComments: (post.numComments + 1),
+                    };
+                  }
+                  return post;
+                }),
+              }));
+              if (prev && update) {
+                prev.pages = update;
+              }
+              return prev;
+            },
+          );
         },
       },
     );

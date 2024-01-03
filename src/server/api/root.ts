@@ -6,6 +6,10 @@ import { authRouter } from "./routers/auth";
 import { commentRouter } from "./routers/comments";
 import { friendsRouter } from "./routers/friends";
 
+import { groupRouter } from "./routers/groups";
+import { userRouter } from "./routers/users";
+import { postRouter } from "./routers/posts";
+
 /**
  * This is the primary router for your server.
  *
@@ -14,6 +18,9 @@ import { friendsRouter } from "./routers/friends";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   feed: feedRouter,
+  users: userRouter,
+  posts: postRouter,
+  groups: groupRouter,
   profile: profileRouter,
   auth: authRouter,
   comments: commentRouter,

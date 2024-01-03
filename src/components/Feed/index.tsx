@@ -4,6 +4,7 @@ import { cn } from "@/utils/cn";
 import useInfiniteScroll from "./useInfiniteScroll";
 import { useCallback, useRef, Fragment } from "react";
 import { Loader } from "lucide-react";
+import CreatePost from "./CreatePost";
 
 type FeedProps = {
   mode: "PROFILE" | "GROUP" | "ALL";
@@ -22,11 +23,10 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       enabled: !!(
         mode === "ALL" ||
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         (mode === "PROFILE" && profileId) ||
         (mode === "GROUP" && groupId)
       ),
-      keepPreviousData: true
+      keepPreviousData: true,
     },
   );
 
@@ -49,7 +49,8 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
 
   return (
     <div className="w-full">
-      <ul className="flex flex-col gap-4 w-full">
+      <CreatePost />
+      <ul className="flex w-full flex-col gap-4">
         {posts.data?.pages.map((page, i) => (
           <Fragment key={page.nextCursor}>
             {page.posts.map((p) => (
@@ -70,9 +71,11 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
             "flex items-center justify-center",
         )}
       >
-        {posts.isLoading || posts.isFetching || posts.isFetchingNextPage
-          ? <Loader className="animate-spin" />
-          : ""}
+        {posts.isLoading || posts.isFetching || posts.isFetchingNextPage ? (
+          <Loader className="animate-spin" />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
