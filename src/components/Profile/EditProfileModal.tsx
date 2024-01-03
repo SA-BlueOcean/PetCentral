@@ -20,7 +20,7 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
         <div className="modal-action">
           <form method="dialog">
             <button
-              className="btn modal-action absolute right-0 top-0 m-6"
+              className="modal-action absolute right-0 top-0 m-6"
               data-micromodal-close
             >
               &times;

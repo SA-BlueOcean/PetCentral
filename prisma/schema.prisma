@@ -50,13 +50,13 @@ model VerificationToken {
 }
 
 model Location {
-  id           String @id @default(cuid())
+  id           String  @id @default(cuid())
   latitude     Float
   longitude    Float
   locationName String?
   zipCode      String?
-  userId       String @unique
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String  @unique
+  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -84,6 +84,7 @@ model User {
   pets     Pet[]
   groups   Group[]
   comments Comment[]
+  votes    Votes[]
 }
 
 enum FriendStatus {
@@ -177,8 +178,9 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  upvotes   Int @default(0)
-  downvotes Int @default(0)
+  upvotes     Int @default(0)
+  downvotes   Int @default(0)
+  numComments Int @default(0)
 
   createdById String
   createdBy   User   @relation(fields: [createdById], references: [id])
@@ -188,6 +190,20 @@ model Post {
 
   photos   Photo[]
   comments Comment[]
+  votes    Votes[]
+}
+
+model Votes {
+  id     Int    @id @default(autoincrement())
+  userId String
+  postId Int
+  vote   Int    @default(0) @db.SmallInt
+
+  User User @relation(fields: [userId], references: [id])
+  Post Post @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
+  @@index([postId, userId])
 }
 
 model Comment {
