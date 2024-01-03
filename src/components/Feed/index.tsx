@@ -3,6 +3,7 @@ import PostCard from "./PostCard";
 import { cn } from "@/utils/cn";
 import useInfiniteScroll from "./useInfiniteScroll";
 import { useCallback, useRef, Fragment } from "react";
+import { Loader } from "lucide-react";
 
 type FeedProps = {
   mode: "PROFILE" | "GROUP" | "ALL";
@@ -55,21 +56,21 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
                 <PostCard data={p} />
               </li>
             ))}
-            <div className="text-center text-xs opacity-50">page {i}</div>
+            {/* <div className="text-center text-xs opacity-50">page {i + 1}</div> */}
           </Fragment>
         ))}
       </ul>
       <div
         ref={scrollRef}
         className={cn(
-          posts.hasNextPage ? "h-10" : "h-0",
-          "w-full bg-blue-500",
+          posts.hasNextPage ? "h-20" : "h-0",
+          "w-full",
           (posts.isLoading || posts.isFetching || posts.isFetchingNextPage) &&
-            "animate-pulse",
+            "flex items-center justify-center",
         )}
       >
         {posts.isLoading || posts.isFetching || posts.isFetchingNextPage
-          ? "loading next page"
+          ? <Loader className="animate-spin" />
           : ""}
       </div>
     </div>
