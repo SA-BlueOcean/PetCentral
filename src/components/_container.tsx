@@ -2,7 +2,7 @@ import SideNav from "@/components/Nav/SideNav";
 import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
@@ -19,7 +19,6 @@ type Provider = {
 
 const Container = ({ Component, pageProps }: AppProps) => {
   const { displayLoginModal, setDisplayLoginModal } = useGlobalContext();
-  const { data: sessionData } = useSession();
   const [providers, setProviders] = useState<Record<string, Provider>>();
 
   //disables scroll if modal is open
@@ -116,23 +115,6 @@ const Container = ({ Component, pageProps }: AppProps) => {
               <div>component c</div>
             </div>
           </div>
-          {/* TODO: remove this button, for demo only */}
-          {!sessionData && (
-            <button
-              className="btn btn-ghost fixed bottom-0 right-0"
-              onClick={() => setDisplayLoginModal(true)}
-            >
-              LOGIN
-            </button>
-          )}{" "}
-          {sessionData && (
-            <button
-              className="btn btn-ghost fixed bottom-0 right-0"
-              onClick={() => signOut()}
-            >
-              LOGOUT
-            </button>
-          )}
         </div>
         <div className="drawer-side z-20">
           <label
