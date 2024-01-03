@@ -6,6 +6,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
+import Chat from "./Chat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -125,14 +126,17 @@ const Container = ({ Component, pageProps }: AppProps) => {
               LOGIN
             </button>
           )}{" "}
-          {sessionData && (
+          {/* {sessionData && (
             <button
               className="btn btn-ghost fixed bottom-0 right-0"
               onClick={() => signOut()}
             >
               LOGOUT
             </button>
-          )}
+          )} */}
+          <div className="fixed bottom-0 right-0">
+            <Chat />
+          </div>
         </div>
         <div className="drawer-side z-20">
           <label
