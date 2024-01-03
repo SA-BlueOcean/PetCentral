@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useGlobalContext } from "@/providers/GlobalContext";
 import { api, type RouterOutputs } from "@/utils/api";
 import { cn } from "@/utils/cn";
