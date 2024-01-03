@@ -1,3 +1,5 @@
+import { SearchIcon } from "lucide-react";
+
 export default function Search() {
   return (
     <div>
@@ -7,7 +9,7 @@ export default function Search() {
             Search
           </label>
           <div className="join">
-            <div className="join-item btn rounded-l-full">s</div>
+            <div className="join-item btn rounded-l-full"><SearchIcon size={20} /></div>
           <input
             id="search"
             type="text"
