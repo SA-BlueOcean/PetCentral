@@ -1,7 +1,22 @@
 import { api } from "@/utils/api";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 
 export default function Onboarding() {
+  const router = useRouter();
+  const { data: sessionData, status} = useSession();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      if (status === 'unauthenticated') {
+        await router.push('/').catch(console.error);
+       }
+    }
+    checkSession().catch(console.error);
+  }, [sessionData]);
+
   const mutation = api.auth.editUser.useMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +73,9 @@ export default function Onboarding() {
             className="input input-bordered w-full max-w-xs"
           />
         </label>
-        <button className="btn btn-primary mt-2" type="submit">SUBMIT</button>
+        <button className="btn btn-primary mt-2" type="submit">
+          SUBMIT
+        </button>
       </form>
     </>
   );
