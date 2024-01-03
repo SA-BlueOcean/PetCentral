@@ -100,7 +100,7 @@ export const feedRouter = createTRPCRouter({
                 ? {
                     increment: 1,
                   }
-                : prev?.vote === 1
+                : prev?.vote === 1 && input.vote !== 1
                   ? {
                       decrement: 1,
                     }
@@ -110,7 +110,7 @@ export const feedRouter = createTRPCRouter({
                 ? {
                     increment: 1,
                   }
-                : prev?.vote === -1
+                : prev?.vote === -1 && input.vote !== -1
                   ? {
                       decrement: 1,
                     }
