@@ -25,6 +25,43 @@ export const petsRouter = createTRPCRouter({
         breeds: breeds,
       };
     }),
+  getPet: publicProcedure
+    .input(z.object({ petId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const pet = await ctx.db.pet.findUnique({
+        where: {
+          id: input?.petId,
+        },
+        include: {
+          breed: true,
+        },
+      });
+      return pet;
+    }),
+  addPet: protectedProcedure
+    .input(
+      z.object({
+        breedId: z.number(),
+        firstName: z.string(),
+        lastName: z.string().optional(),
+        photoUrl: z.string(),
+        dateOfBirth: z.date(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      console.log("something", input);
+      const pet = await ctx.db.pet.create({
+        data: {
+          breedId: input.breedId,
+          firstName: input.firstName,
+          lastName: input.lastName,
+          photoUrl: input.photoUrl,
+          dateOfBirth: input.dateOfBirth,
+          ownerId: ctx.session.user.id,
+        },
+      });
+      return pet;
+    }),
   // input animal id find many with animal id
 
   // create: protectedProcedure
