@@ -42,7 +42,7 @@ export default function EditProfilePhotoModal({
           <div>
             <div className="pt-4">
               <label> Profile Photo URL: </label>
-              <UploadFiles profileId={profileId} update={updateProfile} />
+              <UploadFiles update={updateProfile} />
             </div>
           </div>
         </div>

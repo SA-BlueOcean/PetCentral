@@ -6,19 +6,6 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
 
   const utils = api.useUtils();
 
-  // const updateProfile = (url: string) => {
-  //   mutation.mutate(
-  //     { profilePhotoUrl: url },
-  //     {
-  //       onSuccess() {
-  //         utils.profile.get
-  //           .invalidate({ profileId })
-  //           .catch((err) => console.log(err));
-  //       },
-  //     },
-  //   );
-  // };
-
   const updateBanner = (url: string) => {
     mutation.mutate(
       { bannerPhotoUrl: url },
@@ -50,13 +37,9 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
         </h3>
         <div className="flex justify-center pl-3">
           <div>
-            {/* <div className="pt-4">
-              <label> Profile Photo URL: </label>
-              <UploadFiles profileId={profileId} update={updateProfile} />
-            </div> */}
             <div className="pt-4">
               <label> Banner Photo URL: </label>
-              <UploadFiles profileId={profileId} update={updateBanner} />
+              <UploadFiles update={updateBanner} />
             </div>
           </div>
         </div>
