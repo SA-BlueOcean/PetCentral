@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Link from "next/link";
 import { Check, X, PawPrint } from "lucide-react";
 import Image from "next/image";
 import { api } from "@/utils/api";
@@ -17,11 +15,11 @@ export default function FindFriendsPage() {
     console.log(current, dir);
   };
 
-  const handleDistance = (e) => {
-    setDistance(e.target.value);
+  const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDistance(Number(e.target.value));
   };
 
-  const errorHandle = (err) => {
+  const errorHandle = (err: unknown) => {
     console.log("error", err);
   };
   const users = api.friends.findFriends.useQuery(
@@ -141,7 +139,15 @@ export default function FindFriendsPage() {
   );
 }
 
-const ProfileCard = ({ user, fly, index }) => {
+const ProfileCard = ({
+  user,
+  fly,
+  index,
+}: {
+  user: string;
+  fly: string;
+  index: number;
+}) => {
   return (
     <div
       className={`card absolute left-0 top-0 h-[464px] w-[400px]
