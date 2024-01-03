@@ -49,4 +49,27 @@ export const commentRouter = createTRPCRouter({
         nextCursor,
       };
     }),
+  create: protectedProcedure
+    .input(z.object({ postId: z.number(), content: z.string().min(1) }))
+    .mutation(async ({ input, ctx }) => {
+      await ctx.db.$transaction([
+        ctx.db.comment.create({
+          data: {
+            createdById: ctx.session.user.id,
+            postId: input.postId,
+            content: input.content,
+          },
+        }),
+        ctx.db.post.update({
+          where: {
+            id: input.postId,
+          },
+          data: {
+            numComments: {
+              increment: 1,
+            },
+          },
+        }),
+      ]);
+    }),
 });

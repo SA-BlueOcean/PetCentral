@@ -46,6 +46,7 @@ type PostCardProps = {
 
 export default function PostCard({ data }: PostCardProps) {
   const [displayComments, setDisplayComments] = useState(false);
+  const [numComments, setNumComments] = useState(data.numComments ?? 0);
   return (
     <div className="ring-base-500 rounded-lg bg-base-100 ring-1">
       <div className="p-3">
@@ -99,12 +100,16 @@ export default function PostCard({ data }: PostCardProps) {
           onClick={() => setDisplayComments((d) => !d)}
         >
           <MessageSquareText />
-          <span>{data.numComments ?? 0}</span>
+          <span>{numComments}</span>
         </button>
       </div>
       {displayComments && (
-        <div className="border-base-500 border-t p-3 max-h-[50vh] overflow-y-auto">
-          <Comments postId={data.id} initialCount={data.numComments} />
+        <div className="border-base-500 max-h-[50vh] overflow-y-auto border-t p-3">
+          <Comments
+            postId={data.id}
+            initialCount={data.numComments}
+            onAddComment={() => setNumComments((c) => c + 1)}
+          />
         </div>
       )}
     </div>

@@ -2,13 +2,16 @@ import { api } from "@/utils/api";
 import { Fragment } from "react";
 import Comment from "./Comment";
 import PlaceholderComment from "./PlaceholderComment";
+import CreateComment from "./CreateComment";
 
 export default function Comments({
   postId,
   initialCount = 0,
+  onAddComment
 }: {
   postId: number;
   initialCount?: number;
+  onAddComment?: () => void;
 }) {
   const comments = api.comments.get.useInfiniteQuery(
     {
@@ -21,8 +24,9 @@ export default function Comments({
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <ul className="flex flex-col gap-4 w-full">
-        {(comments.isInitialLoading) ? (
+      <ul className="flex w-full flex-col gap-4">
+        <CreateComment postId={postId} onAddComment={onAddComment} />
+        {comments.isInitialLoading ? (
           <>
             {new Array(Math.min(5, initialCount)).fill(0).map((_, i) => (
               <PlaceholderComment key={i} />
