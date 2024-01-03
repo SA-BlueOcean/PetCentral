@@ -4,14 +4,14 @@ import Avatar from "@/components/Feed/Avatar";
 import { PenSquare } from "lucide-react";
 import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(
     { profileId },
     { enabled: !!profileId },
   );
-  const router = useRouter();
+  // const router = useRouter();
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
 
