@@ -14,7 +14,8 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
 
-  session.data?.user?.id === user.data?.id;
+  const profilePhotoUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.profilePhotoUrl}`;
+  const bannerPhotoUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.bannerPhotoUrl}`;
 
   return (
     <>
@@ -33,7 +34,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               size={25}
               strokeWidth={1}
               absoluteStrokeWidth
-              className="absolute right-4 z-10 mt-1 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+              className="absolute right-4 z-10 mt-3 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
             />
           </button>
         ) : (
@@ -41,8 +42,9 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         )}
         <Image
           src={
-            user.data?.bannerPhotoUrl ??
-            "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
+            user.data?.bannerPhotoUrl
+              ? bannerPhotoUrl
+              : "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
           }
           alt="Background"
           width={700}
@@ -50,13 +52,19 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           className="h-auto max-h-[200px] max-w-full object-cover"
           unoptimized={true}
         ></Image>
-
         <div className="avatar mt-[-5rem]">
+          {/* <Camera
+            size={25}
+            strokeWidth={1}
+            absoluteStrokeWidth
+            className="absolute right-4 z-10 mr-0 mt-2 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+          /> */}
           <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
             <Image
               src={
-                user.data?.profilePhotoUrl ??
-                "https://clipart-library.com/images/BiaEg4n8T.jpg"
+                user.data?.profilePhotoUrl
+                  ? profilePhotoUrl
+                  : "https://clipart-library.com/images/BiaEg4n8T.jpg"
               }
               alt="profile picture"
               unoptimized={true}
