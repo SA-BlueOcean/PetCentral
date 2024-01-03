@@ -28,7 +28,7 @@ export const groupRouter = createTRPCRouter({
     };
   }),
 
-  fetchGroups: publicProcedure.query(async ({ ctx }) => {
+  fetchGroups: protectedProcedure.query(async ({ ctx }) => {
     console.log(ctx)
     const router = useRouter();
     const userId = ctx.session?.user?.id;
@@ -36,7 +36,7 @@ export const groupRouter = createTRPCRouter({
 
     if (!userId) {
       console.log('no user id')
-      void router.replace("/auth/signin")
+      void router.replace("/auth/onboarding")
       return {
         groups: [],
       };
