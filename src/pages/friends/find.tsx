@@ -58,11 +58,6 @@ export default function FindFriendsPage() {
           <p className="mt-48 text-center text-base-500">
             Change filter to find more friends
           </p>
-          {/* <ProfileCard index={2} fly={animate[4]} user={"Mallory Burke"} />
-          <ProfileCard index={2} fly={animate[3]} user={"Joe Doe"} />
-          <ProfileCard index={2} fly={animate[2]} user={"Burhan Syed"} />
-          <ProfileCard index={1} fly={animate[1]} user={"Clay Gibson"} />
-          <ProfileCard index={0} fly={animate[0]} user={"Thomas Harbert"} /> */}
 
           {users.data?.map((user, index) => {
             return (
