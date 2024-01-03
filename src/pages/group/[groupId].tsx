@@ -7,10 +7,10 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
 export default function GroupPage() {
-  
+
   const hello = api.example.hello.useQuery({ text: "example hi" });
 
-  const router = useRouter(); 
+  const router = useRouter();
 
   const groupId = router.query.groupId;
 
