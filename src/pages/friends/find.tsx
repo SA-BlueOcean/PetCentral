@@ -9,8 +9,10 @@ export default function FindFriendsPage() {
   const [animate, setAnimate] = useState(["false", "false", "false"]);
 
   const handleNext = (dir: string) => {
+    const newAnimate = [...animate];
+    newAnimate[current] = dir;
+    setAnimate(newAnimate);
     setCurrent((current) => current + 1);
-    console.log(current, dir);
   };
 
   const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +46,9 @@ export default function FindFriendsPage() {
           <p className="mt-48 text-center text-base-500">
             Change filter to find more friends
           </p>
-          <ProfileCard index={2} fly={"false"} user={"Burhan Syed"} />
-          <ProfileCard index={1} fly={"false"} user={"Clay Gibson"} />
-          <ProfileCard index={0} fly={"false"} user={"Thomas Harbert"} />
+          <ProfileCard index={2} fly={animate[2]} user={"Burhan Syed"} />
+          <ProfileCard index={1} fly={animate[1]} user={"Clay Gibson"} />
+          <ProfileCard index={0} fly={animate[0]} user={"Thomas Harbert"} />
         </div>
 
         <button className="btn btn-circle btn-success h-16 w-16">
@@ -143,7 +145,7 @@ const ProfileCard = ({
   index,
 }: {
   user: string;
-  fly: string;
+  fly: string | undefined;
   index: number;
 }) => {
   return (
