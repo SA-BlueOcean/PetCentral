@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { Check } from "lucide-react";
 
 import { api } from "@/utils/api";
 import { Example } from "@/components/Example";
@@ -13,7 +14,9 @@ export default function FindFriendsPage() {
       <section className="flex w-full justify-between ">
         <button className="btn btn-circle btn-success">X</button>
         <div>IMG</div>
-        <button className="btn btn-circle btn-error">\/</button>
+        <button className="btn btn-circle btn-error">
+          <Check />
+        </button>
       </section>
       <section>
         <h2 className="text-center">Filter Friends</h2>
