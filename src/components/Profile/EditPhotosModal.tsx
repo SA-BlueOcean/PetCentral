@@ -3,19 +3,17 @@ import { api } from "@/utils/api";
 import UploadFiles from "@/components/Profile/UploadFile";
 
 export default function EditPhotosModal({ profileId }: { profileId: string }) {
-  // const [profilePhotoUrl, setProfilePhotoUrl] = useState("");
-  // const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
-
   // setup mutations for updating photos at Profile ID
   const mutation = api.profile.updatePhotos.useMutation();
-  // const onUpdateClick = () => {
-  //   mutation.mutate({ profilePhotoUrl, coverPhotoUrl });
-  // };
   const updateProfile = (url: string) => {
     mutation.mutate({ profilePhotoUrl: url });
   };
   const updateBanner = (url: string) => {
-    mutation.mutate({ coverPhotoUrl: url });
+    mutation.mutate(
+      { bannerPhotoUrl: url },
+
+      // { onSuccess: () => window.location.reload() },
+    );
   };
 
   const profile = "profile";
@@ -54,44 +52,6 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
               />
             </div>
           </div>
-
-          {/* </div> */}
-          {/* <div>
-            <label> Banner Photo URL: </label>
-            <UploadFiles />
-          </div> */}
-          {/* show the files as they're uploaded */}
-
-          {/* <form>
-            <label> Profile Photo URL: </label>
-            <div>
-              <input
-                type="text"
-                value={profilePhotoUrl}
-                className="h-10 w-96"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setProfilePhotoUrl(e.target.value)
-                }
-              />
-            </div>
-            <label> Banner Photo URL: </label>
-            <div>
-              <input
-                type="text"
-                value={coverPhotoUrl}
-                className="h-10 w-96"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCoverPhotoUrl(e.target.value)
-                }
-              />
-            </div>
-            <button
-              className="btn mt-6 bg-primary px-3 text-white"
-              onClick={() => onUpdateClick()}
-            >
-              Update Photos
-            </button>
-          </form> */}
         </div>
       </div>
     </dialog>

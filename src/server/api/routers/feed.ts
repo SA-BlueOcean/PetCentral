@@ -28,7 +28,13 @@ export const feedRouter = createTRPCRouter({
           createdBy: true,
           group: true,
           photos: true,
-          comments: true,
+          votes: ctx.session?.user.id
+            ? {
+                where: {
+                  userId: ctx.session?.user.id,
+                },
+              }
+            : undefined,
         },
         orderBy: {
           createdAt: "desc",
@@ -47,5 +53,11 @@ export const feedRouter = createTRPCRouter({
         posts: feed,
         nextCursor,
       };
+    }),
+  vote: protectedProcedure
+    .input(z.object({ postId: z.number(), vote: z.number().gte(-1).lte(1) }))
+    .mutation(async ({ input, ctx }) => {
+        throw new Error("missing implementation");
+        // TODO
     }),
 });

@@ -14,14 +14,8 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
 
-  console.log(
-    "banner: ",
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.bannerPhotoUrl}`,
-  );
-  console.log(
-    "profile: ",
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.profilePhotoUrl}`,
-  );
+  const profilePhotoUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.profilePhotoUrl}`;
+  const bannerPhotoUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.bannerPhotoUrl}`;
 
   return (
     <>
@@ -48,13 +42,10 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         )}
         <Image
           src={
-            `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.bannerPhotoUrl}` ??
-            "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
+            user.data?.bannerPhotoUrl
+              ? bannerPhotoUrl
+              : "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
           }
-          // src={
-          //   user.data?.bannerPhotoUrl ??
-          //   "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
-          // }
           alt="Background"
           width={700}
           height={200}
@@ -66,12 +57,9 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
             <Image
               src={
-                `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.profilePhotoUrl}` ??
-                "https://clipart-library.com/images/BiaEg4n8T.jpg"
-              }
-              src={
-                user.data?.profilePhotoUrl ??
-                "https://clipart-library.com/images/BiaEg4n8T.jpg"
+                user.data?.profilePhotoUrl
+                  ? profilePhotoUrl
+                  : "https://clipart-library.com/images/BiaEg4n8T.jpg"
               }
               alt="profile picture"
               unoptimized={true}
