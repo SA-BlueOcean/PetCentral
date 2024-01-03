@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import { api } from "@/utils/api";
-import Image from "next/image";
+import Avatar from "./Avatar";
 
 export default function CreatePost() {
   const [post, setPost] = useState({
@@ -16,7 +16,7 @@ export default function CreatePost() {
 
   // Fetch User's Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
-
+  const utils = api.useUtils();
   const handleSubmit = async (
     e: { preventDefault: () => void } | undefined,
   ) => {
@@ -32,43 +32,25 @@ export default function CreatePost() {
           content: "",
           groupId: "",
         });
-      },
+        void utils.feed.get.invalidate();
+      }, 
     });
   };
 
   return (
-    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-500">
+    <form className="ring-base-500 my-3 rounded-lg bg-base-100 ring-1">
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
-            <div className="relative h-10 w-10 overflow-clip rounded-full ">
-              <div className="avatar">
-                <div className="h-10 w-10 rounded-full">
-                  {query?.data?.user?.profilePhotoUrl ? (
-                    <>
-                      <Image
-                        src={query?.data?.user?.profilePhotoUrl}
-                        alt="user avatar"
-                        unoptimized={true}
-                        fill={true}
-                      />
-                    </>
-                  ) : (
-                    <Image
-                      src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                      alt="user avatar"
-                      unoptimized={true}
-                      fill={true}
-                    />
-                  )}
-                </div>
-              </div>
+            <div className="relative h-10 w-10 flex-none overflow-clip rounded-full ">
+              <Avatar profilePhotoUrl={query?.data?.user?.profilePhotoUrl} />
             </div>
             <div className="w-full">
               <input
                 type="text"
                 placeholder="Write a new post..."
                 className="input input-ghost w-full pl-1"
+                value={post.content}
                 onChange={(e) => {
                   setPost({
                     ...post,
@@ -82,6 +64,7 @@ export default function CreatePost() {
         <div className="flex items-center justify-between p-1">
           <select
             className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
+            value={post.groupId ?? undefined}
             onChange={(e) => {
               console.log(post);
               setPost({
