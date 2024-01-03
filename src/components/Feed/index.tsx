@@ -4,7 +4,6 @@ import { cn } from "@/utils/cn";
 import useInfiniteScroll from "./useInfiniteScroll";
 import { useCallback, useRef, Fragment } from "react";
 import { Loader } from "lucide-react";
-
 type FeedProps = {
   mode: "PROFILE" | "GROUP" | "ALL";
   profileId?: string;
@@ -70,9 +69,11 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
             "flex items-center justify-center",
         )}
       >
-        {posts.isLoading || posts.isFetching || posts.isFetchingNextPage
-          ? <Loader className="animate-spin" />
-          : ""}
+        {posts.isLoading || posts.isFetching || posts.isFetchingNextPage ? (
+          <Loader className="animate-spin" />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

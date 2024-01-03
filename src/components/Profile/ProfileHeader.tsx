@@ -1,5 +1,6 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
+import Avatar from "@/components/Feed/Avatar";
 import { PenSquare } from "lucide-react";
 import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -13,8 +14,6 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   const router = useRouter();
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
-
-  session.data?.user?.id === user.data?.id;
 
   return (
     <>
@@ -33,7 +32,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               size={25}
               strokeWidth={1}
               absoluteStrokeWidth
-              className="absolute right-4 z-10 mt-1 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+              className="absolute right-4 z-10 mt-3 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
             />
           </button>
         ) : (
@@ -41,8 +40,9 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         )}
         <Image
           src={
-            user.data?.bannerPhotoUrl ??
-            "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
+            user.data?.bannerPhotoUrl
+              ? user.data?.bannerPhotoUrl
+              : "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
           }
           alt="Background"
           width={700}
@@ -50,18 +50,44 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           className="h-auto max-h-[200px] max-w-full object-cover"
           unoptimized={true}
         ></Image>
-
         <div className="avatar mt-[-5rem]">
-          <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
-            <Image
-              src={
-                user.data?.profilePhotoUrl ??
-                "https://clipart-library.com/images/BiaEg4n8T.jpg"
+          {session.data?.user?.id === user.data?.id ? (
+            <button
+              onClick={() =>
+                (
+                  document.getElementById(
+                    "my_modal_5",
+                  ) as HTMLDialogElement | null
+                )?.showModal?.()
               }
-              alt="profile picture"
-              unoptimized={true}
-              fill={true}
-            />
+            >
+              <Camera
+                size={25}
+                strokeWidth={1}
+                absoluteStrokeWidth
+                className="absolute right-4 z-10 mr-[-.5rem] mt-[-4.5rem] rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+              />
+            </button>
+          ) : (
+            ""
+          )}
+          {/* <Camera
+            size={25}
+            strokeWidth={1}
+            absoluteStrokeWidth
+            className="absolute right-4 z-10 mr-0 mt-2 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+          /> */}
+          <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
+            {user.data?.profilePhotoUrl ? (
+              <Image
+                src={user.data?.profilePhotoUrl}
+                alt="profile picture"
+                unoptimized={true}
+                fill={true}
+              />
+            ) : (
+              <Avatar />
+            )}
           </div>
         </div>
         <div>

@@ -44,6 +44,7 @@ export const profileRouter = createTRPCRouter({
               status: "ACCEPTED",
             },
           },
+          location: true,
           pets: true,
         },
       });
@@ -61,7 +62,7 @@ export const profileRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       // new stuff
       if (input.firstName !== "") {
-        return await ctx.db.user.update({
+        await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
             firstName: input.firstName,
@@ -69,7 +70,7 @@ export const profileRouter = createTRPCRouter({
         });
       }
       if (input.lastName !== "") {
-        return await ctx.db.user.update({
+        await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
             lastName: input.lastName,
@@ -77,36 +78,25 @@ export const profileRouter = createTRPCRouter({
         });
       }
       if (input.about !== "") {
-        return await ctx.db.user.update({
+        await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
             bio: input.about,
           },
         });
       }
-
-      // return await ctx.db.user.update({
-      //   where: { id: ctx.session?.user.id },
-      //   data: {
-      //     firstName: input.firstName,
-      //     lastName: input.lastName,
-      //     bio: input.about,
-      //     // right now there is no zip
-      //     // zip: input.zip,
-      //   },
-      // });
     }),
   // at the moment the mutation is working updating both, one to empty if both fields are not filled in
   updatePhotos: protectedProcedure
     .input(
       z.object({
         profilePhotoUrl: z.string().optional(),
-        coverPhotoUrl: z.string().optional(),
+        bannerPhotoUrl: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
       // new stuff
-      if (input.profilePhotoUrl !== "") {
+      if (input.profilePhotoUrl !== undefined) {
         return await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
@@ -114,20 +104,13 @@ export const profileRouter = createTRPCRouter({
           },
         });
       }
-      if (input.coverPhotoUrl !== "") {
+      if (input.bannerPhotoUrl !== undefined) {
         return await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
-            bannerPhotoUrl: input.coverPhotoUrl,
+            bannerPhotoUrl: input.bannerPhotoUrl,
           },
         });
       }
-      //   return await ctx.db.user.update({
-      //     where: { id: ctx.session?.user.id },
-      //     data: {
-      //       profilePhotoUrl: input.profilePhotoUrl,
-      //       bannerPhotoUrl: input.coverPhotoUrl,
-      //     },
-      //   });
     }),
 });
