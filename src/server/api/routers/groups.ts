@@ -4,7 +4,6 @@ import {
   publicProcedure,
   protectedProcedure,
 } from "@/server/api/trpc";
-import { useRouter } from "next/router";
 
 
 // create tRPC router
@@ -28,17 +27,8 @@ export const groupRouter = createTRPCRouter({
     };
   }),
 
-  fetchGroups: protectedProcedure.query(async ({ ctx }) => {
-    const router = useRouter();
+  fetchGroups: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.session?.user?.id;
-
-    if (!userId) {
-      console.log('no user id')
-      void router.replace("/auth/onboarding")
-      return {
-        groups: [],
-      };
-    }
 
     const groups = await ctx.db.user.findUnique({
       where: {
