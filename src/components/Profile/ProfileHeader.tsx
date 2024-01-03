@@ -14,6 +14,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   // const router = useRouter();
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
+  console.log(user.data?.location?.locationName);
 
   return (
     <>
@@ -119,8 +120,11 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               )}
             </p>
             <div>
-              <span className="px-4"> Petstown, USA </span>|
-              <span className="px-4"> {user.data?.pets.length} Pets </span>|
+              <span className="px-4">
+                {" "}
+                {user.data?.location?.locationName}{" "}
+              </span>
+              |<span className="px-4"> {user.data?.pets.length} Pets </span>|
               <span className="px-4"> {friendsList?.length} Pals </span>
             </div>
           </div>
