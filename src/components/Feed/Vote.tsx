@@ -41,10 +41,8 @@ export default function Votes({
   const voteMutation = api.feed.vote.useMutation({
     // updates the post vote data on voting
     onSuccess: async (data) => {
-      console.log("QK?", queryKey);
       if (!queryKey) return;
       queryClient.setQueriesData<InfiniteData<FeedQuery>>(queryKey, (prev) => {
-        console.log("PREV?", prev);
         const update = prev?.pages.map((page) => ({
           ...page,
           posts: page.posts.map((post) => {
