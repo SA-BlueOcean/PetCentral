@@ -51,7 +51,8 @@ export default function CreateComment({
                   if (post.id === postId) {
                     return {
                       ...post,
-                      numComments: (post.numComments + 1) as number,
+                      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                      numComments: (post.numComments + 1),
                     };
                   }
                   return post;
