@@ -44,6 +44,7 @@ export const profileRouter = createTRPCRouter({
               status: "ACCEPTED",
             },
           },
+          location: true,
           pets: true,
         },
       });
@@ -115,6 +116,7 @@ export const profileRouter = createTRPCRouter({
         });
       }
       if (input.coverPhotoUrl !== "") {
+        console.log("INPUTTTTTTTT:  ", input.coverPhotoUrl);
         return await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {

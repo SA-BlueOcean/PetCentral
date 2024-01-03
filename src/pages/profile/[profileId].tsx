@@ -29,7 +29,7 @@ export default function ProfilePage() {
           {/* <p className="text-2xl ">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p> */}
-          <Example />
+          {/* <Example /> */}
           <Feed mode="PROFILE" profileId={profileId} />
         </div>
       </main>
