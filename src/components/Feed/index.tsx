@@ -23,7 +23,6 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       enabled: !!(
         mode === "ALL" ||
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         (mode === "PROFILE" && profileId) ||
         (mode === "GROUP" && groupId)
       ),
