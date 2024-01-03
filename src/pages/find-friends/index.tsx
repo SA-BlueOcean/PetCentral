@@ -7,7 +7,13 @@ import { useState } from "react";
 
 export default function FindFriendsPage() {
   const [distance, setDistance] = useState(25);
-  // const hello = api.example.hello.useQuery({ text: "example hi" });
+  const [current, setCurrent] = useState(0);
+  const [animate, setAnimate] = useState(["false", "false", "false"]);
+
+  const handleNext = (dir: string) => {
+    setCurrent((current) => current + 1);
+    console.log(current, dir);
+  };
 
   const handleDistance = (e) => {
     setDistance(e.target.value);
@@ -28,12 +34,30 @@ export default function FindFriendsPage() {
       <h1 className="text-center text-lg font-semibold">Find Some Friends</h1>
       <h2 className="text-center">12 Possible new friends</h2>
       <section className="flex w-full items-center justify-between ">
-        <button className="btn btn-circle btn-success h-16 w-16 ">
+        <button
+          onClick={() => {
+            handleNext("left");
+          }}
+          className="btn btn-circle btn-error h-16 w-16 "
+        >
           <X className="h-16 w-16 text-base-100" />
         </button>
-        <ProfileCard />
-        <button className="btn btn-circle btn-error h-16 w-16">
-          <Check className="h-16 w-16 text-base-100" />
+        <div className="relative h-[464px] w-[400px]">
+          <p className="mt-48 text-center text-base-500">
+            Change filter to find more friends
+          </p>
+          <ProfileCard index={2} fly={"left"} user={"Burhan Syed"} />
+          <ProfileCard index={1} fly={"right"} user={"Clay Gibson"} />
+          <ProfileCard index={0} fly={"left"} user={"Thomas Harbert"} />
+        </div>
+
+        <button className="btn btn-circle btn-success h-16 w-16">
+          <Check
+            onClick={() => {
+              handleNext("right");
+            }}
+            className="h-16 w-16 text-base-100"
+          />
         </button>
       </section>
       <section className="w-full p-8">
@@ -74,39 +98,39 @@ export default function FindFriendsPage() {
               Fish
             </label>
           </li>
+
           <li className="flex gap-1">
-            <input type="checkbox" name="Fish" id="Fish" className="checkbox" />
-            <label htmlFor="Fish" className="font-semibold">
-              Fish
+            <input
+              type="checkbox"
+              name="Rabbit"
+              id="Rabbit"
+              className="checkbox"
+            />
+            <label htmlFor="Rabbit" className="font-semibold">
+              Rabbit
             </label>
           </li>
           <li className="flex gap-1">
             <input
               type="checkbox"
-              name="Shark"
-              id="Shark"
+              name="Other"
+              id="Other"
               className="checkbox"
             />
-            <label htmlFor="Shark" className="font-semibold">
-              Shark
-            </label>
-          </li>
-          <li className="flex gap-1">
-            <input type="checkbox" name="dog" id="dog" className="checkbox" />
-            <label htmlFor="dog" className="font-semibold">
-              Dog
+            <label htmlFor="Other" className="font-semibold">
+              Other
             </label>
           </li>
 
           <li className="flex gap-1">
             <input
               type="checkbox"
-              name="Horse"
-              id="Horse"
+              name="Hamster"
+              id="Hamster"
               className="checkbox"
             />
-            <label htmlFor="Horse" className="font-semibold">
-              Horse
+            <label htmlFor="Hamster" className="font-semibold">
+              Hamster
             </label>
           </li>
         </ul>
@@ -115,9 +139,14 @@ export default function FindFriendsPage() {
   );
 }
 
-const ProfileCard = () => {
+const ProfileCard = ({ user, fly, index }) => {
   return (
-    <div className="card h-[464px] w-[400px] overflow-hidden bg-base-500">
+    <div
+      className={`card absolute left-0 top-0 h-[464px] w-[400px]
+      ${fly === "left" ? "animate-flyL" : null} ${
+        fly === "right" ? "animate-flyR" : null
+      } overflow-hidden bg-base-500`}
+    >
       <Image
         className="card-body"
         src="/afd"
@@ -126,7 +155,7 @@ const ProfileCard = () => {
         alt="profile picture"
       />
       <div className="card-title flex h-16 justify-between bg-base-100 p-3">
-        <h2 className="ml-3">John Doe</h2>
+        <h2 className="ml-3">{user}</h2>
         <div className="mr-3 flex gap-2">
           <PawPrint />
           <p className="font-normal">2</p>

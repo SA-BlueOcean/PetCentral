@@ -30,6 +30,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+
       colors: {
         "base-400": "#A9B4C2",
         "base-500": "#82919E",
@@ -37,7 +38,27 @@ export default {
         "base-700": "#404452",
         "base-800": "#282B33",
         "base-900": "#10141A",
-      }
+      },
+      keyframes: {
+        flyR: {
+          "0%": { transform: "translate(0%, 0%)", opacity: "1" },
+          "25%": { transform: "translate(20%, -20%)" },
+          "50%": { transform: "translate(50%, -35%)", opacity: "0.95" },
+          "75%": { transform: "translate(75%, -45%)" },
+          "100%": { transform: "translate(120%, -50%)", opacity: "0" },
+        },
+        flyL: {
+          "0%": { transform: "translate(0%, 0%)", opacity: "1" },
+          "25%": { transform: "translate(-20%, -20%)" },
+          "50%": { transform: "translate(-50%, -35%)", opacity: "0.95" },
+          "75%": { transform: "translate(-75%, -45%)" },
+          "100%": { transform: "translate(-120%, -50%)", opacity: "0" },
+        },
+      },
+      animation: {
+        flyR: "flyR 300ms ease-in forwards",
+        flyL: "flyL 300ms ease-in forwards",
+      },
     },
   },
   plugins: [require("daisyui")],
