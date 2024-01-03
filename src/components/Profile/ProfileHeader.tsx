@@ -34,7 +34,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               size={25}
               strokeWidth={1}
               absoluteStrokeWidth
-              className="absolute right-4 z-10 mt-1 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+              className="absolute right-4 z-10 mt-3 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
             />
           </button>
         ) : (
@@ -52,8 +52,13 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           className="h-auto max-h-[200px] max-w-full object-cover"
           unoptimized={true}
         ></Image>
-
         <div className="avatar mt-[-5rem]">
+          {/* <Camera
+            size={25}
+            strokeWidth={1}
+            absoluteStrokeWidth
+            className="absolute right-4 z-10 mr-0 mt-2 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+          /> */}
           <div className="relative w-20 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:w-40">
             <Image
               src={

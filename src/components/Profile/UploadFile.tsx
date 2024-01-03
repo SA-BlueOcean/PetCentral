@@ -4,11 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function PhotoInput({
   profileId,
-  tag,
   update,
 }: {
   profileId: string;
-  tag: string;
   update: (url: string) => void;
 }) {
   const [file, setFile] = useState<File | null>(null);
@@ -17,7 +15,7 @@ export default function PhotoInput({
     if (!file) {
       return; // handle the case when file is null
     }
-    const filename = `${profileId}-${uuidv4()}-${tag}`;
+    const filename = `${profileId}-${uuidv4()}`;
     const { data, error } = await supabase.storage
       .from("images")
       .upload(filename, file, {
@@ -39,7 +37,12 @@ export default function PhotoInput({
         onChange={handleFileSelected}
         className="file-input-neutral file-input file-input-bordered file-input-sm w-full max-w-xs hover:file-input-secondary"
       />
-      <button onClick={handleSubmit}>Submit Photo</button>
+      <button
+        className="btn mt-1 bg-primary px-1 text-white"
+        onClick={handleSubmit}
+      >
+        Submit Photo
+      </button>
     </div>
   );
 }

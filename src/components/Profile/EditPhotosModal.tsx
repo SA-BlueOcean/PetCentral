@@ -1,23 +1,36 @@
-import { useState } from "react";
 import { api } from "@/utils/api";
 import UploadFiles from "@/components/Profile/UploadFile";
 
 export default function EditPhotosModal({ profileId }: { profileId: string }) {
-  // setup mutations for updating photos at Profile ID
   const mutation = api.profile.updatePhotos.useMutation();
-  const updateProfile = (url: string) => {
-    mutation.mutate({ profilePhotoUrl: url });
-  };
-  const updateBanner = (url: string) => {
-    mutation.mutate(
-      { bannerPhotoUrl: url },
 
-      // { onSuccess: () => window.location.reload() },
+  const utils = api.useUtils();
+
+  const updateProfile = (url: string) => {
+    mutation.mutate(
+      { profilePhotoUrl: url },
+      {
+        onSuccess() {
+          utils.profile.get
+            .invalidate({ profileId })
+            .catch((err) => console.log(err));
+        },
+      },
     );
   };
 
-  const profile = "profile";
-  const banner = "banner";
+  const updateBanner = (url: string) => {
+    mutation.mutate(
+      { bannerPhotoUrl: url },
+      {
+        onSuccess() {
+          utils.profile.get
+            .invalidate({ profileId })
+            .catch((err) => console.log(err));
+        },
+      },
+    );
+  };
 
   return (
     <dialog id="my_modal_3" className="modal">
@@ -37,19 +50,11 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
           <div>
             <div className="pt-4">
               <label> Profile Photo URL: </label>
-              <UploadFiles
-                profileId={profileId}
-                tag={profile}
-                update={updateProfile}
-              />
+              <UploadFiles profileId={profileId} update={updateProfile} />
             </div>
             <div className="pt-4">
               <label> Banner Photo URL: </label>
-              <UploadFiles
-                profileId={profileId}
-                tag={banner}
-                update={updateBanner}
-              />
+              <UploadFiles profileId={profileId} update={updateBanner} />
             </div>
           </div>
         </div>
