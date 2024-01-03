@@ -1,7 +1,6 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 type Group = {
   id: string;
@@ -34,9 +33,9 @@ export function GroupHeader({ group, members }: GroupProps) {
 
   const updateUserGroups = async () => {
     if (userIsMember) {
-      const result = await disconnect.mutateAsync({ groupId });
+      disconnect.mutate({ groupId });
     } else {
-      const result = await mutation.mutateAsync({ groupId });
+      mutation.mutate({ groupId });
     }
   };
 

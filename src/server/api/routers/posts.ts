@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   protectedProcedure,
-  publicProcedure,
 } from "@/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
@@ -14,7 +13,6 @@ export const postRouter = createTRPCRouter({
         groupId: z.string().optional(),
       }))
     .mutation(async ({ ctx, input }) => {
-      console.log(input);
       await ctx.db.post.create({
         data: {
           content: input.content,

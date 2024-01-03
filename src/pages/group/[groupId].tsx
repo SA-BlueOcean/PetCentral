@@ -4,12 +4,16 @@ import Feed from "@/components/Feed";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { GroupHeader } from "@/components/Group/GroupHeader";
-import { useSession } from "next-auth/react";
 import CreatePost from "@/components/Feed/CreatePost";
 
 export default function GroupPage() {
-  const { data } = useSession() || "";
-  const [groupData, setGroupData] = useState({});
+  const [groupData, setGroupData] = useState({
+    id: "",
+    name: "",
+    description: "",
+    photoUrl: "",
+    bannerPhotoUrl: "",
+  });
 
   const router = useRouter();
   const groupId = router.query.groupId! as string;
@@ -29,7 +33,13 @@ export default function GroupPage() {
 
   useEffect(() => {
     if (query.data) {
-      setGroupData(query?.data?.group ?? {});
+      setGroupData({
+        id: query?.data?.group?.id ?? "",
+        name: query?.data?.group?.name ?? "",
+        description: query?.data?.group?.description ?? "",
+        photoUrl: query?.data?.group?.photoUrl ?? "",
+        bannerPhotoUrl: query?.data?.group?.bannerPhotoUrl ?? "",
+      });
     }
   });
 
@@ -40,13 +50,13 @@ export default function GroupPage() {
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GroupHeader group={groupData} members={members} />
       <CreatePost />
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
         <div className="container flex flex-col items-center justify-center gap-12 py-16 ">
           <Feed groupId={groupId} mode="GROUP" />
         </div>
       </main>
+      <GroupHeader group={groupData} members={members ?? 0} />
     </>
   );
 }

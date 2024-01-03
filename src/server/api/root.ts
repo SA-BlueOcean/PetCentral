@@ -4,7 +4,7 @@ import { feedRouter } from "./routers/feed";
 import { profileRouter } from "./routers/profile";
 import { authRouter } from "./routers/auth";
 
-import { groupRouter } from "./routers/groups";
+import { groupRouter } from "./routers/group";
 import { userRouter } from "./routers/users";
 import { postRouter } from "./routers/posts";
 
@@ -16,9 +16,9 @@ import { postRouter } from "./routers/posts";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   feed: feedRouter,
-  user: userRouter,
-  post: postRouter,
-  group: groupRouter,
+  users: userRouter,
+  posts: postRouter,
+  groups: groupRouter,
   profile: profileRouter,
   auth: authRouter,
 });
