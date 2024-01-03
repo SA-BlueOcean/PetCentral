@@ -46,9 +46,9 @@ export default function FindFriendsPage() {
           <p className="mt-48 text-center text-base-500">
             Change filter to find more friends
           </p>
-          <ProfileCard index={2} fly={"left"} user={"Burhan Syed"} />
-          <ProfileCard index={1} fly={"right"} user={"Clay Gibson"} />
-          <ProfileCard index={0} fly={"left"} user={"Thomas Harbert"} />
+          <ProfileCard index={2} fly={"false"} user={"Burhan Syed"} />
+          <ProfileCard index={1} fly={"false"} user={"Clay Gibson"} />
+          <ProfileCard index={0} fly={"false"} user={"Thomas Harbert"} />
         </div>
 
         <button className="btn btn-circle btn-success h-16 w-16">
