@@ -29,10 +29,8 @@ export const groupRouter = createTRPCRouter({
   }),
 
   fetchGroups: protectedProcedure.query(async ({ ctx }) => {
-    console.log(ctx)
     const router = useRouter();
     const userId = ctx.session?.user?.id;
-    console.log(userId)
 
     if (!userId) {
       console.log('no user id')

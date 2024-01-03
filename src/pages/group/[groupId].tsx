@@ -17,12 +17,6 @@ type Group = {
 };
 
 export default function GroupPage() {
-<<<<<<< HEAD
-
-  const hello = api.example.hello.useQuery({ text: "example hi" });
-
-  const router = useRouter();
-=======
   const router = useRouter();
   const groupId = router.query.groupId! as string;
   const [groupData, setGroupData] = useState<Group | null>(null);
@@ -38,7 +32,6 @@ export default function GroupPage() {
       },
     },
   );
->>>>>>> origin
 
   // Fetch Group Members
   const membersQuery = api.groups.fetchMemberCount.useQuery(

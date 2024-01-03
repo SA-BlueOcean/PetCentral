@@ -5,7 +5,7 @@ import { api } from "@/utils/api";
 import { Example } from "@/components/Example";
 
 export default function FindFriendsPage() {
-  
+
   const hello = api.example.hello.useQuery({ text: "example hi" });
 
   return (
