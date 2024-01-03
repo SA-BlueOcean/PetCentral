@@ -7,7 +7,7 @@ export default function CreatePost() {
   const { data } = useSession() || "";
   const [post, setPost] = useState({
     content: "",
-    groupId: "",
+    groupId: undefined,
   });
   const mutation = api.posts.createPost.useMutation({});
 
@@ -24,9 +24,7 @@ export default function CreatePost() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(post);
-    const result = await mutation.mutateAsync(post);
-    console.log(result);
+    mutation.mutate(post);
   };
 
   return (
@@ -78,7 +76,7 @@ export default function CreatePost() {
             onChange={(e) => {
               setPost({
                 ...post,
-                groupId: e.target.value,
+                groupId: e.target.value || undefined,
               });
             }}
           >

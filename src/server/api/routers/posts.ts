@@ -14,10 +14,11 @@ export const postRouter = createTRPCRouter({
         groupId: z.string().optional(),
       }))
     .mutation(async ({ ctx, input }) => {
+      console.log(input);
       await ctx.db.post.create({
         data: {
           content: input.content,
-          groupId: input.groupId ?? null,
+          groupId: input.groupId ?? undefined,
           createdById: ctx.session.user.id,
         },
       });
