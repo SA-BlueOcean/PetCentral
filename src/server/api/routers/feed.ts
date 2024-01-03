@@ -96,7 +96,7 @@ export const feedRouter = createTRPCRouter({
           },
           data: {
             upvotes:
-              input.vote === 1
+              input.vote === 1 && prev?.vote !== 1
                 ? {
                     increment: 1,
                   }
@@ -106,7 +106,7 @@ export const feedRouter = createTRPCRouter({
                     }
                   : undefined,
             downvotes:
-              input.vote === -1
+              input.vote === -1 && prev?.vote !== -1
                 ? {
                     increment: 1,
                   }
