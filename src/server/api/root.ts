@@ -3,6 +3,7 @@ import { exampleRouter } from "./routers/example";
 import { feedRouter } from "./routers/feed";
 import { profileRouter } from "./routers/profile";
 import { authRouter } from "./routers/auth";
+import { commentRouter } from "./routers/comments";
 
 import { groupRouter } from "./routers/groups";
 import { userRouter } from "./routers/users";
@@ -21,6 +22,7 @@ export const appRouter = createTRPCRouter({
   groups: groupRouter,
   profile: profileRouter,
   auth: authRouter,
+  comments: commentRouter
 });
 
 // export type definition of API
