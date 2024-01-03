@@ -4,7 +4,6 @@ import Feed from "@/components/Feed";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { GroupHeader } from "@/components/Group/GroupHeader";
-import CreatePost from "@/components/Feed/CreatePost";
 
 type Group = {
   id: string;
@@ -49,9 +48,8 @@ export default function GroupPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GroupHeader group={groupData} members={members ?? 0} />
-      <CreatePost />
       <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
-        <div className="container flex flex-col items-center justify-center gap-12 py-16 ">
+        <div className="container flex flex-col items-center justify-center gap-12 py-4 ">
           <Feed groupId={groupId} mode="GROUP" />
         </div>
       </div>
