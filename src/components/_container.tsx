@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
+import SideNavElements from "./Nav/SideNavElements";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -147,7 +148,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
             >
               x
             </label>
-            sidebar content
+            <SideNavElements />
           </ul>
         </div>
       </div>
