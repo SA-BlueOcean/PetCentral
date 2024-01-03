@@ -39,7 +39,7 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
           <div>
             <div className="pt-4">
               <label> Banner Photo URL: </label>
-              <UploadFiles profileId={profileId} update={updateBanner} />
+              <UploadFiles update={updateBanner} />
             </div>
           </div>
         </div>
