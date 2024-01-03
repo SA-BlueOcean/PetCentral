@@ -2,7 +2,9 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
+  protectedProcedure,
 } from "@/server/api/trpc";
+import { useRouter } from "next/router";
 
 
 // create tRPC router
@@ -27,9 +29,22 @@ export const groupRouter = createTRPCRouter({
   }),
 
   fetchGroups: publicProcedure.query(async ({ ctx }) => {
+    console.log(ctx)
+    const router = useRouter();
+    const userId = ctx.session?.user?.id;
+    console.log(userId)
+
+    if (!userId) {
+      console.log('no user id')
+      void router.replace("/auth/signin")
+      return {
+        groups: [],
+      };
+    }
+
     const groups = await ctx.db.user.findUnique({
       where: {
-        id: ctx.session?.user?.id,
+        id: userId,
       },
       include: {
         groups: true,

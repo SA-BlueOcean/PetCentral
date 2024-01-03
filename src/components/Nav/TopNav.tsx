@@ -11,7 +11,7 @@ export default function TopNav() {
           </Link>
         </li>
         <li>
-          <Link href={"/group"} className="flex items-center gap-2">
+          <Link href={"/group/mygroups"} className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-full bg-base-100"></div>My Groups
           </Link>
         </li>
