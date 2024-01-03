@@ -47,8 +47,8 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
   useInfiniteScroll(scrollRef.current, tryLoadMore);
 
   return (
-    <div>
-      <ul className="flex flex-col gap-4">
+    <div className="w-full">
+      <ul className="flex flex-col gap-4 w-full">
         {posts.data?.pages.map((page, i) => (
           <Fragment key={page.nextCursor}>
             {page.posts.map((p) => (
