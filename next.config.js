@@ -17,6 +17,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  experimental: {
+    scrollRestoration: true
+  }
 };
 
 export default config;

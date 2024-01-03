@@ -26,6 +26,7 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
         (mode === "PROFILE" && profileId) ||
         (mode === "GROUP" && groupId)
       ),
+      keepPreviousData: true
     },
   );
 
