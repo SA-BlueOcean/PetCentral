@@ -4,7 +4,10 @@ import { api } from "@/utils/api";
 import Image from "next/image";
 
 export default function CreatePost() {
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState({
+    content: "",
+    groupId: "",
+  });
   const mutation = api.posts.createPost.useMutation({});
   const { setDisplayLoginModal } = useGlobalContext();
 
