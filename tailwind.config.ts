@@ -41,18 +41,32 @@ export default {
       },
       keyframes: {
         flyR: {
-          "0%": { transform: "translate(0%, 0%)", opacity: "1" },
-          "25%": { transform: "translate(20%, -20%)" },
-          "50%": { transform: "translate(50%, -35%)", opacity: "0.95" },
-          "75%": { transform: "translate(75%, -45%)" },
-          "100%": { transform: "translate(120%, -50%)", opacity: "0" },
+          "0%": { transform: "translate(0%, 0%) rotate (0)", opacity: "1" },
+          "25%": { transform: "translate(20%, -20%) rotate(10deg)" },
+          "50%": {
+            transform: "translate(50%, -35%) rotate(25deg)",
+            opacity: "0.95",
+          },
+          "75%": { transform: "translate(75%, -45%) rotate(40deg)" },
+          "100%": {
+            transform: "translate(120%, -50%) rotate(55deg)",
+            opacity: "0",
+            visibility: "hidden",
+          },
         },
         flyL: {
-          "0%": { transform: "translate(0%, 0%)", opacity: "1" },
-          "25%": { transform: "translate(-20%, -20%)" },
-          "50%": { transform: "translate(-50%, -35%)", opacity: "0.95" },
-          "75%": { transform: "translate(-75%, -45%)" },
-          "100%": { transform: "translate(-120%, -50%)", opacity: "0" },
+          "0%": { transform: "translate(0%, 0%) rotate (0)", opacity: "1" },
+          "25%": { transform: "translate(-20%, -20%) rotate(-10deg)" },
+          "50%": {
+            transform: "translate(-50%, -35%) rotate(-25deg)",
+            opacity: "0.95",
+          },
+          "75%": { transform: "translate(-75%, -45%) rotate(-40deg)" },
+          "100%": {
+            transform: "translate(-120%, -50%) rotate(-55deg)",
+            opacity: "0",
+            visiblity: "hidden",
+          },
         },
       },
       animation: {
