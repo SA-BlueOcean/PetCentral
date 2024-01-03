@@ -4,6 +4,7 @@ import { ProfileHeader } from "@/components/Profile/ProfileHeader";
 import EditProfileModal from "@/components/Profile/EditProfileModal";
 import EditProfilePhotoModal from "@/components/Profile/EditProfilePhotoModal";
 import Feed from "@/components/Feed";
+import Bio from "@/components/Profile/Bio";
 import EditPhotosModal from "@/components/Profile/EditPhotosModal";
 
 export default function ProfilePage() {
@@ -17,6 +18,7 @@ export default function ProfilePage() {
       <EditPhotosModal profileId={profileId} />
       <EditProfilePhotoModal profileId={profileId} />
       <EditProfileModal profileId={profileId} />
+      <Bio profileId={profileId} />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );
