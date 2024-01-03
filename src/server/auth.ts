@@ -74,20 +74,16 @@ export const authOptions: nextAuth.NextAuthOptions = {
       allowDangerousEmailAccountLinking: true,
     }),
   ],
-  theme: {
-    logo: "http://placekitten.com/200/200",
-  },
   session: { strategy: "jwt" },
   jwt: {
     secret: env.NEXTAUTH_SECRET,
   },
   secret: env.NEXTAUTH_SECRET,
-  // useSecureCookies: true,
   cookies: getCookies(),
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
-    newUser: "/auth/newuser",
+    newUser: "/auth/onboarding",
   },
 };
 
