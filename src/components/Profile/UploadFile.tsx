@@ -13,7 +13,7 @@ export default function PhotoInput({
 
   const handleSubmit = async () => {
     if (!file) {
-      return; // handle the case when file is null
+      return;
     }
     const filename = `${profileId}-${uuidv4()}`;
     const { data, error } = await supabase.storage

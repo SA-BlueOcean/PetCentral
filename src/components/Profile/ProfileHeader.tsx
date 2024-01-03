@@ -4,6 +4,7 @@ import { PenSquare } from "lucide-react";
 import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { env } from "@/env.js";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(
@@ -14,8 +15,8 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
 
-  const profilePhotoUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.profilePhotoUrl}`;
-  const bannerPhotoUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.bannerPhotoUrl}`;
+  const profilePhotoUrl = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.profilePhotoUrl}`;
+  const bannerPhotoUrl = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${user.data?.bannerPhotoUrl}`;
 
   return (
     <>
@@ -53,6 +54,26 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           unoptimized={true}
         ></Image>
         <div className="avatar mt-[-5rem]">
+          {session.data?.user?.id === user.data?.id ? (
+            <button
+              onClick={() =>
+                (
+                  document.getElementById(
+                    "my_modal_5",
+                  ) as HTMLDialogElement | null
+                )?.showModal?.()
+              }
+            >
+              <Camera
+                size={25}
+                strokeWidth={1}
+                absoluteStrokeWidth
+                className="absolute right-4 z-10 mr-[-.5rem] mt-[-4.5rem] rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+              />
+            </button>
+          ) : (
+            ""
+          )}
           {/* <Camera
             size={25}
             strokeWidth={1}
