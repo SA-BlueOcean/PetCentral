@@ -41,7 +41,7 @@ export default function GroupPage() {
         bannerPhotoUrl: query?.data?.group?.bannerPhotoUrl ?? "",
       });
     }
-  });
+  }, []);
 
   return (
     <>
@@ -50,13 +50,13 @@ export default function GroupPage() {
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <GroupHeader group={groupData} members={members ?? 0} />
       <CreatePost />
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
         <div className="container flex flex-col items-center justify-center gap-12 py-16 ">
           <Feed groupId={groupId} mode="GROUP" />
         </div>
       </main>
-      <GroupHeader group={groupData} members={members ?? 0} />
     </>
   );
 }

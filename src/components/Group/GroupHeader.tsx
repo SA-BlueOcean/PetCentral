@@ -17,6 +17,7 @@ type GroupProps = {
 
 export function GroupHeader({ group, members }: GroupProps) {
   const { name, description, photoUrl, bannerPhotoUrl } = group;
+  console.log(group);
   const groupId = group.id;
   const mutation = api.users.updateUserGroups.useMutation({});
   const disconnect = api.users.removeUserGroup.useMutation({});

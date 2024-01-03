@@ -17,7 +17,10 @@ export default function CreatePost() {
   // Fetch User's Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (
+    e: { preventDefault: () => void } | undefined,
+  ) => {
+    e.preventDefault();
     mutation.mutate(post, {
       onError(error: { message: string }) {
         if (error.message === "UNAUTHORIZED") {
@@ -86,7 +89,7 @@ export default function CreatePost() {
               });
             }}
           >
-            <option disabled selected>
+            <option disabled selected defaultValue={undefined}>
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (
@@ -116,7 +119,7 @@ export default function CreatePost() {
           </div>
           <button
             className="btn btn-primary btn-sm rounded-btn uppercase text-white"
-            onClick={() => handleSubmit()}
+            onClick={(e) => handleSubmit(e)}
           >
             Post
           </button>

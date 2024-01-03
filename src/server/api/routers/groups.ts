@@ -11,7 +11,7 @@ export const groupRouter = createTRPCRouter({
   .input(
     z
     .object({
-      groupID: z.string()
+      groupID: z.string().optional(),
     })
   )
   .query(

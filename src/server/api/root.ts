@@ -4,7 +4,7 @@ import { feedRouter } from "./routers/feed";
 import { profileRouter } from "./routers/profile";
 import { authRouter } from "./routers/auth";
 
-import { groupRouter } from "./routers/group";
+import { groupRouter } from "./routers/groups";
 import { userRouter } from "./routers/users";
 import { postRouter } from "./routers/posts";
 
