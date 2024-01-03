@@ -5,14 +5,11 @@ import Image from "next/image";
 
 export default function CreatePost() {
   const { data } = useSession() || "";
-  const [user, setUser] = useState({});
-  const [group, setGroup] = useState("");
   const [post, setPost] = useState({
-    createdBy: data?.user?.id,
     content: "",
     groupId: "",
-    photos: [],
   });
+  const mutation = api.posts.createPost.useMutation({});
 
   // Fetch User Details & Session Info
   const query = api.users.fetchUser.useQuery(
@@ -22,23 +19,24 @@ export default function CreatePost() {
     { enabled: !!data?.user?.id },
   );
 
-  // Fetch User Groups
+  // Fetch User's Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(post);
+    const result = await mutation.mutateAsync(post);
+    console.log(result);
+  };
+
   return (
-    <form
-      className="rounded-lg bg-base-100 ring-1 ring-base-500"
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log(post);
-      }}
-    >
+    <form className="rounded-lg bg-base-100 ring-1 ring-base-500">
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
             <div className="relative h-10 w-10 overflow-clip rounded-full ">
               <div className="avatar">
-                <div className="rounded-full">
+                <div className="h-10 w-10 rounded-full">
                   {query?.data?.profilePhotoUrl ? (
                     <>
                       <Image
@@ -64,12 +62,26 @@ export default function CreatePost() {
                 type="text"
                 placeholder="Write a new post..."
                 className="input input-ghost w-full pl-1"
+                onChange={(e) =>
+                  setPost({
+                    ...post,
+                    content: e.target.value,
+                  })
+                }
               />
             </div>
           </div>
         </div>
         <div className="flex items-center justify-between p-1">
-          <select className="select select-ghost max-w-xs grow pl-1 text-secondary-content">
+          <select
+            className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
+            onChange={(e) => {
+              setPost({
+                ...post,
+                groupId: e.target.value,
+              });
+            }}
+          >
             <option disabled selected>
               Choose a community
             </option>
@@ -77,7 +89,9 @@ export default function CreatePost() {
               <>
                 {" "}
                 {groupsQuery?.data?.groups?.map((g) => (
-                  <option key={g.id}>{g.name}</option>
+                  <option key={g.id} value={g.id}>
+                    {g.name}
+                  </option>
                 ))}
               </>
             )}
@@ -98,7 +112,7 @@ export default function CreatePost() {
           </div>
           <button
             className="btn btn-primary btn-sm rounded-btn uppercase text-white"
-            type="submit"
+            onClick={(e) => handleSubmit(e)}
           >
             Post
           </button>

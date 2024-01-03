@@ -34,13 +34,9 @@ export function GroupHeader({ group, members }: GroupProps) {
 
   const updateUserGroups = async () => {
     if (userIsMember) {
-      console.log("user is member");
       const result = await disconnect.mutateAsync({ groupId });
-      console.log(result);
     } else {
-      console.log("user is not member");
       const result = await mutation.mutateAsync({ groupId });
-      console.log(result);
     }
   };
 

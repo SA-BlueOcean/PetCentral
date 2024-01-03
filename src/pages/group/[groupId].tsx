@@ -29,7 +29,7 @@ export default function GroupPage() {
 
   useEffect(() => {
     if (query.data) {
-      setGroupData(query.data.group);
+      setGroupData(query?.data?.group ?? {});
     }
   });
 
