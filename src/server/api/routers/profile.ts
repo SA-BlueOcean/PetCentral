@@ -61,24 +61,24 @@ export const profileRouter = createTRPCRouter({
     )
     .mutation(async ({ input, ctx }) => {
       // new stuff
-      if (input.firstName !== undefined) {
-        return await ctx.db.user.update({
+      if (input.firstName !== "") {
+        await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
             firstName: input.firstName,
           },
         });
       }
-      if (input.lastName !== undefined) {
-        return await ctx.db.user.update({
+      if (input.lastName !== "") {
+        await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
             lastName: input.lastName,
           },
         });
       }
-      if (input.about !== undefined) {
-        return await ctx.db.user.update({
+      if (input.about !== "") {
+        await ctx.db.user.update({
           where: { id: ctx.session?.user.id },
           data: {
             bio: input.about,
