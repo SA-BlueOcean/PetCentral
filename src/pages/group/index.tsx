@@ -14,7 +14,7 @@ export default function GroupPageBase() {
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b ">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-5xl font-extrabold tracking-tight  sm:text-[5rem]">
             Group page no group!
@@ -48,7 +48,7 @@ export default function GroupPageBase() {
           </p>
           <Example />
         </div>
-      </main>
+      </div>
     </>
   );
 }
