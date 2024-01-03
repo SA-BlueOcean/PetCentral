@@ -14,6 +14,7 @@ export default function PetCard({ pet }: { pet: Pet }) {
     <div>
       <Image
         src={pet.photoUrl ?? "https://clipart-library.com/images/BiaEg4n8T.jpg"}
+        alt={pet.firstName}
         width={50}
         height={50}
       ></Image>
