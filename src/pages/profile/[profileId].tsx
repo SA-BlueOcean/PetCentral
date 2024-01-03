@@ -1,4 +1,4 @@
-import { api } from "@/utils/api";
+// import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { ProfileHeader } from "@/components/Profile/ProfileHeader";
 import EditProfileModal from "@/components/Profile/EditProfileModal";
