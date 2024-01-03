@@ -1,4 +1,5 @@
 import { z } from "zod";
+import zipcode from "zipcodes";
 
 import {
   createTRPCRouter,
@@ -85,6 +86,30 @@ export const profileRouter = createTRPCRouter({
           },
         });
       }
+      if (input.zip === null || input.zip === undefined) {
+        return;
+      }
+      const data = zipcode.lookup(+input.zip ?? 37660);
+      const zipCode = data?.zip;
+      const locationName = data?.city + ", " + data?.state;
+      const latitude = data?.latitude ?? 0;
+      const longitude = data?.longitude ?? 0;
+      await ctx.db.location.upsert({
+        where: { userId: ctx.session?.user.id },
+        create: {
+          userId: ctx.session?.user.id,
+          zipCode,
+          locationName,
+          latitude,
+          longitude,
+        },
+        update: {
+          zipCode,
+          locationName,
+          latitude,
+          longitude,
+        },
+      });
     }),
   // at the moment the mutation is working updating both, one to empty if both fields are not filled in
   updatePhotos: protectedProcedure
