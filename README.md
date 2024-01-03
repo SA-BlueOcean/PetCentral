@@ -162,6 +162,8 @@ Node version is expected to be v20.10.0 or higher
    - `GOOGLE_CLIENT_SECRET`
    - `FACEBOOK_CLIENT_ID`
    - `FACEBOOK_CLIENT_SECRET`
+   - NEXT_PUBLIC_SUPABASE_URL
+   - NEXT_PUBLIC_SUPABASE_ANON_KEY
    - Check NextAuth.js documentation for more information on how to set up OAuth providers
 1. Run Prisma generate to generate the Prisma client
 
