@@ -53,6 +53,26 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           unoptimized={true}
         ></Image>
         <div className="avatar mt-[-5rem]">
+          {session.data?.user?.id === user.data?.id ? (
+            <button
+              onClick={() =>
+                (
+                  document.getElementById(
+                    "my_modal_5",
+                  ) as HTMLDialogElement | null
+                )?.showModal?.()
+              }
+            >
+              <Camera
+                size={25}
+                strokeWidth={1}
+                absoluteStrokeWidth
+                className="absolute right-4 z-10 mr-[-.5rem] mt-[-4.5rem] rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+              />
+            </button>
+          ) : (
+            ""
+          )}
           {/* <Camera
             size={25}
             strokeWidth={1}
