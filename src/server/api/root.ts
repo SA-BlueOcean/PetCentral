@@ -15,7 +15,12 @@ import { postRouter } from "./routers/posts";
  */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
-  feed: feedRouter
+  feed: feedRouter,
+  user: userRouter,
+  post: postRouter,
+  group: groupRouter,
+  profile: profileRouter,
+  auth: authRouter,
 });
 
 // export type definition of API
