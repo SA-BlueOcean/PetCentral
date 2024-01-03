@@ -4,27 +4,39 @@ import { useSession } from "next-auth/react";
 
 type Group = {
   id: string;
+  createdAt: Date;
+  updatedAt: Date;
   name: string;
-  description: string;
-  photoUrl: string;
-  bannerPhotoUrl: string;
+  description: string | null;
+  photoUrl: string | null;
+  bannerPhotoUrl: string | null;
 };
 
 type GroupProps = {
-  group: Group;
+  group: Group | null;
   members: number;
 };
 
 export function GroupHeader({ group, members }: GroupProps) {
-  const { name, description, photoUrl, bannerPhotoUrl } = group;
-  console.log(group);
-  const groupId = group.id;
+  // Add a null check before destructuring
+  let name, description;
+  let id = "";
+  let bannerPhotoUrl = "https://placekitten.com/500/100";
+  let photoUrl = "https://placekitten.com/300/300";
+  if (group) {
+    id = group.id;
+    name = group.name;
+    description = group.description;
+    photoUrl = group.photoUrl ?? photoUrl;
+    bannerPhotoUrl = group.bannerPhotoUrl ?? bannerPhotoUrl;
+  }
+
   const mutation = api.users.updateUserGroups.useMutation({});
   const disconnect = api.users.removeUserGroup.useMutation({});
 
   const getMemberIds = api.groups.fetchMembers.useQuery(
-    { groupId: groupId },
-    { enabled: !!groupId },
+    { groupId: id },
+    { enabled: !!id },
   );
 
   const memberIdArr = getMemberIds?.data?.users?.map((user) => user.id);
@@ -34,9 +46,9 @@ export function GroupHeader({ group, members }: GroupProps) {
 
   const updateUserGroups = async () => {
     if (userIsMember) {
-      disconnect.mutate({ groupId });
+      disconnect.mutate({ groupId: id });
     } else {
-      mutation.mutate({ groupId });
+      mutation.mutate({ groupId: id });
     }
   };
 

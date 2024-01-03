@@ -4,10 +4,7 @@ import { api } from "@/utils/api";
 import Image from "next/image";
 
 export default function CreatePost() {
-  const [post, setPost] = useState({
-    content: "",
-    groupId: "",
-  });
+  const [post, setPost] = useState({});
   const mutation = api.posts.createPost.useMutation({});
   const { setDisplayLoginModal } = useGlobalContext();
 
@@ -20,7 +17,7 @@ export default function CreatePost() {
   const handleSubmit = async (
     e: { preventDefault: () => void } | undefined,
   ) => {
-    e.preventDefault();
+    e?.preventDefault();
     mutation.mutate(post, {
       onError(error: { message: string }) {
         if (error.message === "UNAUTHORIZED") {
@@ -69,12 +66,12 @@ export default function CreatePost() {
                 type="text"
                 placeholder="Write a new post..."
                 className="input input-ghost w-full pl-1"
-                onChange={(e) =>
+                onChange={(e) => {
                   setPost({
                     ...post,
                     content: e.target.value,
-                  })
-                }
+                  });
+                }}
               />
             </div>
           </div>
@@ -83,10 +80,12 @@ export default function CreatePost() {
           <select
             className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
             onChange={(e) => {
+              console.log(post);
               setPost({
                 ...post,
                 groupId: e.target.value,
               });
+              console.log(post);
             }}
           >
             <option disabled selected defaultValue={undefined}>

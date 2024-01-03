@@ -6,22 +6,32 @@ import { useRouter } from "next/router";
 import { GroupHeader } from "@/components/Group/GroupHeader";
 import CreatePost from "@/components/Feed/CreatePost";
 
-export default function GroupPage() {
-  const [groupData, setGroupData] = useState({
-    id: "",
-    name: "",
-    description: "",
-    photoUrl: "",
-    bannerPhotoUrl: "",
-  });
+type Group = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  description: string | null;
+  photoUrl: string | null;
+  bannerPhotoUrl: string | null;
+};
 
+export default function GroupPage() {
   const router = useRouter();
   const groupId = router.query.groupId! as string;
+  const [groupData, setGroupData] = useState<Group | null>(null);
 
   // Fetch Group Details
-  const query = api.groups.fetchDetails.useQuery({
-    groupID: groupId,
-  });
+  api.groups.fetchDetails.useQuery(
+    {
+      groupID: groupId,
+    },
+    {
+      onSuccess(data) {
+        setGroupData(data.group);
+      },
+    },
+  );
 
   // Fetch Group Members
   const membersQuery = api.groups.fetchMemberCount.useQuery(
@@ -30,18 +40,6 @@ export default function GroupPage() {
   );
 
   const members = membersQuery?.data?.memberCount;
-
-  useEffect(() => {
-    if (query.data) {
-      setGroupData({
-        id: query?.data?.group?.id ?? "",
-        name: query?.data?.group?.name ?? "",
-        description: query?.data?.group?.description ?? "",
-        photoUrl: query?.data?.group?.photoUrl ?? "",
-        bannerPhotoUrl: query?.data?.group?.bannerPhotoUrl ?? "",
-      });
-    }
-  }, []);
 
   return (
     <>
@@ -52,11 +50,11 @@ export default function GroupPage() {
       </Head>
       <GroupHeader group={groupData} members={members ?? 0} />
       <CreatePost />
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
         <div className="container flex flex-col items-center justify-center gap-12 py-16 ">
           <Feed groupId={groupId} mode="GROUP" />
         </div>
-      </main>
+      </div>
     </>
   );
 }
