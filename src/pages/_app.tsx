@@ -6,7 +6,7 @@ import { api } from "@/utils/api";
 
 import "@/styles/globals.css";
 import { GlobalContextProvider } from "@/providers/GlobalContext";
-import Container from "./_container";
+import Container from "@/components/_container";
 
 const MyApp: AppType<{ session: Session | null }> = (appProps) => {
   const { session } = appProps.pageProps;
