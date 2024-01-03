@@ -37,7 +37,7 @@ export default function CreatePost() {
   };
 
   return (
-    <form className="rounded-lg bg-base-100 ring-1 ring-base-500">
+    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-500">
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
