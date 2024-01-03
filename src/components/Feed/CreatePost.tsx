@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useGlobalContext } from "@/providers/GlobalContext";
 import { api } from "@/utils/api";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -9,13 +10,12 @@ export default function CreatePost() {
     content: "",
     groupId: undefined,
   });
-  const mutation = api.posts.createPost.useMutation({});
+  const mutation = api.post.createPost.useMutation({});
+  const { setDisplayLoginModal } = useGlobalContext();
 
   // Fetch User Details & Session Info
   const query = api.users.fetchUser.useQuery(
-    {
-      userId: data?.user?.id!,
-    },
+    { userId: data?.user?.id! },
     { enabled: !!data?.user?.id },
   );
 
@@ -24,7 +24,24 @@ export default function CreatePost() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate(post);
+    mutation.mutate(
+      {
+        content: post,
+      },
+      {
+        onError(error: { message: string }) {
+          if (error.message === "UNAUTHORIZED") {
+            setDisplayLoginModal(true);
+          }
+        },
+        onSuccess() {
+          setPost({
+            content: "",
+            groupId: undefined,
+          });
+        },
+      },
+    );
   };
 
   return (
