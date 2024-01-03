@@ -20,7 +20,7 @@ export default function FindFriendsPage() {
   };
 
   const errorHandle = (err: unknown) => {
-    console.log("error", err);
+    console.log("THERE IS AN ErRRoR", err);
   };
   const users = api.friends.findFriends.useQuery(
     { distance: 10 },
@@ -46,9 +46,21 @@ export default function FindFriendsPage() {
           <p className="mt-48 text-center text-base-500">
             Change filter to find more friends
           </p>
+          <ProfileCard index={2} fly={animate[4]} user={"Mallory Burke"} />
+          <ProfileCard index={2} fly={animate[3]} user={"Joe Doe"} />
           <ProfileCard index={2} fly={animate[2]} user={"Burhan Syed"} />
           <ProfileCard index={1} fly={animate[1]} user={"Clay Gibson"} />
           <ProfileCard index={0} fly={animate[0]} user={"Thomas Harbert"} />
+
+          {users.data?.map((user, index) => {
+            return (
+              <ProfileCard
+                key={user.id}
+                fly={animate[users.data.length - index - 1]}
+                user={user.name}
+              />
+            );
+          })}
         </div>
 
         <button className="btn btn-circle btn-success h-16 w-16">
