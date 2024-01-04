@@ -6,11 +6,29 @@ import { useState } from "react";
 import EditPets from "./EditPets";
 
 export default function Pets({ profileId }: { profileId: string }) {
+  type Pet = {
+    id: string;
+    firstName: string | null;
+    lastName: string | null;
+    dateOfBirth: Date | null;
+    breedId: number | null;
+    photoUrl: string | null;
+    breed: {
+      id: number;
+      name: string;
+      animalId: number;
+      animal: {
+        id: number;
+        name: string;
+      };
+    };
+  };
+
   const pets = api.profile.get.useQuery({ profileId }).data?.pets;
 
-  const [currPet, setCurrPet] = useState(null);
+  const [currPet, setCurrPet] = useState<Pet | null>(null);
   const [animalId, setAnimalId] = useState(0);
-  const handleEditPet = (pet, animalId) => {
+  const handleEditPet = (pet: Pet, animalId: number) => {
     setCurrPet(pet);
     setAnimalId(animalId);
     (
