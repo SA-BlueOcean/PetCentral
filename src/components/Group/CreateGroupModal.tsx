@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { api } from "@/utils/api";
+import { useGlobalContext } from "@/providers/GlobalContext";
 
 export default function CreateGroupModal() {
+  const { setDisplayLoginModal } = useGlobalContext();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [groupDetails, setGroupDetails] = useState({
     name: "",
@@ -36,6 +38,11 @@ export default function CreateGroupModal() {
         bannerPhotoUrl: groupDetails.bannerPhotoUrl,
       },
       {
+        onError(error: { message: string }) {
+          if (error.message === "UNAUTHORIZED") {
+            setDisplayLoginModal(true);
+          }
+        },
         onSuccess() {
           setGroupDetails({
             ...groupDetails,
