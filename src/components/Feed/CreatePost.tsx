@@ -18,7 +18,6 @@ export default function CreatePost() {
   // Fetch User's Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
   const utils = api.useUtils();
-
   const handleSubmit = async (
     e: { preventDefault: () => void } | undefined,
   ) => {
@@ -35,7 +34,7 @@ export default function CreatePost() {
           groupId: "",
         });
         void utils.feed.get.invalidate();
-      },
+      }, 
     });
   };
 
@@ -66,6 +65,7 @@ export default function CreatePost() {
         <div className="flex items-center justify-between p-1">
           <select
             className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
+            value={post.groupId ?? undefined}
             onChange={(e) => {
               setPost({
                 ...post,

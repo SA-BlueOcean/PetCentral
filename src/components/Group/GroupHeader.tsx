@@ -76,7 +76,7 @@ export function GroupHeader({ group, members }: GroupProps) {
             />
           </div>
           {/* GROUP META */}
-          <div className="-mt-10 ml-24 inline-block h-24 w-5/6">
+          <div className="pointer-events-none -mt-10 ml-24 inline-block">
             <div className="flex flex-row">
               <span className="text-l basis-3/5 font-bold">{name}</span>
               <span className="basis-2/5 text-right">

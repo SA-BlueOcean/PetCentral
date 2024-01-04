@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
+  protectedProcedure,
 } from "@/server/api/trpc";
 
 
@@ -26,10 +27,12 @@ export const groupRouter = createTRPCRouter({
     };
   }),
 
-  fetchGroups: publicProcedure.query(async ({ ctx }) => {
+  fetchGroups: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session?.user?.id;
+
     const groups = await ctx.db.user.findUnique({
       where: {
-        id: ctx.session?.user?.id,
+        id: userId,
       },
       include: {
         groups: true,
@@ -88,4 +91,12 @@ export const groupRouter = createTRPCRouter({
       users: groupUsers?.members ?? [],
     };
   }),
+
+  findAllGroups: publicProcedure.query(async ({ ctx }) => {
+    const allGroups = await ctx.db.group.findMany();
+    return {
+      groups: allGroups,
+    };
+  }),
+
 });

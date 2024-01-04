@@ -16,6 +16,7 @@ import Avatar from "@/components/Feed/Avatar";
 // }, [sessionData]);
 
 export default function FindFriendsPage() {
+  const hello = api.example.hello.useQuery({ text: "example hi" });
   const [distance, setDistance] = useState(25);
   const [current, setCurrent] = useState(0);
   const [animate, setAnimate] = useState(["false", "false", "false"]);
