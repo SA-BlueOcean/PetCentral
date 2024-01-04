@@ -11,7 +11,20 @@ export const friendsRouter = createTRPCRouter({
   findFriends: publicProcedure
     .input(z.object({ distance: z.number().optional() }))
     .query(async ({ ctx, input }) => {
-      let zips = zipcodes.radius(30301, input?.distance);
+      const userZip = await ctx.db.user.findUnique({
+        where: {
+          id: ctx.session?.user.id,
+        },
+        select: {
+          location: {
+            select: {
+              zipCode: true,
+            },
+          },
+        },
+      });
+
+      let zips = zipcodes.radius(userZip?.location?.zipCode, input?.distance);
       const users = await ctx.db.user.findMany({
         where: {
           location: {
@@ -28,8 +41,11 @@ export const friendsRouter = createTRPCRouter({
           pets: {
             select: {
               id: true,
-              firstName: true,
-              breedId: true,
+              breed: {
+                select: {
+                  animalId: true,
+                },
+              },
             },
           },
           location: {
