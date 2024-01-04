@@ -20,7 +20,9 @@ export default function Pets({ profileId }: { profileId: string }) {
           <PlusCircle size={24} strokeWidth={1.25} absoluteStrokeWidth />
         </button>
       </div>
-      <div>{pets?.map((pet) => <PetCard key={pet.id} pet={pet} />)}</div>
+      <div className="flex flex-col gap-y-10">
+        {pets?.map((pet) => <PetCard key={pet.id} pet={pet} />)}
+      </div>
     </div>
   );
 }
