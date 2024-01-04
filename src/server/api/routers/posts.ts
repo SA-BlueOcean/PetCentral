@@ -35,7 +35,6 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input, ctx }) => {
-      console.log('hi');
         return await ctx.db.photo.create({
           data: {
             url: input.photoUrl,

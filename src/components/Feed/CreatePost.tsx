@@ -61,15 +61,7 @@ export default function CreatePost() {
   };
 
   const handleSubmitImage = (postId: number, photoUrl: string) => {
-    console.log(photoUrl);
-    photoMutation.mutate(
-      { postId: postId, photoUrl: photoUrl },
-      {
-        onSuccess() {
-          console.log("success");
-        },
-      },
-    );
+    photoMutation.mutate({ postId: postId, photoUrl: photoUrl });
   };
 
   return (
