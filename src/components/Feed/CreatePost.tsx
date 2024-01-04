@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import { api } from "@/utils/api";
-import Image from "next/image";
-import { supabase } from "lib/supabase";
-import { v4 as uuidv4 } from "uuid";
-import { env } from "@/env.js";
 import Avatar from "./Avatar";
+
 export default function CreatePost() {
   const [post, setPost] = useState({
     content: "",
     groupId: "",
   });
-  const [image, setImage] = useState<File | null>(null);
 
   const mutation = api.posts.createPost.useMutation({});
-  const photoMutation = api.posts.addPhoto.useMutation({});
   const { setDisplayLoginModal } = useGlobalContext();
 
   // Fetch User Details & Session Info
@@ -23,6 +18,7 @@ export default function CreatePost() {
   // Fetch User's Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
   const utils = api.useUtils();
+
   const handleSubmit = async (
     e: { preventDefault: () => void } | undefined,
   ) => {
@@ -33,12 +29,7 @@ export default function CreatePost() {
           setDisplayLoginModal(true);
         }
       },
-      onSuccess(data) {
-        console.log(data);
-        if (image) {
-          getUrl(image);
-          handleSubmitImage(data, image);
-        }
+      onSuccess() {
         setPost({
           content: "",
           groupId: "",
@@ -46,32 +37,6 @@ export default function CreatePost() {
         void utils.feed.get.invalidate();
       },
     });
-  };
-
-  const getUrl = async (file: File | null) => {
-    const filename = `${uuidv4()}`;
-    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(filename, file, {
-        cacheControl: "3600",
-        upsert: true,
-      });
-    handleSubmitImage(data, address);
-  };
-
-  const handleSubmitImage = (data: number, url: string) => {
-    console.log(url);
-    photoMutation.mutate(
-      { data: data, url: url },
-      {
-        onSuccess() {
-          utils.profile.get
-            .invalidate({ profileId })
-            .catch((err) => console.log(err));
-        },
-      },
-    );
   };
 
   return (
@@ -132,10 +97,6 @@ export default function CreatePost() {
                 name="file-upload"
                 type="file"
                 className="sr-only"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  setImage(file);
-                }}
               />
             </label>
           </div>
