@@ -25,9 +25,8 @@ export const appRouter = createTRPCRouter({
   profile: profileRouter,
   auth: authRouter,
   comments: commentRouter,
-  chat: chatRouter
+  chat: chatRouter,
   pets: petsRouter,
-  comments: commentRouter,
   friends: friendsRouter,
 });
 
