@@ -86,7 +86,7 @@ export default function PetCard({
       <button onClick={handleDelete}>
         <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
       </button>
-      <EditPets />
+      <EditPets petId={pet?.id} />
     </div>
   );
 }
