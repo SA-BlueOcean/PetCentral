@@ -1,7 +1,9 @@
 import { api } from "@/utils/api";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 
 interface Pet {
+  id: string;
   firstName: string | null;
   lastName: string | null;
   dateOfBirth: Date | null;
@@ -9,10 +11,33 @@ interface Pet {
   photoUrl: string | null;
 }
 
-export default function PetCard({ pet }: { pet: Pet }) {
+export default function PetCard({
+  pet,
+  profileId,
+}: {
+  pet: Pet;
+  profileId: string;
+}) {
   const breed = api.pets.getSpecificBreed.useQuery({
     breedId: pet?.breedId ?? 0,
   }).data;
+
+  const mutation = api.pets.removePet.useMutation();
+  const utils = api.useUtils();
+
+  const handleDelete = () => {
+    mutation.mutate(
+      { petId: pet.id },
+      {
+        onSuccess() {
+          utils.profile.get.invalidate({ profileId }).catch((err) => {
+            console.log(err);
+          });
+        },
+      },
+    );
+  };
+
   const capitalize = (s: string | undefined) =>
     s ? s?.[0]?.toUpperCase() + s.slice(1) : "";
   const currentDate = new Date();
@@ -25,13 +50,14 @@ export default function PetCard({ pet }: { pet: Pet }) {
       : ageInYears > 1
         ? `${ageInYears} ${ageInYears === 1 ? "year" : "years"}`
         : "<1 year";
+
   return (
     <div className="flex">
       <Image
         src={
           pet?.photoUrl
             ? pet?.photoUrl
-            : "https://ph-files.imgix.net/75c2cda9-e2c3-4bcd-a0b1-0595daba1844.png?auto=format&fit=crop://clipart-library.com/images/BiaEg4n8T.jpg"
+            : "https://static.vecteezy.com/system/resources/previews/012/049/155/original/isolated-dog-animal-silhouette-icon-simple-black-shape-graphic-symbol-illustration-abstract-design-element-vet-clinic-logo-pet-portrait-shadow-flat-style-vector.jpg"
         }
         alt={pet?.firstName ?? ""}
         width={75}
@@ -46,6 +72,9 @@ export default function PetCard({ pet }: { pet: Pet }) {
           <p>{capitalize(breed?.name ?? "")}</p>
         </div>
       </div>
+      <button onClick={handleDelete}>
+        <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
+      </button>
     </div>
   );
 }
