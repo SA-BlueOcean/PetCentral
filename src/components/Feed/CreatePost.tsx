@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import { api } from "@/utils/api";
-import Image from "next/image";
 import { supabase } from "lib/supabase";
 import { v4 as uuidv4 } from "uuid";
 import { env } from "@/env.js";
@@ -54,7 +53,7 @@ export default function CreatePost() {
     const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
     const { data, error } = await supabase.storage
       .from("images")
-      .upload(filename, file, {
+      .upload(filename, file!, {
         upsert: true,
       });
     handleSubmitImage(postId, address);
@@ -133,7 +132,7 @@ export default function CreatePost() {
                 className="sr-only"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  setImage(file);
+                  setImage(file!);
                 }}
               />
             </label>
