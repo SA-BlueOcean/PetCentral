@@ -64,7 +64,7 @@ export default function CreatePost() {
         </div>
         <div className="flex items-center justify-between p-1">
           <select
-            className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
+            className="select select-ghost z-50 max-w-xs grow pl-1 text-secondary-content"
             value={post.groupId ?? undefined}
             onChange={(e) => {
               setPost({
