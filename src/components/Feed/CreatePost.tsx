@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import { api } from "@/utils/api";
+import Image from "next/image";
+import { supabase } from "lib/supabase";
+import { v4 as uuidv4 } from "uuid";
+import { env } from "@/env.js";
 import Avatar from "./Avatar";
-
 export default function CreatePost() {
   const [post, setPost] = useState({
     content: "",
     groupId: "",
   });
+  const [image, setImage] = useState<File | null>(null);
+
   const mutation = api.posts.createPost.useMutation({});
+  const photoMutation = api.posts.addPhoto.useMutation({});
   const { setDisplayLoginModal } = useGlobalContext();
 
   // Fetch User Details & Session Info
@@ -27,18 +33,49 @@ export default function CreatePost() {
           setDisplayLoginModal(true);
         }
       },
-      onSuccess() {
+      onSuccess(data) {
+        console.log(data);
+        if (image) {
+          getUrl(image);
+          handleSubmitImage(data, image);
+        }
         setPost({
           content: "",
           groupId: "",
         });
         void utils.feed.get.invalidate();
-      }, 
+      },
     });
   };
 
+  const getUrl = async (file: File | null) => {
+    const filename = `${uuidv4()}`;
+    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(filename, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+    handleSubmitImage(data, address);
+  };
+
+  const handleSubmitImage = (data: number, url: string) => {
+    console.log(url);
+    photoMutation.mutate(
+      { data: data, url: url },
+      {
+        onSuccess() {
+          utils.profile.get
+            .invalidate({ profileId })
+            .catch((err) => console.log(err));
+        },
+      },
+    );
+  };
+
   return (
-    <form className="ring-base-500 my-3 rounded-lg bg-base-100 ring-1">
+    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-500">
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
@@ -64,22 +101,18 @@ export default function CreatePost() {
         <div className="flex items-center justify-between p-1">
           <select
             className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
-            value={post.groupId ?? undefined}
             onChange={(e) => {
-              console.log(post);
               setPost({
                 ...post,
                 groupId: e.target.value,
               });
-              console.log(post);
             }}
           >
-            <option disabled selected defaultValue={undefined}>
+            <option disabled selected>
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (
               <>
-                {" "}
                 {groupsQuery?.data?.groups?.map((g) => (
                   <option key={g.id} value={g.id}>
                     {g.name}
@@ -99,6 +132,10 @@ export default function CreatePost() {
                 name="file-upload"
                 type="file"
                 className="sr-only"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  setImage(file);
+                }}
               />
             </label>
           </div>
