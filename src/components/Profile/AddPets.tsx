@@ -1,15 +1,18 @@
 import { api } from "@/utils/api";
 import { useState } from "react";
 
-export default function AddPets({ profileId }: { profileId: string }) {
-  const animalQuery = api.pets.getAnimals.useQuery();
+export default function AddPets() {
+  type Breed = {
+    id: number;
+    name: string;
+  };
+
+  const animalQuery = api.pets.getAnimals.useQuery().data?.animals;
 
   const [firstName, setFirstName] = useState("");
   const [dateOfBirth, setDOB] = useState("mm/dd/yyyy");
   const [animalId, setAnimalId] = useState(0);
-
-  const breedQuery = api.pets.getBreeds.useQuery({ animalId });
-
+  const [breeds, setBreeds] = useState([] as Breed[]);
   const [breedId, setBreedId] = useState(0);
   const [photoUrl, setPhotoUrl] = useState("");
 
@@ -65,12 +68,17 @@ export default function AddPets({ profileId }: { profileId: string }) {
           <select
             required
             value={animalId}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setAnimalId(parseInt(e.target.value, 10))
-            }
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              const selectedAnimalId = parseInt(e.target.value, 10);
+              setAnimalId(selectedAnimalId);
+              setBreeds(
+                animalQuery?.find((animal) => animal.id === selectedAnimalId)
+                  ?.breeds ?? [],
+              );
+            }}
           >
             <option value={0}>Select Animal</option>
-            {animalQuery.data?.animals?.map((animal) => (
+            {animalQuery?.map((animal) => (
               <option key={animal.id} value={animal.id}>
                 {animal.name}
               </option>
@@ -85,7 +93,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
             }
           >
             <option value={0}>Select Breed</option>
-            {breedQuery.data?.breeds?.map((breed) => (
+            {breeds.map((breed) => (
               <option key={breed.id} value={breed.id}>
                 {breed.name}
               </option>
