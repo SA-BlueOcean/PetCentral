@@ -8,6 +8,7 @@ import type { RealtimeChannel } from "@supabase/supabase-js";
 import { cn } from "@/utils/cn";
 import { ArrowLeft, ChevronsDown, ChevronsUp } from "lucide-react";
 import Avatar from "../Feed/Avatar";
+import { useGlobalContext } from "@/providers/GlobalContext";
 
 type SupaChatsJoins = {
   User: { id: string; name: string; profilePhotoUrl?: string };
@@ -20,6 +21,12 @@ export default function Chat() {
   const [expand, setExpand] = useState(false);
   const [chats, setChats] = useState<SupaChatsJoins[]>();
   const [activeChat, setActiveChat] = useState<number | undefined>();
+  const { openChatTrigger } = useGlobalContext();
+
+  useEffect(() => {
+    openChatTrigger > 0 && setExpand(true);
+  }, [openChatTrigger]);
+
   useEffect(() => {
     const getChats = async () => {
       const chats = await supabase
@@ -28,7 +35,6 @@ export default function Chat() {
         .eq("userId", session.data?.user.id);
       if (chats.data) {
         const chatIds = chats.data?.map((d) => d.chatsId) as string[];
-        console.log("d?", chatIds);
         const { data, error } = await supabase
           .from("ChatUsers")
           .select(
@@ -45,7 +51,6 @@ export default function Chat() {
           .in("chatsId", chatIds)
           .neq("userId", session.data?.user.id);
         if (data) {
-          console.log("D?", data);
           setChats(data as unknown as SupaChatsJoins[]);
         }
       }
@@ -59,13 +64,13 @@ export default function Chat() {
           event: "INSERT",
           schema: "public",
           table: "ChatUsers",
-          filter: `userId=${session.data.user.id}`,
+          filter: `userId=eq.${session.data.user.id}`,
         },
         (payload) => {
           console.log("chats update?", payload);
           void getChats();
         },
-      );
+      ).subscribe();
     }
 
     return () => {
