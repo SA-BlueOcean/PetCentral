@@ -15,7 +15,6 @@ export default function AddFriend({
 }) {
   const utils = api.useUtils();
   const friendStatus = api.friends.getStatus.useQuery({userId});
-  console.log(friendStatus)
   const friendState = friendStatus.data;
   const [loading, setLoading] = useState(false);
   const { addFriend } = useAddFriend();
