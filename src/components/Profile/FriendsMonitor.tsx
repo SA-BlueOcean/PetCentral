@@ -20,7 +20,7 @@ export default function FriendsMonitor() {
     };
     const intervalId = setInterval(() => {
       removeFirstElement();
-    }, 2000);
+    }, 5000);
     return () => clearInterval(intervalId);
   }, [newFriends]);
 
