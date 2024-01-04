@@ -5,6 +5,7 @@ import { FileSearch, LogIn, UserRoundSearch } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Avatar from "../Feed/Avatar";
+import {useRouter} from "next/router";
 
 const links = [
   {
@@ -24,6 +25,7 @@ const links = [
 ];
 
 export default function SideNavElements() {
+  const router = useRouter();
   const session = useSession();
   const { setDisplayLoginModal } = useGlobalContext();
   const profile = api.profile.get.useQuery(
@@ -101,7 +103,9 @@ export default function SideNavElements() {
           )}
           onClick={() => {
             if (session.status === "authenticated") {
-              void signOut();
+              signOut().then(() => {
+                router.push("/");
+            })
             } else {
               setDisplayLoginModal(true);
             }
