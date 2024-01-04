@@ -162,7 +162,7 @@ const ProfileCard = ({
   user,
   fly,
 }: {
-  user: { name: string | null; id: string };
+  user: { name: string | null; id: string; profilePhotoUrl: string | null };
   fly: string | null | undefined;
 }) => {
   return (
@@ -173,8 +173,8 @@ const ProfileCard = ({
       } overflow-hidden bg-base-500`}
     >
       <Image
-        className="card-body"
-        src={`/dsafadsf`}
+        className="card-body object-cover p-0"
+        src={user.profilePhotoUrl ? user.profilePhotoUrl : "/logo-100.png"}
         width={460}
         height={460}
         alt="profile picture"
