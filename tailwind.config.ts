@@ -30,6 +30,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+
       colors: {
         "base-400": "#A9B4C2",
         "base-500": "#82919E",
@@ -37,7 +38,41 @@ export default {
         "base-700": "#404452",
         "base-800": "#282B33",
         "base-900": "#10141A",
-      }
+      },
+      keyframes: {
+        flyR: {
+          "0%": { transform: "translate(0%, 0%) rotate (0)", opacity: "1" },
+          "25%": { transform: "translate(20%, -20%) rotate(10deg)" },
+          "50%": {
+            transform: "translate(50%, -35%) rotate(25deg)",
+            opacity: "0.95",
+          },
+          "75%": { transform: "translate(75%, -45%) rotate(40deg)" },
+          "100%": {
+            transform: "translate(120%, -50%) rotate(55deg)",
+            opacity: "0",
+            visibility: "hidden",
+          },
+        },
+        flyL: {
+          "0%": { transform: "translate(0%, 0%) rotate (0)", opacity: "1" },
+          "25%": { transform: "translate(-20%, -20%) rotate(-10deg)" },
+          "50%": {
+            transform: "translate(-50%, -35%) rotate(-25deg)",
+            opacity: "0.95",
+          },
+          "75%": { transform: "translate(-75%, -45%) rotate(-40deg)" },
+          "100%": {
+            transform: "translate(-120%, -50%) rotate(-55deg)",
+            opacity: "0",
+            visiblity: "hidden",
+          },
+        },
+      },
+      animation: {
+        flyR: "flyR 300ms ease-in forwards",
+        flyL: "flyL 300ms ease-in forwards",
+      },
     },
   },
   plugins: [require("daisyui")],

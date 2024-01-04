@@ -2,11 +2,12 @@ import SideNav from "@/components/Nav/SideNav";
 import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
 import Chat from "./Chat";
+import SideNavGroups from "./Group/SideNavGroups";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,6 @@ type Provider = {
 
 const Container = ({ Component, pageProps }: AppProps) => {
   const { displayLoginModal, setDisplayLoginModal } = useGlobalContext();
-  const { data: sessionData } = useSession();
   const [providers, setProviders] = useState<Record<string, Provider>>();
 
   //disables scroll if modal is open
@@ -114,11 +114,9 @@ const Container = ({ Component, pageProps }: AppProps) => {
             </div>
             <div className="sticky top-4 hidden self-start p-4 md:block">
               <div>component b</div>
-              <div>component c</div>
+              <SideNavGroups />
             </div>
           </div>
-          {/* TODO: remove this button, for demo only */}
-          
           <div className="fixed bottom-0 right-10">
             <Chat />
           </div>
