@@ -14,7 +14,6 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
   const router = useRouter();
   const session = useSession();
   const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
-  console.log(user.data?.location?.locationName);
 
   return (
     <>
