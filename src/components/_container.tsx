@@ -2,11 +2,13 @@ import SideNav from "@/components/Nav/SideNav";
 import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
-import { signIn, getProviders } from "next-auth/react";
+import { signIn, getProviders, useSession } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
+import Chat from "./Chat";
 import SideNavGroups from "./Group/SideNavGroups";
+import FriendsMonitor from "./Profile/FriendsMonitor";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +21,7 @@ type Provider = {
 };
 
 const Container = ({ Component, pageProps }: AppProps) => {
+  const session = useSession();
   const { displayLoginModal, setDisplayLoginModal } = useGlobalContext();
   const [providers, setProviders] = useState<Record<string, Provider>>();
 
@@ -41,6 +44,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
 
   return (
     <div className={inter.className}>
+      {session.status == "authenticated" && <FriendsMonitor />}
       {displayLoginModal && (
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
           <div className="card absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 bg-base-100 shadow-xl">
@@ -115,6 +119,9 @@ const Container = ({ Component, pageProps }: AppProps) => {
               <div>component b</div>
               <SideNavGroups />
             </div>
+          </div>
+          <div className="fixed bottom-0 right-10">
+            <Chat />
           </div>
         </div>
         <div className="drawer-side z-20">

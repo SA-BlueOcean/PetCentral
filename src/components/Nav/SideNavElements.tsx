@@ -5,6 +5,7 @@ import { FileSearch, LogIn, UserRoundSearch } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Avatar from "../Feed/Avatar";
+import {useRouter} from "next/router";
 
 const links = [
   {
@@ -24,6 +25,7 @@ const links = [
 ];
 
 export default function SideNavElements() {
+  const router = useRouter();
   const session = useSession();
   const { setDisplayLoginModal } = useGlobalContext();
   const profile = api.profile.get.useQuery(
@@ -38,17 +40,28 @@ export default function SideNavElements() {
             <Link
               href={
                 link.name === "My Profile"
-                  ? `/profile/${profile.data?.id}`
+                  ? session.status === "unauthenticated"
+                    ? "#"
+                    : `/profile/${profile.data?.id}`
                   : link.href
               }
-              className="flex items-center gap-2"
+              className={cn("flex items-center gap-2", link.name === "My Profile" && session.status === "unauthenticated" && "pointer-events-none")}
             >
               {link.name === "My Profile" ? (
                 <>
                   {session.status === "unauthenticated" ? (
                     <>
-                      <LogIn />
-                      <button className="">Sign in</button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setDisplayLoginModal(true);
+                        }}
+                        className="flex items-center gap-2 pointer-events-auto w-full"
+                      >
+                        <LogIn />
+                        Sign in
+                      </button>
                     </>
                   ) : (
                     <>
@@ -90,7 +103,9 @@ export default function SideNavElements() {
           )}
           onClick={() => {
             if (session.status === "authenticated") {
-              void signOut();
+              signOut().then(() => {
+                router.push("/");
+            })
             } else {
               setDisplayLoginModal(true);
             }
