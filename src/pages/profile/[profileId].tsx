@@ -7,16 +7,11 @@ import Bio from "@/components/Profile/Bio";
 import EditPhotosModal from "@/components/Profile/EditPhotosModal";
 import Pets from "@/components/Profile/Pets";
 import AddPets from "@/components/Profile/AddPets";
-import { api } from "@/utils/api";
 
 export default function ProfilePage() {
   const router = useRouter();
-
   const profileId = router.query.profileId as string;
-  const user = api.profile.get.useQuery(
-    { profileId },
-    { enabled: !!profileId },
-  );
+
   return (
     <>
       <ProfileHeader profileId={profileId} />
