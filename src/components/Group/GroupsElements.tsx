@@ -11,7 +11,7 @@ export default function GroupsElements() {
         {groupsList.data?.groups.map((group) => (
           <li key={group.id} className="py-3">
             <Link
-              href={`/${group.id}`}
+              href={`/group/${group.id}`}
               className="flex items-center gap-3 pl-px"
             >
               <Image

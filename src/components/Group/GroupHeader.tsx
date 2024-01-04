@@ -1,6 +1,7 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import JoinButton from "./JoinBtn";
 
 type Group = {
   id: string;
@@ -14,10 +15,9 @@ type Group = {
 
 type GroupProps = {
   group: Group | null;
-  members: number;
 };
 
-export function GroupHeader({ group, members }: GroupProps) {
+export function GroupHeader({ group }: GroupProps) {
   // Add a null check before destructuring
   let name, description;
   let id = "";
@@ -44,14 +44,6 @@ export function GroupHeader({ group, members }: GroupProps) {
 
   const userIsMember = memberIdArr?.includes(user ?? "");
 
-  const updateUserGroups = async () => {
-    if (userIsMember) {
-      disconnect.mutate({ groupId: id });
-    } else {
-      mutation.mutate({ groupId: id });
-    }
-  };
-
   return (
     <>
       <div>
@@ -76,31 +68,12 @@ export function GroupHeader({ group, members }: GroupProps) {
             />
           </div>
           {/* GROUP META */}
-          <div className="-mt-10 ml-24 inline-block">
-            <div className="flex flex-row">
-              <span className="text-l basis-3/5 font-bold">{name}</span>
-              <span className="basis-2/5 text-right">
-                {members} {members === 1 ? <>Member</> : <>Members</>}
-              </span>
+          <div className="-mt-10 ml-24 flex justify-between">
+            <div className="flex flex-col">
+              <span className="text-l font-bold">{name}</span>
+              <p className="text-sm">{description}</p>
             </div>
-            <div className="flex flex-row">
-              <p className="basis-4/5 text-sm">{description}</p>
-              {userIsMember ? (
-                <button
-                  className="btn btn-primary btn-xs z-50 basis-1/5 rounded-btn uppercase text-white"
-                  onClick={() => updateUserGroups()}
-                >
-                  Leave
-                </button>
-              ) : (
-                <button
-                  className="btn btn-primary btn-xs z-50 basis-1/5 rounded-btn uppercase text-white"
-                  onClick={() => updateUserGroups()}
-                >
-                  Join
-                </button>
-              )}
-            </div>
+            <JoinButton id={id} />
           </div>
         </div>
       </div>

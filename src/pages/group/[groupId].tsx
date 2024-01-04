@@ -47,7 +47,7 @@ export default function GroupPage() {
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <GroupHeader group={groupData} members={members ?? 0} />
+      <GroupHeader group={groupData} />
       <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
         <div className="container flex flex-col items-center justify-center gap-12 py-4 ">
           <Feed groupId={groupId} mode="GROUP" />
