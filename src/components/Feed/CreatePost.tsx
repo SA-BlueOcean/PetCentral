@@ -34,7 +34,7 @@ export default function CreatePost() {
           groupId: "",
         });
         void utils.feed.get.invalidate();
-      }, 
+      },
     });
   };
 
@@ -73,7 +73,7 @@ export default function CreatePost() {
               });
             }}
           >
-            <option disabled selected>
+            <option disabled selected defaultValue={undefined}>
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (

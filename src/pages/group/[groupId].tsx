@@ -4,7 +4,6 @@ import Feed from "@/components/Feed";
 import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 import { GroupHeader } from "@/components/Group/GroupHeader";
-import CreateGroupModal from "@/components/Group/CreateGroupModal";
 
 type Group = {
   id: string;
@@ -51,7 +50,6 @@ export default function GroupPage() {
       <GroupHeader group={groupData} members={members ?? 0} />
       <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b">
         <div className="container flex flex-col items-center justify-center gap-12 py-4 ">
-          <CreateGroupModal />
           <Feed groupId={groupId} mode="GROUP" />
         </div>
       </div>
