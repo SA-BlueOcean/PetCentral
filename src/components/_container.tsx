@@ -6,6 +6,7 @@ import { signIn, getProviders, useSession } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
+import Chat from "./Chat";
 import SideNavGroups from "./Group/SideNavGroups";
 import FriendsMonitor from "./Profile/FriendsMonitor";
 
@@ -118,6 +119,9 @@ const Container = ({ Component, pageProps }: AppProps) => {
               <div>component b</div>
               <SideNavGroups />
             </div>
+          </div>
+          <div className="fixed bottom-0 right-10">
+            <Chat />
           </div>
         </div>
         <div className="drawer-side z-20">
