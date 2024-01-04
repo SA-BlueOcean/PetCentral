@@ -2,13 +2,12 @@ import { api } from "@/utils/api";
 import Link from "next/link";
 import Image from "next/image";
 
-
 export default function GroupsElements() {
   const groupsList = api.groups.findAllGroups.useQuery();
 
   return (
     <>
-      <ul className="w-full divide-y">
+      <ul className="w-full divide-y overflow-scroll">
         {groupsList.data?.groups.map((group) => (
           <li key={group.id} className="py-3">
             <Link

@@ -40,17 +40,28 @@ export default function SideNavElements() {
             <Link
               href={
                 link.name === "My Profile"
-                  ? `/profile/${profile.data?.id}`
+                  ? session.status === "unauthenticated"
+                    ? "#"
+                    : `/profile/${profile.data?.id}`
                   : link.href
               }
-              className="flex items-center gap-2"
+              className={cn("flex items-center gap-2", link.name === "My Profile" && session.status === "unauthenticated" && "pointer-events-none")}
             >
               {link.name === "My Profile" ? (
                 <>
                   {session.status === "unauthenticated" ? (
                     <>
-                      <LogIn />
-                      <button className="">Sign in</button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setDisplayLoginModal(true);
+                        }}
+                        className="flex items-center gap-2 pointer-events-auto w-full"
+                      >
+                        <LogIn />
+                        Sign in
+                      </button>
                     </>
                   ) : (
                     <>
