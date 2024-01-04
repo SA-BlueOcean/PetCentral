@@ -33,7 +33,7 @@ export default function PetCard({ pet }: { pet: Pet }) {
             ? pet?.photoUrl
             : "https://ph-files.imgix.net/75c2cda9-e2c3-4bcd-a0b1-0595daba1844.png?auto=format&fit=crop://clipart-library.com/images/BiaEg4n8T.jpg"
         }
-        alt={pet?.firstName}
+        alt={pet?.firstName ?? ""}
         width={75}
         height={75}
         unoptimized

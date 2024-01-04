@@ -92,5 +92,3 @@ export const petsRouter = createTRPCRouter({
   //   return "you can now see this secret message!";
   // }),
 });
-
-// ctrl space
