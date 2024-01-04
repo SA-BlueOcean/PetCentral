@@ -82,7 +82,6 @@ export default function PetCard({
       </div>
       <button
         onClick={() => {
-          console.log(pet);
           handleEditPet(pet, pet?.breed?.animalId ?? 0);
         }}
       >
