@@ -30,7 +30,9 @@ export default function Pets({ profileId }: { profileId: string }) {
         )}
       </div>
       <div className="flex flex-col gap-y-10">
-        {pets?.map((pet) => <PetCard key={pet.id} pet={pet} />)}
+        {pets?.map((pet) => (
+          <PetCard key={pet.id} pet={pet} profileId={profileId} />
+        ))}
       </div>
     </div>
   );
