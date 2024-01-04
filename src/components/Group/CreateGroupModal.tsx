@@ -61,9 +61,7 @@ export default function CreateGroupModal() {
         <div className="modal-box bg-primary text-white">
           <button
             className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-            onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setModalIsOpen(false)
-            }
+            onClick={() => setModalIsOpen(false)}
           >
             ✕
           </button>
