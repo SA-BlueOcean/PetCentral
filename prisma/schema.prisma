@@ -104,6 +104,8 @@ model Friend {
   friendB   User         @relation("FriendB", fields: [friendBId], references: [id])
   friendBId String
   status    FriendStatus
+
+  @@unique([friendAId, friendBId])
 }
 
 model Animal {
