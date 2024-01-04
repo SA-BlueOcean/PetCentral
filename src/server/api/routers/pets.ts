@@ -62,6 +62,20 @@ export const petsRouter = createTRPCRouter({
       });
       return pet;
     }),
+  removePet: protectedProcedure
+    .input(
+      z.object({
+        petId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const pet = await ctx.db.pet.delete({
+        where: {
+          id: input.petId,
+        },
+      });
+      return pet;
+    }),
   // input animal id find many with animal id
 
   // create: protectedProcedure
