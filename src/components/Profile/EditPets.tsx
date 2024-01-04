@@ -83,7 +83,7 @@ export default function EditPets({
             &times;
           </button>
         </form>
-        <p>{`Update ${pet?.firstName}'s Information ${firstName}`}</p>
+        <p>{`Update ${pet?.firstName}'s Information`}</p>
         <form>
           <label>First Name</label>
           <input
