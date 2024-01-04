@@ -6,6 +6,7 @@ import { signIn, getProviders } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
+import SideNavGroups from "./Group/SideNavGroups";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -112,7 +113,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
             </div>
             <div className="sticky top-4 hidden self-start p-4 md:block">
               <div>component b</div>
-              <div>component c</div>
+              <SideNavGroups />
             </div>
           </div>
         </div>
