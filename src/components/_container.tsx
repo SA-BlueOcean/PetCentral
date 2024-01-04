@@ -120,7 +120,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
               <SideNavGroups />
             </div>
           </div>
-          <div className="fixed bottom-0 right-10">
+          <div className="fixed bottom-0 right-0 sm:right-10 z-50 pointer-events-none">
             <Chat />
           </div>
         </div>

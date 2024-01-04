@@ -86,7 +86,7 @@ export default function Chat() {
   return (
     <div
       className={cn(
-        "h-[50vh] w-80 rounded-lg rounded-b-none bg-accent/80 text-neutral backdrop-blur-md transition-transform",
+        "h-[50vh] w-80 rounded-lg rounded-b-none bg-accent/80 text-neutral backdrop-blur-md transition-transform pointer-events-auto",
         expand ? "translate-y-0" : "translate-y-[calc(100%-3rem)] ",
       )}
     >
