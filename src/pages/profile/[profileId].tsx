@@ -7,7 +7,6 @@ import Bio from "@/components/Profile/Bio";
 import EditPhotosModal from "@/components/Profile/EditPhotosModal";
 import Pets from "@/components/Profile/Pets";
 import AddPets from "@/components/Profile/AddPets";
-import EditPets from "@/components/Profile/EditPets";
 import { api } from "@/utils/api";
 
 export default function ProfilePage() {
@@ -26,8 +25,7 @@ export default function ProfilePage() {
       <EditProfileModal profileId={profileId} />
       <Bio profileId={profileId} />
       <Pets profileId={profileId} />
-      <AddPets profileId={profileId} />
-      <EditPets profileId={profileId} />
+      <AddPets />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );

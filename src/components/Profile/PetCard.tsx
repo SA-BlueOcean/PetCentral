@@ -2,6 +2,7 @@ import { api } from "@/utils/api";
 import { PenSquare } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
+import EditPets from "./EditPets";
 
 interface Pet {
   id: string;
@@ -85,6 +86,7 @@ export default function PetCard({
       <button onClick={handleDelete}>
         <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
       </button>
+      <EditPets />
     </div>
   );
 }
