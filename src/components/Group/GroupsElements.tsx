@@ -13,13 +13,14 @@ export default function GroupsElements() {
           <li key={group.id} className="py-3">
             <Link
               href={`/${group.id}`}
-              className="flex items-center gap-3">
+              className="flex flex-none items-center gap-3 ">
                 <Image src={`${group.photoUrl}`}
                 alt={`Image for ${group.name}`}
                 width={50}
                 height={50}
                 unoptimized={true}
-                className="relative h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200"/>
+                style={{ objectFit: "cover" }}
+                className=" flex-none h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200"/>
                 {group.name}
             </Link>
           </li>
