@@ -46,7 +46,15 @@ export const profileRouter = createTRPCRouter({
             },
           },
           location: true,
-          pets: true,
+          pets: {
+            include: {
+              breed: {
+                include: {
+                  animal: true,
+                },
+              },
+            },
+          },
         },
       });
       return profile;
