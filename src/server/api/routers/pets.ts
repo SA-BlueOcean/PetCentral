@@ -25,18 +25,18 @@ export const petsRouter = createTRPCRouter({
         breeds: breeds,
       };
     }),
-  getPet: publicProcedure
-    .input(z.object({ petId: z.string() }))
+  getSpecificBreed: publicProcedure
+    .input(z.object({ breedId: z.number() }))
     .query(async ({ input, ctx }) => {
-      const pet = await ctx.db.pet.findUnique({
+      const breed = await ctx.db.breed.findUnique({
         where: {
-          id: input?.petId,
+          id: input?.breedId,
         },
         include: {
-          breed: true,
+          animal: true,
         },
       });
-      return pet;
+      return breed;
     }),
   addPet: protectedProcedure
     .input(
