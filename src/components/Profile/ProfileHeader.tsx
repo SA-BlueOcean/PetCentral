@@ -5,6 +5,9 @@ import { PenSquare } from "lucide-react";
 import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import AddFriend from "./AddFriend";
+import { env } from "@/env.js";
+import AddChat from "../Chat/AddChat";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(
@@ -129,6 +132,10 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
             </div>
           </div>
         </div>
+        {session.data?.user.id !== profileId && (
+          <AddFriend userId={profileId} />
+        )}
+        <AddChat userId={user.data?.id} />
       </div>
     </>
   );

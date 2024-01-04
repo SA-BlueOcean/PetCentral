@@ -76,7 +76,7 @@ export function GroupHeader({ group, members }: GroupProps) {
             />
           </div>
           {/* GROUP META */}
-          <div className="pointer-events-none -mt-10 ml-24 inline-block">
+          <div className="-mt-10 ml-24 inline-block">
             <div className="flex flex-row">
               <span className="text-l basis-3/5 font-bold">{name}</span>
               <span className="basis-2/5 text-right">
@@ -87,14 +87,14 @@ export function GroupHeader({ group, members }: GroupProps) {
               <p className="basis-4/5 text-sm">{description}</p>
               {userIsMember ? (
                 <button
-                  className="btn btn-primary btn-xs basis-1/5 rounded-btn uppercase text-white"
+                  className="btn btn-primary btn-xs z-50 basis-1/5 rounded-btn uppercase text-white"
                   onClick={() => updateUserGroups()}
                 >
                   Leave
                 </button>
               ) : (
                 <button
-                  className="btn btn-primary btn-xs basis-1/5 rounded-btn uppercase text-white"
+                  className="btn btn-primary btn-xs z-50 basis-1/5 rounded-btn uppercase text-white"
                   onClick={() => updateUserGroups()}
                 >
                   Join

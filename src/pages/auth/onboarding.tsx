@@ -80,12 +80,12 @@ export default function Onboarding() {
                 className="input input-bordered w-full max-w-xs"
               />
             </label>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary mt-2" type="submit">
+                SUBMIT
+              </button>
+            </div>
           </form>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary mt-2" type="submit">
-              SUBMIT
-            </button>
-          </div>
         </div>
       </div>
     </>
