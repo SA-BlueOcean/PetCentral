@@ -1,4 +1,5 @@
 import { api } from "@/utils/api";
+import { PenSquare } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 
@@ -72,6 +73,15 @@ export default function PetCard({
           <p>{capitalize(breed?.name ?? "")}</p>
         </div>
       </div>
+      <button
+        onClick={() =>
+          (
+            document.getElementById("my_modal_7") as HTMLDialogElement | null
+          )?.showModal?.()
+        }
+      >
+        <PenSquare size={18} strokeWidth={1.25} absoluteStrokeWidth />
+      </button>
       <button onClick={handleDelete}>
         <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
       </button>
