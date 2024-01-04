@@ -7,7 +7,7 @@ export default function GroupsElements() {
 
   return (
     <>
-      <ul className="w-full divide-y overflow-scroll">
+      <ul className="w-full divide-y px-3">
         {groupsList.data?.groups.map((group) => (
           <li key={group.id} className="py-3">
             <Link
