@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import { useState } from "react";
 
-export default function AddPets({ profileId }: { profileId: string }) {
+export default function AddPets() {
   const animalQuery = api.pets.getAnimals.useQuery();
 
   const [firstName, setFirstName] = useState("");
