@@ -1,36 +1,43 @@
 import { Check, X, PawPrint } from "lucide-react";
 import Image from "next/image";
 import { api } from "@/utils/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useMutation } from "@tanstack/react-query";
+import { setTimeout } from "timers";
 
 // const utils = api.useUtils();
 
-// const { data: sessionData, status } = useSession();
-
-// useEffect(() => {
-//   const checkSession = async () => {
-//     if (status === "unauthenticated") {
-//       await router.push("/").catch(console.error);
-//     }
-//   };
-//   checkSession().catch(console.error);
-// }, [sessionData]);
-
 export default function FindFriendsPage() {
-<<<<<<< HEAD
   const [distance, setDistance] = useState(50);
-=======
-  const hello = api.example.hello.useQuery({ text: "example hi" });
-  const [distance, setDistance] = useState(25);
->>>>>>> dev
   const [current, setCurrent] = useState(0);
   const [animate, setAnimate] = useState([]);
+  const [hide, setHide] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const { data: sessionData, status } = useSession();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      console.log("checking session", status);
+      if (status === "authenticated") {
+        setLoggedIn(true);
+      }
+    };
+    checkSession().catch(console.error);
+  }, [sessionData]);
 
   const handleNext = (dir: string) => {
     const newAnimate = [...animate];
     newAnimate[current] = dir;
     setAnimate(newAnimate);
+    const newHide = [...hide];
+    newHide[current] = true;
     setCurrent((current) => current + 1);
+    setTimeout(() => {
+      console.log("timeout");
+      setHide(newHide);
+    }, 300);
   };
 
   const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,8 +55,6 @@ export default function FindFriendsPage() {
     { distance: distance },
     { onError: errorHandle },
   );
-
-  console.log(users.data);
 
   return (
     <div className="flex w-full flex-col  justify-center gap-3">
@@ -74,6 +79,7 @@ export default function FindFriendsPage() {
               <ProfileCard
                 key={user.id}
                 fly={animate[users.data.length - index - 1]}
+                hide={hide[users.data.length - index - 1]}
                 user={user}
               />
             );
@@ -91,7 +97,7 @@ export default function FindFriendsPage() {
       </section>
       <section className="w-full p-8">
         <h2 className="text-center">Filter Friends</h2>
-        <div className="mb-8 flex justify-between gap-8">
+        <div className="mb-8">
           <div>
             <label htmlFor="distance">Friends within {distance} miles</label>
             <input
@@ -104,14 +110,14 @@ export default function FindFriendsPage() {
               className="range"
             />
           </div>
-          <button
+          {/* <button
             onClick={handleSearch}
             className="btn btn-primary btn-lg rounded-full text-base-100"
           >
             Search
-          </button>
+          </button> */}
         </div>
-        <ul className="flex flex-wrap gap-3">
+        {/* <ul className="flex flex-wrap gap-3">
           <li className="flex gap-1">
             <input type="checkbox" name="dog" id="dog" className="checkbox" />
             <label htmlFor="dog" className="font-semibold">
@@ -165,7 +171,7 @@ export default function FindFriendsPage() {
               Hamster
             </label>
           </li>
-        </ul>
+        </ul> */}
       </section>
     </div>
   );
@@ -174,22 +180,24 @@ export default function FindFriendsPage() {
 const ProfileCard = ({
   user,
   fly,
+  hide,
 }: {
   user: {
     name: string | null;
     id: string;
     profilePhotoUrl: string | null;
-    location: { locationName: string };
+    location: { locationName: string | null };
     pets: object[];
   };
   fly: string | null | undefined;
+  hide: boolean | null;
 }) => {
   return (
     <div
       className={`card absolute left-0 top-0 h-[464px] w-[400px]
       ${fly === "left" ? "animate-flyL" : null} ${
         fly === "right" ? "animate-flyR" : null
-      } overflow-hidden bg-base-500`}
+      } ${hide ? "hidden" : null} overflow-hidden bg-base-500`}
     >
       <Image
         className="card-body h-[400px] w-[400px] object-cover p-0"
