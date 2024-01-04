@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import { api } from "@/utils/api";
-// import { useRouter } from "next/router";
 import Image from "next/image";
+import { api } from "@/utils/api";
 import { useGlobalContext } from "@/providers/GlobalContext";
 
 export default function MyGroups() {
@@ -15,12 +14,12 @@ export default function MyGroups() {
       <meta name="description" content="App description" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-  );
+  )
 
   if (groupsList.isLoading) {
     return (
       <>
-      {commonHead}
+        {commonHead}
         <div>Loading Groups...</div>
       </>
     )
@@ -29,8 +28,19 @@ export default function MyGroups() {
     setDisplayLoginModal(true)
     return (
       <>
-      {commonHead}
-        <div>eError: Unable to fetch groups. Please log in.</div>
+        {commonHead}
+        <div>Error: Unable to fetch groups. Please log in.</div>
+      </>
+    )
+  }
+  if (groupsList.data?.groups?.length === 0) {
+    return (
+      <>
+        {commonHead}
+        <div className="flex h-full w-full justify-center text-xl my-2">You are not a member of any groups.</div>
+        <div className="flex h-full w-full justify-center text-xl">
+          <Link href="/group" className="text-primary-content underline">Create one?</Link>
+        </div>
       </>
     )
   }
