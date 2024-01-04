@@ -269,3 +269,7 @@ information.
 </h4>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<p> Attribution <p>
+
+<a target="_blank" href="https://icons8.com/icon/NI-py7EAFhDr/animal-shelter">Animal Shelter</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
