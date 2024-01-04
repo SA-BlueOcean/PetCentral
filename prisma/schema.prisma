@@ -78,13 +78,15 @@ model User {
   bio             String?   @db.Text
 
   location Location?
-  friendsA Friend[]  @relation("FriendA")
-  friendsB Friend[]  @relation("FriendB")
+  friendsA Friend[]    @relation("FriendA")
+  friendsB Friend[]    @relation("FriendB")
   posts    Post[]
   pets     Pet[]
   groups   Group[]
   comments Comment[]
   votes    Votes[]
+  chats    ChatUsers[]
+  messages Messages[]
 }
 
 enum FriendStatus {
@@ -223,4 +225,30 @@ model Comment {
   post   Post @relation(fields: [postId], references: [id])
 
   photos Photo[]
+}
+
+model Chats {
+  id       Int         @id @default(autoincrement())
+  messages Messages[]
+  users    ChatUsers[]
+}
+
+model ChatUsers {
+  id      Int    @id @default(autoincrement())
+  chatsId Int
+  userId  String
+  chats   Chats? @relation(fields: [chatsId], references: [id])
+  User    User   @relation(fields: [userId], references: [id])
+
+  @@unique([chatsId, userId])
+}
+
+model Messages {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  chatsId   Int
+  userId    String
+  content   String
+  chats     Chats    @relation(fields: [chatsId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
