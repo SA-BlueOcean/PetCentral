@@ -2,10 +2,21 @@ import { api } from "@/utils/api";
 import { PlusCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import PetCard from "./PetCard";
+import { useState } from "react";
+import EditPets from "./EditPets";
 
 export default function Pets({ profileId }: { profileId: string }) {
-  const pets = api.profile.get.useQuery({ profileId }, { enabled: !!profileId })
-    .data?.pets;
+  const pets = api.profile.get.useQuery({ profileId }).data?.pets;
+
+  const [currPet, setCurrPet] = useState(null);
+  const [animalId, setAnimalId] = useState(0);
+  const handleEditPet = (pet, animalId) => {
+    setCurrPet(pet);
+    setAnimalId(animalId);
+    (
+      document.getElementById("my_modal_7") as HTMLDialogElement | null
+    )?.showModal?.();
+  };
 
   const session = useSession();
 
@@ -31,9 +42,15 @@ export default function Pets({ profileId }: { profileId: string }) {
       </div>
       <div className="flex flex-col gap-y-10">
         {pets?.map((pet) => (
-          <PetCard key={pet.id} pet={pet} profileId={profileId} />
+          <PetCard
+            key={pet.id}
+            pet={pet}
+            profileId={profileId}
+            handleEditPet={handleEditPet}
+          />
         ))}
       </div>
+      <EditPets pet={currPet} animalId={animalId} profileId={profileId} />
     </div>
   );
 }
