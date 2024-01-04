@@ -2,7 +2,6 @@ import { api } from "@/utils/api";
 import { PenSquare } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import EditPets from "./EditPets";
 
 interface Pet {
   id: string;
@@ -11,19 +10,26 @@ interface Pet {
   dateOfBirth: Date | null;
   breedId: number | null;
   photoUrl: string | null;
+  breed: {
+    id: number;
+    name: string;
+    animalId: number;
+    animal: {
+      id: number;
+      name: string;
+    };
+  };
 }
 
 export default function PetCard({
   pet,
   profileId,
+  handleEditPet,
 }: {
   pet: Pet;
   profileId: string;
+  handleEditPet: (pet: Pet, animalId: number) => void;
 }) {
-  const breed = api.pets.getSpecificBreed.useQuery({
-    breedId: pet?.breedId ?? 0,
-  }).data;
-
   const mutation = api.pets.removePet.useMutation();
   const utils = api.useUtils();
 
@@ -70,23 +76,21 @@ export default function PetCard({
         <p>{capitalize(pet?.firstName ?? "")}</p>
         <div className="flex gap-x-12">
           <p>{ageDisplay}</p>
-          <p>{capitalize(breed?.animal?.name ?? "")}</p>
-          <p>{capitalize(breed?.name ?? "")}</p>
+          <p>{capitalize(pet?.breed?.animal?.name ?? "")}</p>
+          <p>{capitalize(pet?.breed?.name ?? "")}</p>
         </div>
       </div>
       <button
-        onClick={() =>
-          (
-            document.getElementById("my_modal_7") as HTMLDialogElement | null
-          )?.showModal?.()
-        }
+        onClick={() => {
+          console.log(pet);
+          handleEditPet(pet, pet?.breed?.animalId ?? 0);
+        }}
       >
         <PenSquare size={18} strokeWidth={1.25} absoluteStrokeWidth />
       </button>
       <button onClick={handleDelete}>
         <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
       </button>
-      <EditPets petId={pet?.id} />
     </div>
   );
 }
