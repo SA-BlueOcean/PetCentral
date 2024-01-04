@@ -31,7 +31,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
   };
 
   return (
-    <dialog id="my_modal_5" className="modal">
+    <dialog id="my_modal_6" className="modal">
       <div className="modal-box">
         <form method="dialog">
           <button
@@ -100,7 +100,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
                 setPhotoUrl(e.target.value)
               }
             />
-            <button>Upload Photo</button>
+            <button type="button">Upload Photo</button>
           </div>
           <button onClick={handleSubmit}>Add Pet</button>
         </form>

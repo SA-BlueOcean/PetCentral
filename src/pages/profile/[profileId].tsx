@@ -7,6 +7,7 @@ import Bio from "@/components/Profile/Bio";
 import EditPhotosModal from "@/components/Profile/EditPhotosModal";
 import Pets from "@/components/Profile/Pets";
 import AddPets from "@/components/Profile/AddPets";
+import { api } from "@/utils/api";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -22,9 +23,9 @@ export default function ProfilePage() {
       <EditPhotosModal profileId={profileId} />
       <EditProfilePhotoModal profileId={profileId} />
       <EditProfileModal profileId={profileId} />
+      <AddPets profileId={profileId} />
       <Bio profileId={profileId} />
       <Pets profileId={profileId} />
-      <AddPets profileId={profileId} />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );
