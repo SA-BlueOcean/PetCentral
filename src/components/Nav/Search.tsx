@@ -17,7 +17,7 @@ export default function Search() {
             className="input join-item rounded-r-full focus:outline-none focus-visible:outline-none"
           />
           </div>
-          
+
         </form>
       </search>
     </div>
