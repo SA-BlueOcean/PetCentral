@@ -43,7 +43,7 @@ export default function CreatePost() {
           groupId: "",
         });
         void utils.feed.get.invalidate();
-      }, 
+      },
     });
   };
 
@@ -89,7 +89,7 @@ export default function CreatePost() {
         </div>
         <div className="flex items-center justify-between p-1">
           <select
-            className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
+            className="select select-ghost z-50 max-w-xs grow pl-1 text-secondary-content"
             value={post.groupId ?? undefined}
             onChange={(e) => {
               setPost({
@@ -98,7 +98,7 @@ export default function CreatePost() {
               });
             }}
           >
-            <option disabled selected>
+            <option disabled selected defaultValue={undefined}>
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (
@@ -130,7 +130,7 @@ export default function CreatePost() {
             </label>
           </div>
           <button
-            className="btn btn-primary btn-sm rounded-btn uppercase text-white"
+            className="btn btn-primary btn-sm z-50 rounded-btn uppercase text-white"
             onClick={(e) => handleSubmit(e)}
           >
             Post
