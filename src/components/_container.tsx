@@ -134,7 +134,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
               LOGOUT
             </button>
           )} */}
-          <div className="fixed bottom-0 right-0">
+          <div className="fixed bottom-0 right-10">
             <Chat />
           </div>
         </div>
