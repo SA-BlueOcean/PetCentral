@@ -5,9 +5,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
   const animalQuery = api.pets.getAnimals.useQuery();
 
   const [firstName, setFirstName] = useState("");
-  const [dateOfBirth, setDOB] = useState(
-    new Date().toISOString().split("T")[0],
-  );
+  const [dateOfBirth, setDOB] = useState("mm/dd/yyyy");
   const [animalId, setAnimalId] = useState(0);
 
   const breedQuery = api.pets.getBreeds.useQuery({ animalId });
@@ -27,7 +25,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
 
   const resetFields = () => {
     setFirstName("");
-    setDOB(new Date().toISOString().split("T")[0]);
+    setDOB("mm/dd/yyyy");
     setAnimalId(0);
     setBreedId(0);
   };
