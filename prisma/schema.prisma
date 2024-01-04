@@ -235,17 +235,16 @@ model Chats {
 
 model ChatUsers {
   id      Int    @id @default(autoincrement())
-  chatId  Int
+  chatsId Int
   userId  String
   chats   Chats? @relation(fields: [chatsId], references: [id])
-  chatsId Int?
   User    User   @relation(fields: [userId], references: [id])
 
-  @@unique([chatId, userId])
+  @@unique([chatsId, userId])
 }
 
 model Messages {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   chatsId   Int
   userId    String
