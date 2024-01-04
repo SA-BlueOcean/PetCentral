@@ -21,7 +21,7 @@ export default function Chat() {
   const [expand, setExpand] = useState(false);
   const [chats, setChats] = useState<SupaChatsJoins[]>();
   const [activeChat, setActiveChat] = useState<number | undefined>();
-  const { openChatTrigger } = useGlobalContext();
+  const { openChatTrigger, setDisplayLoginModal } = useGlobalContext();
 
   useEffect(() => {
     openChatTrigger > 0 && setExpand(true);
@@ -58,19 +58,22 @@ export default function Chat() {
     let channels: RealtimeChannel;
     if (session.data?.user.id) {
       getChats();
-      channels = supabase.channel("chats-channel").on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "ChatUsers",
-          filter: `userId=eq.${session.data.user.id}`,
-        },
-        (payload) => {
-          console.log("chats update?", payload);
-          void getChats();
-        },
-      ).subscribe();
+      channels = supabase
+        .channel("chats-channel")
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "ChatUsers",
+            filter: `userId=eq.${session.data.user.id}`,
+          },
+          (payload) => {
+            console.log("chats update?", payload);
+            void getChats();
+          },
+        )
+        .subscribe();
     }
 
     return () => {
@@ -113,7 +116,21 @@ export default function Chat() {
           {expand ? <ChevronsDown /> : <ChevronsUp />}
         </button>
       </div>
-      <div className="h-full">
+      <div
+        className={cn(
+          "h-full",
+          session.status === "unauthenticated" &&
+            "flex items-center justify-center",
+        )}
+      >
+        {session.status === "unauthenticated" && (
+          <button
+            className="btn btn-accent mb-12 rounded-l-full rounded-r-full "
+            onClick={() => setDisplayLoginModal(true)}
+          >
+            Sign in To Chat
+          </button>
+        )}
         {activeChat ? (
           <ChatRoom chatId={activeChat} />
         ) : (

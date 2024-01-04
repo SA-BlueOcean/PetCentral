@@ -118,22 +118,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
             </div>
           </div>
           {/* TODO: remove this button, for demo only */}
-          {!sessionData && (
-            <button
-              className="btn btn-ghost fixed bottom-0 right-0"
-              onClick={() => setDisplayLoginModal(true)}
-            >
-              LOGIN
-            </button>
-          )}{" "}
-          {/* {sessionData && (
-            <button
-              className="btn btn-ghost fixed bottom-0 right-0"
-              onClick={() => signOut()}
-            >
-              LOGOUT
-            </button>
-          )} */}
+          
           <div className="fixed bottom-0 right-10">
             <Chat />
           </div>

@@ -4,7 +4,7 @@ import { Loader, MessageCircle } from "lucide-react";
 
 export default function AddChat({ userId }: { userId?: string }) {
   const mutation = api.chat.joinChat.useMutation();
-  const { triggerOpenChat } = useGlobalContext();
+  const { triggerOpenChat, setDisplayLoginModal } = useGlobalContext();
   return (
     <button
       className="btn"
@@ -16,6 +16,9 @@ export default function AddChat({ userId }: { userId?: string }) {
           { userId },
           {
             onError(error, variables, context) {
+              if (error.message === "UNAUTHORIZED") {
+                setDisplayLoginModal(true);
+              }
             },
             onSuccess(data, variables, context) {
               triggerOpenChat();
