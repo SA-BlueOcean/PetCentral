@@ -1,4 +1,5 @@
 import { z } from "zod";
+import zipcodes from "zipcodes";
 
 import {
   createTRPCRouter,
@@ -10,15 +11,7 @@ export const friendsRouter = createTRPCRouter({
   findFriends: publicProcedure
     .input(z.object({ distance: z.number().optional() }))
     .query(async ({ ctx, input }) => {
-      let zips = [
-        "30301",
-        "30302",
-        "30303",
-        "30304",
-        "30305",
-        "30306",
-        "30307",
-      ];
+      let zips = zipcodes.radius(30301, input?.distance);
       const users = await ctx.db.user.findMany({
         where: {
           location: {
