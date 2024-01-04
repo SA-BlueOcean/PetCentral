@@ -166,6 +166,7 @@ const ProfileCard = ({
     id: string;
     profilePhotoUrl: string | null;
     location: { locationName: string };
+    pets: object[];
   };
   fly: string | null | undefined;
 }) => {
@@ -193,7 +194,7 @@ const ProfileCard = ({
         </div>
         <div className="mr-3 flex gap-2">
           <PawPrint />
-          <p className="font-normal">2</p>
+          <p className="font-normal">{user.pets.length}</p>
           <p className="font-normal">Pets</p>
         </div>
       </div>
