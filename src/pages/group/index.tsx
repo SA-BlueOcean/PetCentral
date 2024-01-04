@@ -22,7 +22,7 @@ export default function GroupsSearch() {
             className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500"
           >
             <Link
-              href={`/${group.id}`}
+              href={`/group/${group.id}`}
               className="relative h-10 w-10 overflow-clip rounded-lg bg-secondary ring-1 ring-base-200"
             >
               <Image
