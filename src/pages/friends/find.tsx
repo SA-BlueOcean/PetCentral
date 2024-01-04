@@ -3,6 +3,8 @@ import Image from "next/image";
 import { api } from "@/utils/api";
 import { useState } from "react";
 
+// const utils = api.useUtils();
+
 // const { data: sessionData, status } = useSession();
 
 // useEffect(() => {
@@ -15,9 +17,9 @@ import { useState } from "react";
 // }, [sessionData]);
 
 export default function FindFriendsPage() {
-  const [distance, setDistance] = useState(25);
+  const [distance, setDistance] = useState(50);
   const [current, setCurrent] = useState(0);
-  const [animate, setAnimate] = useState(["false", "false", "false"]);
+  const [animate, setAnimate] = useState([]);
 
   const handleNext = (dir: string) => {
     const newAnimate = [...animate];
@@ -28,6 +30,10 @@ export default function FindFriendsPage() {
 
   const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDistance(Number(e.target.value));
+  };
+
+  const handleSearch = () => {
+    console.log("searching");
   };
 
   const errorHandle = (err: unknown) => {
@@ -93,7 +99,10 @@ export default function FindFriendsPage() {
               className="range"
             />
           </div>
-          <button className="btn btn-primary btn-lg rounded-full text-base-100">
+          <button
+            onClick={handleSearch}
+            className="btn btn-primary btn-lg rounded-full text-base-100"
+          >
             Search
           </button>
         </div>
