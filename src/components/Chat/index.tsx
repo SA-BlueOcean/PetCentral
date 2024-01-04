@@ -6,12 +6,19 @@ import { supabase } from "lib/supabase";
 import type { ChatUsers } from "@prisma/client";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { cn } from "@/utils/cn";
-import { ChevronsDown, ChevronsUp } from "lucide-react";
+import { ArrowLeft, ChevronsDown, ChevronsUp } from "lucide-react";
+import Avatar from "../Feed/Avatar";
+
+type SupaChatsJoins = {
+  User: { id: string; name: string; profilePhotoUrl?: string };
+  chatsId: number;
+  id: number;
+};
 
 export default function Chat() {
   const session = useSession();
   const [expand, setExpand] = useState(false);
-  const [chats, setChats] = useState<ChatUsers[]>();
+  const [chats, setChats] = useState<SupaChatsJoins[]>();
   const [activeChat, setActiveChat] = useState<number | undefined>();
   useEffect(() => {
     const getChats = async () => {
@@ -28,17 +35,19 @@ export default function Chat() {
             `
           id,
           chatsId,
-          ,
-          Users (
+          User (
             id,
             name,
             profilePhotoUrl
-          )
+          )          
           `,
           )
-          .in("chatId", chatIds);
-        console.log("chats?", data);
-        setChats(data);
+          .in("chatsId", chatIds)
+          .neq("userId", session.data?.user.id);
+        if (data) {
+          console.log("D?", data);
+          setChats(data as unknown as SupaChatsJoins[]);
+        }
       }
     };
     let channels: RealtimeChannel;
@@ -54,6 +63,7 @@ export default function Chat() {
         },
         (payload) => {
           console.log("chats update?", payload);
+          void getChats();
         },
       );
     }
@@ -63,28 +73,57 @@ export default function Chat() {
     };
   }, [session.data?.user.id]);
 
+  const selectedUser = chats?.find((c) => c.chatsId === activeChat);
+
   return (
     <div
       className={cn(
-        "h-[50vh] w-80 rounded-lg bg-accent/80 text-neutral backdrop-blur-md transition-transform rounded-b-none",
+        "h-[50vh] w-80 rounded-lg rounded-b-none bg-accent/80 text-neutral backdrop-blur-md transition-transform",
         expand ? "translate-y-0" : "translate-y-[calc(100%-3rem)] ",
       )}
     >
       <div
-        onClick={() => setExpand((e) => !e)}
-        className="flex h-12 items-center justify-between px-4"
+        onClick={() => !activeChat && setExpand((e) => !e)}
+        className="flex h-12 items-center justify-between border-b border-b-accent px-4"
       >
-        <h2 className="text-lg">Messages</h2>
-        <button className="p-1">{expand ? <ChevronsDown /> : <ChevronsUp />}</button>
+        {activeChat ? (
+          <div className="flex items-center gap-2">
+            <button
+              className="btn btn-circle btn-ghost"
+              onClick={() => setActiveChat(undefined)}
+            >
+              <ArrowLeft />
+            </button>
+
+            <h2 className="text-lg">{selectedUser?.User?.name}</h2>
+          </div>
+        ) : (
+          <h2 className="text-lg">Messages</h2>
+        )}
+
+        <button
+          className="btn btn-circle btn-ghost p-1"
+          onClick={() => activeChat && setExpand((e) => !e)}
+        >
+          {expand ? <ChevronsDown /> : <ChevronsUp />}
+        </button>
       </div>
-      <div>
+      <div className="h-full">
         {activeChat ? (
           <ChatRoom chatId={activeChat} />
         ) : (
-          <ul className="">
+          <ul className="max-h-[calc(100%-3rem)] overflow-auto">
             {chats?.map((chat) => (
-              <li key={chat.id} onClick={() => setActiveChat(chat.chatsId)}>
-                chat {chat.chatsId}
+              <li
+                key={chat.id}
+                onClick={() => setActiveChat(chat.chatsId)}
+                className="flex items-center gap-2 p-4 hover:cursor-pointer hover:bg-accent"
+              >
+                <div className="relative h-8 w-8 overflow-clip rounded-full">
+                  <Avatar profilePhotoUrl={chat.User.profilePhotoUrl} />
+                </div>
+
+                {chat.User.name}
               </li>
             ))}
           </ul>
