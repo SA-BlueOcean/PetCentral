@@ -21,8 +21,8 @@ export default function GroupsSearch() {
               <Image src={`${group.photoUrl}`} alt={`Image for ${group.name}`} width={50} height={50} unoptimized={true}/>
             </Link>
             <div className="flex flex-col mx-4">
-              <Link href={`/${group.id}`} >
-                  <h1>{group.name}</h1>
+              <Link href={`/group/${group.id}`} >
+                  <h2>{group.name}</h2>
               </Link>
               <p>{group.description}</p>
             </div>

@@ -27,7 +27,7 @@ export const groupRouter = createTRPCRouter({
     };
   }),
 
-  fetchGroups: publicProcedure.query(async ({ ctx }) => {
+  fetchGroups: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session?.user?.id;
 
     const groups = await ctx.db.user.findUnique({
