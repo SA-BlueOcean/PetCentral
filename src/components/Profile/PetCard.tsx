@@ -1,12 +1,11 @@
 import Image from "next/image";
 
 interface Pet {
-  firstName: string;
-  lastName: string;
-  dateOfBirth: Date;
-  animalId: number;
-  breedId: number;
-  photoUrl: string;
+  firstName: string | null;
+  lastName: string | null;
+  dateOfBirth: Date | null;
+  breedId: number | null;
+  photoUrl: string | null;
 }
 
 export default function PetCard({ pet }: { pet: Pet }) {
