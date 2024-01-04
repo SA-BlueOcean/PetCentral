@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import { api } from "@/utils/api";
-// import { useRouter } from "next/router";
 import Image from "next/image";
 
 export default function GroupsSearch() {
