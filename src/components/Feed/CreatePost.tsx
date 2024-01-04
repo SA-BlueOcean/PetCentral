@@ -8,6 +8,7 @@ export default function CreatePost() {
     content: "",
     groupId: "",
   });
+
   const mutation = api.posts.createPost.useMutation({});
   const { setDisplayLoginModal } = useGlobalContext();
 
@@ -17,6 +18,7 @@ export default function CreatePost() {
   // Fetch User's Groups
   const groupsQuery = api.groups.fetchGroups.useQuery();
   const utils = api.useUtils();
+
   const handleSubmit = async (
     e: { preventDefault: () => void } | undefined,
   ) => {
@@ -33,12 +35,12 @@ export default function CreatePost() {
           groupId: "",
         });
         void utils.feed.get.invalidate();
-      }, 
+      },
     });
   };
 
   return (
-    <form className="ring-base-500 my-3 rounded-lg bg-base-100 ring-1">
+    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-500">
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
@@ -64,22 +66,18 @@ export default function CreatePost() {
         <div className="flex items-center justify-between p-1">
           <select
             className="select select-ghost max-w-xs grow pl-1 text-secondary-content"
-            value={post.groupId ?? undefined}
             onChange={(e) => {
-              console.log(post);
               setPost({
                 ...post,
                 groupId: e.target.value,
               });
-              console.log(post);
             }}
           >
-            <option disabled selected defaultValue={undefined}>
+            <option disabled selected>
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (
               <>
-                {" "}
                 {groupsQuery?.data?.groups?.map((g) => (
                   <option key={g.id} value={g.id}>
                     {g.name}
