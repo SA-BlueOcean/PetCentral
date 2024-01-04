@@ -46,29 +46,33 @@ export function GroupHeader({ group }: GroupProps) {
 
   return (
     <>
-      <div>
+      <div className="relative -m-3 pb-4">
         {/* GROUP BANNER */}
-        <Image
-          src={bannerPhotoUrl}
-          alt={`${name} banner background`}
-          width={700}
-          height={100}
-          unoptimized={true}
-          className="h-20 w-full object-cover"
-        ></Image>
+        <div className="absolute">
+          <Image
+            src={bannerPhotoUrl}
+            alt={`${name} banner background`}
+            width={700}
+            height={100}
+            unoptimized={true}
+            className="h-full max-h-20 max-w-full object-cover"
+          ></Image>
+        </div>
 
-        {/* GROUP AVATAR */}
-        <div className="avatar mx-auto block max-h-28 w-11/12 sm:-mt-8">
-          <div className="relative max-h-20 w-full overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 sm:w-20">
-            <Image
-              src={photoUrl}
-              alt="group avatar"
-              unoptimized={true}
-              fill={true}
-            />
+        <div className="z-10 flex w-full pt-20 px-10 gap-4">
+          <div className="absolute top-0 translate-y-1/2">
+            <div className="relative h-20 w-20 overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 ">
+              <Image
+                src={photoUrl}
+                alt="group avatar"
+                unoptimized={true}
+                fill={true}
+              />
+            </div>
           </div>
-          {/* GROUP META */}
-          <div className="-mt-10 ml-24 flex justify-between">
+          <div className="w-20"></div>
+
+          <div className="flex justify-between p-2 w-full">
             <div className="flex flex-col">
               <span className="text-l font-bold">{name}</span>
               <p className="text-sm">{description}</p>
