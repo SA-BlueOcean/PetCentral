@@ -1,20 +1,39 @@
 import { useState } from "react";
 import UploadFiles from "@/components/Profile/UploadFile";
+import { api } from "@/utils/api";
 
 export default function CreateGroupModal() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [groupDetails, setGroupDetails] = useState({
     name: "",
     description: "",
-    avatar: "",
-    banner: "",
+    photoUrl: "",
+    bannerPhotoUrl: "",
   });
+
+  const mutation = api.groups.create.useMutation({});
 
   if (modalIsOpen) {
     if (document) {
       document.getElementById("my_modal_5").showModal();
     }
   }
+
+  const createGroup = async () => {
+    console.log(groupDetails);
+    mutation.mutate({
+      name: groupDetails.name,
+      description: groupDetails.description,
+    });
+  };
+
+  const updatePhoto = async (url: string, type: string) => {
+    if (type === "avatar") {
+      setGroupDetails({ ...groupDetails, photoUrl: url });
+    } else {
+      setGroupDetails({ ...groupDetails, bannerPhotoUrl: url });
+    }
+  };
 
   return (
     <>
@@ -48,10 +67,13 @@ export default function CreateGroupModal() {
                   });
                 }}
               />
-              {/* <UploadFiles update={addGroupBanner} />
-              <UploadFiles update={addGroupAvatar} /> */}
+              <label className="mr-4">Upload Group Avatar</label>
+              <UploadFiles update={updatePhoto} />
+
+              <label className="mr-4">Upload Group Banner</label>
+              <UploadFiles update={updatePhoto} />
               <div>
-                <button className="btn" onChange={() => createGroup()}>
+                <button className="btn" onClick={() => createGroup()}>
                   Create Group
                 </button>
               </div>

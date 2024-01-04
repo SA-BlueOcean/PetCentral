@@ -14,16 +14,16 @@ export const groupRouter = createTRPCRouter({
       .object({
         name: z.string().min(1),
         description: z.string().min(1),
-        photoUrl: z.string().min(1),
-        bannerPhotoUrl: z.string().min(1),
+        // photoUrl: z.string().min(1),
+        // bannerPhotoUrl: z.string().min(1),
       }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.group.create({
         data: {
           name: input.name,
           description: input.description,
-          photoUrl: input.photoUrl,
-          bannerPhotoUrl: input.bannerPhotoUrl,
+          // photoUrl: input.photoUrl,
+          // bannerPhotoUrl: input.bannerPhotoUrl,
           members: {
             connect: { id: ctx.session.user.id },
           },
