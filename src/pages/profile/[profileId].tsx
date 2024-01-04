@@ -13,10 +13,7 @@ export default function ProfilePage() {
   const router = useRouter();
 
   const profileId = router.query.profileId as string;
-  const user = api.profile.get.useQuery(
-    { profileId },
-    { enabled: !!profileId },
-  );
+
   return (
     <>
       <ProfileHeader profileId={profileId} />
