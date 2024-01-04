@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Search from "./Search";
+import { BookUser, UsersRound } from "lucide-react";
 
 export default function TopNav() {
   return (
@@ -7,12 +8,13 @@ export default function TopNav() {
       <ul className="hidden flex-row gap-4 sm:flex">
         <li>
           <Link href={"/friends"} className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-full bg-base-100"></div>My Friends
+            <UsersRound />
+            My Friends
           </Link>
         </li>
         <li>
-          <Link href={"/group"} className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-full bg-base-100"></div>My Groups
+          <Link href={"/group/mygroups"} className="flex items-center gap-2">
+            <BookUser /> My Groups
           </Link>
         </li>
       </ul>
@@ -40,7 +42,7 @@ export default function TopNav() {
       <div className="hidden sm:block">
         <Search />
       </div>
-      <div className="block sm:hidden pr-4">
+      <div className="block pr-4 sm:hidden">
         <h2 className="text-xl">Pet Pals</h2>
       </div>
     </nav>

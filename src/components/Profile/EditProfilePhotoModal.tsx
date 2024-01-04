@@ -1,14 +1,18 @@
 import { api } from "@/utils/api";
 import UploadFiles from "@/components/Profile/UploadFile";
 
-export default function EditPhotosModal({ profileId }: { profileId: string }) {
+export default function EditProfilePhotoModal({
+  profileId,
+}: {
+  profileId: string;
+}) {
   const mutation = api.profile.updatePhotos.useMutation();
 
   const utils = api.useUtils();
 
-  const updateBanner = (url: string) => {
+  const updateProfile = (url: string) => {
     mutation.mutate(
-      { bannerPhotoUrl: url },
+      { profilePhotoUrl: url },
       {
         onSuccess() {
           utils.profile.get
@@ -18,9 +22,8 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
       },
     );
   };
-
   return (
-    <dialog id="my_modal_3" className="modal">
+    <dialog id="my_modal_5" className="modal">
       <div className="pl-100 modal-box  w-11/12 max-w-3xl">
         <div className="modal-action">
           <form method="dialog">
@@ -33,13 +36,13 @@ export default function EditPhotosModal({ profileId }: { profileId: string }) {
           </form>
         </div>
         <h3 className="text-center text-lg font-bold">
-          Update Your Banner Photo:
+          Update Your Profile Photo:
         </h3>
         <div className="flex justify-center pl-3">
           <div>
             <div className="pt-4">
-              <label> Banner Photo URL: </label>
-              <UploadFiles update={updateBanner} />
+              <label> Profile Photo URL: </label>
+              <UploadFiles update={updateProfile} />
             </div>
           </div>
         </div>

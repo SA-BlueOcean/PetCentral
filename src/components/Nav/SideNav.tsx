@@ -1,38 +1,34 @@
 import Link from "next/link";
+import SideNavElements from "./SideNavElements";
+import Image from "next/image";
+import { Rubik_Bubbles } from "next/font/google";
 
-const links = [
-  {
-    name: "My Profile",
-    href: "/profile",
-  },
-  {
-    name: "Find Friends",
-    href: "/friends",
-  },
-  {
-    name: "Find Groups",
-    href: "/group",
-  },
-];
+const rubik = Rubik_Bubbles({
+  weight: ["400"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 
 export default function SideNav() {
   return (
-    <nav className="flex flex-col items-center justify-center rounded-lg bg-primary-content p-4 text-neutral gap-2">
-      <Link href={'/'} className="flex flex-col items-center justify-center gap-2">
-        <div className="h-14 w-14 rounded-full bg-base-100"></div>
-        <h2 className="text-2xl">Pet Pals</h2>
+    <nav className="flex flex-col items-center justify-center gap-2 rounded-lg bg-primary-content p-4 text-neutral">
+      <Link
+        href={"/"}
+        className="flex flex-col items-center justify-center gap-2"
+      >
+        <div className="rounded-full border-4 border-accent bg-base-100 p-4 shadow-2xl">
+          <Image
+            src={"/logo-100.png"}
+            alt={"Pet Pals Logo"}
+            width={75}
+            height={75}
+          />
+        </div>
+        <h2 className={`text-3xl tracking-wide ${rubik.className}`}>
+          Pet Pals
+        </h2>
       </Link>
-      <ul className="divide-y w-full">
-        {links.map((link) => (
-          <li key={link.name} className="py-2 ">
-            <Link href={link.href} className="flex items-center gap-2">
-              <div className="h-10 w-10 rounded-full bg-base-100"></div>
-              {link.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <button className="btn rounded-full w-full min-h-8 h-8 mt-2">New Post</button>
+      <SideNavElements />
     </nav>
   );
 }

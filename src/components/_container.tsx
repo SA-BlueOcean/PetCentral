@@ -2,8 +2,12 @@ import SideNav from "@/components/Nav/SideNav";
 import TopNav from "@/components/Nav/TopNav";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import type { AppProps } from "next/app";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { signIn, getProviders } from "next-auth/react";
+import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
+import SideNavElements from "./Nav/SideNavElements";
+
+const inter = Inter({ subsets: ["latin"] });
 
 type Provider = {
   id: string;
@@ -15,7 +19,6 @@ type Provider = {
 
 const Container = ({ Component, pageProps }: AppProps) => {
   const { displayLoginModal, setDisplayLoginModal } = useGlobalContext();
-  const { data: sessionData } = useSession();
   const [providers, setProviders] = useState<Record<string, Provider>>();
 
   //disables scroll if modal is open
@@ -36,7 +39,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <>
+    <div className={inter.className}>
       {displayLoginModal && (
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
           <div className="card absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 bg-base-100 shadow-xl">
@@ -112,23 +115,6 @@ const Container = ({ Component, pageProps }: AppProps) => {
               <div>component c</div>
             </div>
           </div>
-          {/* TODO: remove this button, for demo only */}
-          {!sessionData && (
-            <button
-              className="btn btn-ghost fixed bottom-0 right-0"
-              onClick={() => setDisplayLoginModal(true)}
-            >
-              LOGIN
-            </button>
-          )}{" "}
-          {sessionData && (
-            <button
-              className="btn btn-ghost fixed bottom-0 right-0"
-              onClick={() => signOut()}
-            >
-              LOGOUT
-            </button>
-          )}
         </div>
         <div className="drawer-side z-20">
           <label
@@ -144,11 +130,11 @@ const Container = ({ Component, pageProps }: AppProps) => {
             >
               x
             </label>
-            sidebar content
+            <SideNavElements />
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

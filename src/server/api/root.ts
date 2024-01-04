@@ -4,6 +4,11 @@ import { feedRouter } from "./routers/feed";
 import { profileRouter } from "./routers/profile";
 import { authRouter } from "./routers/auth";
 import { petsRouter } from "./routers/pets";
+import { commentRouter } from "./routers/comments";
+import { friendsRouter } from "./routers/friends";
+import { groupRouter } from "./routers/groups";
+import { userRouter } from "./routers/users";
+import { postRouter } from "./routers/posts";
 
 /**
  * This is the primary router for your server.
@@ -13,9 +18,14 @@ import { petsRouter } from "./routers/pets";
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   feed: feedRouter,
+  users: userRouter,
+  posts: postRouter,
+  groups: groupRouter,
   profile: profileRouter,
   auth: authRouter,
   pets: petsRouter,
+  comments: commentRouter,
+  friends: friendsRouter,
 });
 
 // export type definition of API

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import pets from "../data/pets.json" assert { type: 'json' };
+import pets from "../data/pets.json" assert { type: "json" };
 
 const prisma = new PrismaClient();
 
@@ -17,17 +17,19 @@ async function main() {
   await Promise.all(
     users.map(async (user) => {
       const email = `${user}@example.test`;
-      const posts = new Array(Math.floor(Math.random() * 20)).fill(0).map((_, i) => ({
-        createdAt: new Date(
-          Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000,
-        ),
-        downvotes: Math.floor(Math.random() * 100),
-        upvotes: Math.floor(Math.random() * 1000),
-        content: generateRandomSentence(20 + Math.floor(Math.random() * 100)),
-        groupId: null,
-      }));
+      const posts = new Array(Math.floor(Math.random() * 20))
+        .fill(0)
+        .map((_, i) => ({
+          createdAt: new Date(
+            Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000,
+          ),
+          downvotes: Math.floor(Math.random() * 100),
+          upvotes: Math.floor(Math.random() * 1000),
+          content: generateRandomSentence(20 + Math.floor(Math.random() * 100)),
+          groupId: null,
+        }));
 
-      await prisma.user.upsert({
+      const userUpsert = await prisma.user.upsert({
         where: { email: email },
         update: {},
         create: {
@@ -41,7 +43,42 @@ async function main() {
             },
           },
         },
+        select: {
+          posts: {
+            select: {
+              id: true,
+              createdAt: true,
+            },
+          },
+          id: true,
+        },
       });
+      await Promise.all(
+        userUpsert.posts.map(async (post) => {
+          const comments = new Array(Math.floor(Math.random() * 7)).fill(0);
+          const createComments = await prisma.comment.createMany({
+            data: comments.map((c) => ({
+              content: generateRandomSentence(
+                2 + Math.floor(Math.random() * 4),
+              ),
+              postId: post.id,
+              createdById: userUpsert.id,
+              createdAt: new Date(
+                post.createdAt.getTime() +
+                  Math.floor(Math.random() * 4) * 24 * 60 * 60 * 1000,
+              ),
+            })),
+          });
+          await prisma.post.update({
+            where: { id: post.id },
+            data: {
+              numComments: {
+                increment: createComments.count,
+              },
+            },
+          });
+        }),
+      );
     }),
   );
 
