@@ -13,7 +13,8 @@ export default function PetCard({ pet }: { pet: Pet }) {
   const breed = api.pets.getSpecificBreed.useQuery({
     breedId: pet?.breedId ?? 0,
   }).data;
-  const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
+  const capitalize = (s: string | undefined) =>
+    s ? s?.[0]?.toUpperCase() + s.slice(1) : "";
   const currentDate = new Date();
   const birthdate = new Date(pet?.dateOfBirth ?? new Date());
   const ageInMilliseconds = currentDate.getTime() - birthdate.getTime();
