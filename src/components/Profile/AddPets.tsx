@@ -1,5 +1,8 @@
 import { api } from "@/utils/api";
 import { useState } from "react";
+import { supabase } from "lib/supabase";
+import { v4 as uuidv4 } from "uuid";
+import { env } from "@/env.js";
 
 export default function AddPets({ profileId }: { profileId: string }) {
   type Breed = {
@@ -14,7 +17,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
   const [animalId, setAnimalId] = useState(0);
   const [breeds, setBreeds] = useState([] as Breed[]);
   const [breedId, setBreedId] = useState(0);
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   const resetFields = () => {
     setFirstName("");
@@ -26,14 +29,25 @@ export default function AddPets({ profileId }: { profileId: string }) {
 
   const mutation = api.pets.addPet.useMutation();
   const utils = api.useUtils();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!file) {
+      return;
+    }
+    const filename = `${uuidv4()}`;
+    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(filename, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
     mutation.mutate(
       {
         firstName,
         dateOfBirth: new Date(Date.parse(dateOfBirth ?? "")),
         breedId,
-        photoUrl,
+        photoUrl: address,
       },
       {
         onSuccess: () => {
@@ -62,7 +76,7 @@ export default function AddPets({ profileId }: { profileId: string }) {
         </form>
         <p className="mt-5 text-center text-lg font-semibold">Add Your Pet</p>
         <form
-          className="mx-20 my-5 flex flex-col gap-y-3"
+          className="mx-20 my-5 flex flex-col gap-y-5"
           onSubmit={handleSubmit}
         >
           <label className="form-control w-full max-w-xs">
@@ -137,21 +151,19 @@ export default function AddPets({ profileId }: { profileId: string }) {
               ))}
             </select>
           </label>
-          <label>Picture of Your Pet</label>
-          <div className="flex justify-between">
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Upload A Picture of Your Pet</span>
+            </div>
             <input
-              type="text"
-              value={photoUrl}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPhotoUrl(e.target.value)
-              }
+              type="file"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setFile(e.target.files?.[0] ?? null);
+              }}
+              className="file-input-neutral file-input file-input-bordered file-input-sm w-full max-w-xs hover:file-input-secondary"
             />
-            <button type="button">Upload Photo</button>
-          </div>
-          <button
-            type="submit"
-            className="btn btn-outline btn-success btn-wide w-full"
-          >
+          </label>
+          <button type="submit" className="btn btn-outline btn-success w-full">
             Add Pet
           </button>
         </form>
