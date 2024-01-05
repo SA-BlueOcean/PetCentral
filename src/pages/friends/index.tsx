@@ -57,7 +57,7 @@ export default function FriendsBasePage() {
             className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500"
           >
             <Link
-              href={`/friend/${friend.friendB.name}`}
+              href={`/profile/${friend.friendB.name}`}
               className="relative h-10 w-10 overflow-clip rounded-full bg-secondary ring-1 ring-base-200 object-cover"
             >
               <Image
@@ -69,9 +69,9 @@ export default function FriendsBasePage() {
                 fill
               />
             </Link>
-            <div className="mx-4 flex flex-col">
-              <Link href={`/friend/${friend.friendB.id}`}>
-                <h2>{friend.friendB.name}</h2>
+            <div className="mx-4 flex flex-col justify-center">
+              <Link href={`/profile/${friend.friendB.id}`}>
+                <h2 className="link-hover">{friend.friendB.name}</h2>
               </Link>
             </div>
           </div>

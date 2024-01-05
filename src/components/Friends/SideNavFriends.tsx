@@ -10,7 +10,7 @@ export default function SideNavFriends() {
       <Link
         href={"/friends"}
         className="flex w-full items-center justify-center  p-4">
-        <h2 className="p-4 text-2xl">Friends</h2>
+        <h2 className="p-4 text-2xl link-hover">Friends</h2>
       </Link>
       <div className="relative max-h-[40vh] w-full overflow-y-auto">
         <ul className="divide-y px-3">
@@ -32,7 +32,7 @@ export default function SideNavFriends() {
                     unoptimized={true}
                     className=" h-10 w-10 flex-none rounded-full bg-secondary ring-1 ring-base-200 object-cover"
                   />
-                  {friend.friendB.name}
+                  <div className="link-hover">{friend.friendB.name}</div>
                 </Link>
               </li>
             ))

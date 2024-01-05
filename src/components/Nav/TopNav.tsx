@@ -11,7 +11,7 @@ export default function TopNav() {
     <nav className="flex h-full w-full items-center justify-between bg-primary-content p-2 px-4 text-neutral shadow">
       <ul className="hidden flex-row gap-4 sm:flex">
         <li>
-          <Link href={"/friends"} className="flex items-center gap-2"
+          <Link href={"/friends"} className="flex items-center gap-2 link-hover"
           onClick={(e) => {
             if (session.status === "unauthenticated") {
               e.preventDefault();
@@ -23,7 +23,7 @@ export default function TopNav() {
           </Link>
         </li>
         <li>
-          <Link href={"/group/mygroups"} className="flex items-center gap-2"
+          <Link href={"/group/mygroups"} className="flex items-center gap-2 link-hover"
           onClick={(e) => {
             if (session.status === "unauthenticated") {
               e.preventDefault();
