@@ -36,7 +36,7 @@ export default function GroupsSearch() {
             </Link>
             <div className="mx-4 flex flex-col">
               <Link href={`/group/${group.id}`}>
-                <h2>{group.name}</h2>
+                <h2 className="link-hover">{group.name}</h2>
               </Link>
               <p>{group.description}</p>
             </div>
