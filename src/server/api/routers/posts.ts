@@ -1,47 +1,45 @@
 import { z } from "zod";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-} from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   createPost: protectedProcedure
     .input(
-      z
-      .object({
+      z.object({
         content: z.string().min(1),
         groupId: z.string().optional(),
-      }))
+        photoUrl: z.string().optional(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
-      const groupIdValue = input.groupId !== '' ? input.groupId : undefined;
-      const newPostId = await ctx.db.post.create({
+      return await ctx.db.post.create({
         data: {
           content: input.content,
-          groupId: groupIdValue,
+          groupId: input.groupId ? input.groupId : null,
           createdById: ctx.session.user.id,
+          photos: input.photoUrl ? {
+            create: {
+              url: input.photoUrl,
+            },
+          } : undefined,
         },
       });
+    }),
 
-      return {
-        postId: newPostId?.id,
-      };
-  }),
-
-    addPhoto: protectedProcedure
+  addPhoto: protectedProcedure
     .input(
       z.object({
-        postId: z.number(),
         photoUrl: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-        return await ctx.db.photo.create({
-          data: {
-            url: input.photoUrl,
-            post: {
-              connect: { id: input.postId },
-            },
-          }
-        });
+      const photo = await ctx.db.photo.create({
+        data: {
+          url: input.photoUrl,
+        },
+      });
+
+      return {
+        photoId: photo?.id,
+      };
     }),
-  });
+});
