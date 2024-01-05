@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { api } from "@/utils/api";
 import { useGlobalContext } from "@/providers/GlobalContext";
 
@@ -73,7 +73,7 @@ export default function CreateGroupModal() {
           </button>
           <h3 className="text-lg font-bold ">Create A New Group</h3>
           <div className="mt- modal-action">
-            <form method="dialog">
+            <form method="dialog" onSubmit={(e) => e.preventDefault()}>
               <label className="mr-4"> Group Name:</label>
               <input
                 type="text"
