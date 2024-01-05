@@ -57,7 +57,7 @@ export default function PostCard({ data }: PostCardProps) {
               alt=""
               unoptimized
               fill
-              className="z-10 object-cover"
+              className="object-contain"
             />
           )}
         </div>
