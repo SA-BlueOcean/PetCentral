@@ -6,6 +6,7 @@ import { signIn, getProviders, useSession } from "next-auth/react";
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import SideNavElements from "./Nav/SideNavElements";
+import SideNavFriends from "./Friends/SideNavFriends";
 import Chat from "./Chat";
 import SideNavGroups from "./Group/SideNavGroups";
 import FriendsMonitor from "./Profile/FriendsMonitor";
@@ -104,7 +105,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
             <div className="sticky top-4 hidden items-end self-start p-4 md:flex md:flex-col">
               <div className=" w-full max-w-56">
                 <SideNav />
-                <div>component a</div>
+                {session.status == "authenticated" && <SideNavFriends />}
               </div>
             </div>
             <div className="relative col-span-1 w-full max-w-xl">
