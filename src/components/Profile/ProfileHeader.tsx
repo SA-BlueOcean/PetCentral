@@ -6,6 +6,7 @@ import { Camera } from "lucide-react";
 import { useSession } from "next-auth/react";
 import AddFriend from "./AddFriend";
 import AddChat from "../Chat/AddChat";
+import { cn } from "@/utils/cn";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(
@@ -34,19 +35,23 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         ) : (
           ""
         )}
-        <div className="absolute">
-          <Image
-            src={
-              user.data?.bannerPhotoUrl
-                ? user.data?.bannerPhotoUrl
-                : "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
-            }
-            alt="Background"
-            width={700}
-            height={200}
-            className="h-full max-h-52 max-w-full object-cover"
-            unoptimized={true}
-          ></Image>
+        <div className="absolute h-52 w-full">
+          {user.isLoading ? (
+            <div className="skeleton w-full h-full rounded-none"></div>
+          ) : (
+            <Image
+              src={
+                user.data?.bannerPhotoUrl
+                  ? user.data?.bannerPhotoUrl
+                  : "https://cdn.thewirecutter.com/wp-content/media/2021/06/20210617_doggie_dna_topart_2x1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200"
+              }
+              alt="Background"
+              width={700}
+              height={200}
+              className="h-full max-h-52 max-w-full object-cover"
+              unoptimized={true}
+            />
+          )}
         </div>
 
         <div className="relative z-10 flex flex-col items-center justify-center pt-52 sm:flex-row sm:items-start sm:justify-normal">
@@ -68,17 +73,14 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               ) : (
                 ""
               )}
-              <div className="relative h-32 w-32 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:h-40 sm:w-40">
-                {user.data?.profilePhotoUrl ? (
-                  <Image
-                    src={user.data?.profilePhotoUrl}
-                    alt="profile picture"
-                    unoptimized={true}
-                    fill={true}
-                    className="object-cover"
-                  />
-                ) : (
-                  <Avatar />
+              <div
+                className={cn(
+                  "relative h-32 w-32 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:h-40 sm:w-40",
+                  user.isLoading && "skeleton",
+                )}
+              >
+                {user.isFetched && (
+                  <Avatar profilePhotoUrl={user.data?.profilePhotoUrl} />
                 )}
               </div>
             </div>
