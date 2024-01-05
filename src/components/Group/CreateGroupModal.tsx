@@ -97,8 +97,8 @@ export default function CreateGroupModal() {
               />
               <button
                 className="btn mx-auto mt-4 border-none bg-secondary text-white"
-                onClick={(e) => {
-                  createGroup(e);
+                onClick={() => {
+                  createGroup();
                   setModalIsOpen(false);
                 }}
               >
