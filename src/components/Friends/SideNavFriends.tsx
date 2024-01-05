@@ -7,7 +7,11 @@ export default function SideNavFriends() {
 
   return (
     <nav className="relative mt-2 flex flex-col items-center justify-center rounded-lg bg-primary-content text-neutral">
-      <h2 className="p-4 text-2xl">Friends</h2>
+      <Link
+        href={"/friends"}
+        className="flex w-full items-center justify-center  p-4">
+        <h2 className="p-4 text-2xl">Friends</h2>
+      </Link>
       <div className="relative max-h-[40vh] w-full overflow-y-auto">
         <ul className="divide-y px-3">
           {friends.length ? (
@@ -26,7 +30,7 @@ export default function SideNavFriends() {
                     width={50}
                     height={50}
                     unoptimized={true}
-                    className=" h-10 w-10 flex-none rounded-lg bg-secondary ring-1 ring-base-200"
+                    className=" h-10 w-10 flex-none rounded-full bg-secondary ring-1 ring-base-200 object-cover"
                   />
                   {friend.friendB.name}
                 </Link>
