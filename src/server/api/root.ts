@@ -3,9 +3,10 @@ import { exampleRouter } from "./routers/example";
 import { feedRouter } from "./routers/feed";
 import { profileRouter } from "./routers/profile";
 import { authRouter } from "./routers/auth";
+import { petsRouter } from "./routers/pets";
 import { commentRouter } from "./routers/comments";
+import { chatRouter } from "./routers/chat";
 import { friendsRouter } from "./routers/friends";
-
 import { groupRouter } from "./routers/groups";
 import { userRouter } from "./routers/users";
 import { postRouter } from "./routers/posts";
@@ -24,6 +25,8 @@ export const appRouter = createTRPCRouter({
   profile: profileRouter,
   auth: authRouter,
   comments: commentRouter,
+  chat: chatRouter,
+  pets: petsRouter,
   friends: friendsRouter,
 });
 

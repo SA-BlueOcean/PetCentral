@@ -2,15 +2,30 @@ import { Check, X, PawPrint } from "lucide-react";
 import Image from "next/image";
 import { api } from "@/utils/api";
 import { useState } from "react";
+import Avatar from "@/components/Feed/Avatar";
+
+// const { data: sessionData, status } = useSession();
+
+// useEffect(() => {
+//   const checkSession = async () => {
+//     if (status === "unauthenticated") {
+//       await router.push("/").catch(console.error);
+//     }
+//   };
+//   checkSession().catch(console.error);
+// }, [sessionData]);
 
 export default function FindFriendsPage() {
+  const hello = api.example.hello.useQuery({ text: "example hi" });
   const [distance, setDistance] = useState(25);
   const [current, setCurrent] = useState(0);
   const [animate, setAnimate] = useState(["false", "false", "false"]);
 
   const handleNext = (dir: string) => {
+    const newAnimate = [...animate];
+    newAnimate[current] = dir;
+    setAnimate(newAnimate);
     setCurrent((current) => current + 1);
-    console.log(current, dir);
   };
 
   const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +33,7 @@ export default function FindFriendsPage() {
   };
 
   const errorHandle = (err: unknown) => {
-    console.log("error", err);
+    console.log("THERE IS AN ErRRoR", err);
   };
   const users = api.friends.findFriends.useQuery(
     { distance: 10 },
@@ -30,7 +45,7 @@ export default function FindFriendsPage() {
   return (
     <div className="flex w-full flex-col  justify-center gap-3">
       <h1 className="text-center text-lg font-semibold">Find Some Friends</h1>
-      <h2 className="text-center">12 Possible new friends</h2>
+      <h2 className="text-center">{users.data?.length} Possible new friends</h2>
       <section className="flex w-full items-center justify-between ">
         <button
           onClick={() => {
@@ -44,9 +59,21 @@ export default function FindFriendsPage() {
           <p className="mt-48 text-center text-base-500">
             Change filter to find more friends
           </p>
-          <ProfileCard index={2} fly={"false"} user={"Burhan Syed"} />
-          <ProfileCard index={1} fly={"false"} user={"Clay Gibson"} />
-          <ProfileCard index={0} fly={"false"} user={"Thomas Harbert"} />
+          {/* <ProfileCard index={2} fly={animate[4]} user={"Mallory Burke"} />
+          <ProfileCard index={2} fly={animate[3]} user={"Joe Doe"} />
+          <ProfileCard index={2} fly={animate[2]} user={"Burhan Syed"} />
+          <ProfileCard index={1} fly={animate[1]} user={"Clay Gibson"} />
+          <ProfileCard index={0} fly={animate[0]} user={"Thomas Harbert"} /> */}
+
+          {users.data?.map((user, index) => {
+            return (
+              <ProfileCard
+                key={user.id}
+                fly={animate[users.data.length - index - 1]}
+                user={user}
+              />
+            );
+          })}
         </div>
 
         <button className="btn btn-circle btn-success h-16 w-16">
@@ -140,11 +167,9 @@ export default function FindFriendsPage() {
 const ProfileCard = ({
   user,
   fly,
-  index,
 }: {
-  user: string;
-  fly: string;
-  index: number;
+  user: { name: string | null; id: string };
+  fly: string | null | undefined;
 }) => {
   return (
     <div
@@ -155,13 +180,13 @@ const ProfileCard = ({
     >
       <Image
         className="card-body"
-        src="/afd"
+        src={`/dsafadsf`}
         width={460}
         height={460}
         alt="profile picture"
       />
       <div className="card-title flex h-16 justify-between bg-base-100 p-3">
-        <h2 className="ml-3">{user}</h2>
+        <h2 className="ml-3">{user.name}</h2>
         <div className="mr-3 flex gap-2">
           <PawPrint />
           <p className="font-normal">2</p>

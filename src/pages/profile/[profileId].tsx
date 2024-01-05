@@ -5,6 +5,9 @@ import EditProfilePhotoModal from "@/components/Profile/EditProfilePhotoModal";
 import Feed from "@/components/Feed";
 import Bio from "@/components/Profile/Bio";
 import EditPhotosModal from "@/components/Profile/EditPhotosModal";
+import Pets from "@/components/Profile/Pets";
+import AddPets from "@/components/Profile/AddPets";
+import { api } from "@/utils/api";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -18,6 +21,8 @@ export default function ProfilePage() {
       <EditProfilePhotoModal profileId={profileId} />
       <EditProfileModal />
       <Bio profileId={profileId} />
+      <Pets profileId={profileId} />
+      <AddPets />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );
