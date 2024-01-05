@@ -64,17 +64,22 @@ export const petsRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const updateData: any = {
+        breedId: input.breedId,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        dateOfBirth: input.dateOfBirth,
+      };
+
+      if (input.photoUrl && input.photoUrl.trim() !== "") {
+        updateData.photoUrl = input.photoUrl;
+      }
+
       const pet = await ctx.db.pet.update({
         where: {
           id: input.petId,
         },
-        data: {
-          breedId: input.breedId,
-          firstName: input.firstName,
-          lastName: input.lastName,
-          photoUrl: input.photoUrl,
-          dateOfBirth: input.dateOfBirth,
-        },
+        data: updateData,
       });
       return pet;
     }),
