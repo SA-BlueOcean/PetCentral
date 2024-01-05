@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function Search() {
   const router = useRouter();
   const { query } = router;
-  const searchTerm = query.query || '';
+  const searchTerm = query.query as string | undefined;
   const groupsResults = api.groups.searchGroups.useQuery(
     searchTerm ? { searchTerm: searchTerm, } : { searchTerm: '' }
   );
