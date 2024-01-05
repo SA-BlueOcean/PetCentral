@@ -35,7 +35,7 @@ export const petsRouter = createTRPCRouter({
         breedId: z.number(),
         firstName: z.string(),
         lastName: z.string().optional(),
-        photoUrl: z.string(),
+        photoUrl: z.string().optional(),
         dateOfBirth: z.date(),
       }),
     )
