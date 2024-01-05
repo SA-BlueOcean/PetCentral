@@ -1,28 +1,39 @@
 import { api } from "@/utils/api";
+import { cn } from "@/utils/cn";
+import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 export default function JoinButton({ id }: { id: string }) {
+  const user = useSession().data?.user?.id;
   const mutation = api.users.updateUserGroups.useMutation({});
   const disconnect = api.users.removeUserGroup.useMutation({});
-
+  const userIsMember = api.groups.fetchIsMember.useQuery(
+    {
+      groupId: id,
+    },
+    {
+      enabled: !!id && !!user,
+    },
+  );
   const getMemberIds = api.groups.fetchMembers.useQuery(
     { groupId: id },
     { enabled: !!id },
   );
 
-  const memberIdArr = getMemberIds?.data?.users?.map((user) => user.id);
-  const members = getMemberIds?.data?.users?.length;
-  const user = useSession().data?.user?.id;
+  const membersCount = getMemberIds?.data?.usersIds?.length;
   const utils = api.useUtils();
-  const userIsMember = memberIdArr?.includes(user ?? "");
 
   const updateUserGroups = async () => {
-    if (userIsMember) {
+    if (userIsMember.isLoading) {
+      return;
+    }
+    if (userIsMember.data === false) {
       disconnect.mutate(
         { groupId: id },
         {
           onSuccess() {
-            void utils.groups.fetchMembers.invalidate();
+            void utils.groups.fetchMembers.invalidate({ groupId: id });
+            void utils.groups.fetchIsMember.invalidate({ groupId: id });
           },
         },
       );
@@ -31,7 +42,8 @@ export default function JoinButton({ id }: { id: string }) {
         { groupId: id },
         {
           onSuccess() {
-            void utils.groups.fetchMembers.invalidate();
+            void utils.groups.fetchMembers.invalidate({ groupId: id });
+            void utils.groups.fetchIsMember.invalidate({ groupId: id });
           },
         },
       );
@@ -42,23 +54,28 @@ export default function JoinButton({ id }: { id: string }) {
     <>
       <div className="ml-auto flex flex-col">
         <span className="r-0 basis-2/5 text-right text-xs text-gray-400">
-          {members} {members === 1 ? <>Member</> : <>Members</>}
+          {membersCount} {membersCount === 1 ? <>Member</> : <>Members</>}
         </span>
-        {userIsMember ? (
-          <button
-            className="btn btn-secondary btn-xs basis-1/5 rounded-btn uppercase text-white"
-            onClick={() => updateUserGroups()}
-          >
-            Leave
-          </button>
-        ) : (
-          <button
-            className="btn btn-primary btn-xs basis-1/5 rounded-btn uppercase text-white"
-            onClick={() => updateUserGroups()}
-          >
-            Join
-          </button>
-        )}
+        <button
+          disabled={
+            mutation.isLoading || disconnect.isLoading || userIsMember.isLoading
+          }
+          className={cn(
+            "btn btn-xs basis-1/5 rounded-btn uppercase text-white",
+            userIsMember.data === true ? "btn-secondary" : "btn-primary",
+          )}
+          onClick={() => updateUserGroups()}
+        >
+          {mutation.isLoading || disconnect.isLoading ? (
+            <Loader size={12} className="animate-spin" />
+          ) : userIsMember.data === true ? (
+            "Leave"
+          ) : userIsMember.data === false ? (
+            "Join"
+          ) : (
+            ""
+          )}
+        </button>
       </div>
     </>
   );
