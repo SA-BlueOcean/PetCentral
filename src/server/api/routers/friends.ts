@@ -8,7 +8,7 @@ import {
 } from "@/server/api/trpc";
 
 export const friendsRouter = createTRPCRouter({
-  findFriends: publicProcedure
+  findFriends: protectedProcedure
     .input(z.object({ distance: z.number().optional() }))
     .query(async ({ ctx, input }) => {
       const userZip = await ctx.db.user.findUnique({

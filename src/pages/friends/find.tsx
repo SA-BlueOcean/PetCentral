@@ -5,47 +5,40 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { setTimeout } from "timers";
+import useAddFriend from "@/components/Profile/useAddFriend";
 
-// const utils = api.useUtils();
+//const utils = api.useUtils();
 
 export default function FindFriendsPage() {
   const [distance, setDistance] = useState(50);
   const [current, setCurrent] = useState(0);
   const [animate, setAnimate] = useState([]);
   const [hide, setHide] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const { data: sessionData, status } = useSession();
-
-  useEffect(() => {
-    const checkSession = async () => {
-      console.log("checking session", status);
-      if (status === "authenticated") {
-        setLoggedIn(true);
-      }
-    };
-    checkSession().catch(console.error);
-  }, [sessionData]);
+  const { addFriend } = useAddFriend();
 
   const handleNext = (dir: string) => {
-    const newAnimate = [...animate];
-    newAnimate[current] = dir;
-    setAnimate(newAnimate);
-    const newHide = [...hide];
-    newHide[current] = true;
-    setCurrent((current) => current + 1);
-    setTimeout(() => {
-      console.log("timeout");
-      setHide(newHide);
-    }, 300);
+    if (users.data[users.data?.length - current - 1] !== undefined) {
+      addFriend(users.data[users.data?.length - current - 1].id).catch(
+        (err) => {
+          console.error(err);
+        },
+      );
+      const newAnimate = [...animate];
+      newAnimate[current] = dir;
+      setAnimate(newAnimate);
+      const newHide = [...hide];
+      newHide[current] = true;
+      setCurrent((current) => current + 1);
+      setTimeout(() => {
+        setHide(newHide);
+      }, 300);
+    }
   };
 
   const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDistance(Number(e.target.value));
-  };
-
-  const handleSearch = () => {
-    console.log("searching");
   };
 
   const errorHandle = (err: unknown) => {
@@ -53,8 +46,10 @@ export default function FindFriendsPage() {
   };
   const users = api.friends.findFriends.useQuery(
     { distance: distance },
-    { onError: errorHandle },
+    { onError: errorHandle, enabled: status === "authenticated" },
   );
+
+  console.log(users.data);
 
   return (
     <div className="flex w-full flex-col  justify-center gap-3">
@@ -74,16 +69,31 @@ export default function FindFriendsPage() {
             Change filter to find more friends
           </p>
 
-          {users.data?.map((user, index) => {
-            return (
-              <ProfileCard
-                key={user.id}
-                fly={animate[users.data.length - index - 1]}
-                hide={hide[users.data.length - index - 1]}
-                user={user}
-              />
-            );
-          })}
+          {users.isLoading ? (
+            <ProfileCard
+              key={"sdfaljasdfl"}
+              fly={null}
+              hide={null}
+              user={{
+                name: "loading friends ...",
+                id: "aafadsffd",
+                profilePhotoUrl: null,
+                location: { locationName: null },
+                pets: [],
+              }}
+            />
+          ) : (
+            users.data?.map((user, index) => {
+              return (
+                <ProfileCard
+                  key={user.id}
+                  fly={animate[users.data.length - index - 1]}
+                  hide={hide[users.data.length - index - 1]}
+                  user={user}
+                />
+              );
+            })
+          )}
         </div>
 
         <button className="btn btn-circle btn-success h-16 w-16">
@@ -194,7 +204,7 @@ const ProfileCard = ({
 }) => {
   return (
     <div
-      className={`card absolute left-0 top-0 h-[464px] w-[400px]
+      className={`card  absolute left-0 top-0 h-[464px] w-[400px]
       ${fly === "left" ? "animate-flyL" : null} ${
         fly === "right" ? "animate-flyR" : null
       } ${hide ? "hidden" : null} overflow-hidden bg-base-500`}
