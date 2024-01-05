@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import { useSession } from "next-auth/react";
 import { api } from "@/utils/api";
 import { supabase } from "lib/supabase";
 import { v4 as uuidv4 } from "uuid";
@@ -7,6 +8,7 @@ import { env } from "@/env.js";
 import Avatar from "./Avatar";
 
 export default function CreatePost() {
+  const session = useSession();
   const [post, setPost] = useState({
     content: "",
     groupId: "",
@@ -32,14 +34,18 @@ export default function CreatePost() {
   };
 
   const getUrl = async (file: File | null) => {
-    const filename = `${uuidv4()}`;
-    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(filename, file!, {
-        upsert: true,
-      });
-    handleSubmitImage(address);
+    if (session.status === "authenticated") {
+      const filename = `${uuidv4()}`;
+      const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(filename, file!, {
+          upsert: true,
+        });
+      handleSubmitImage(address);
+    } else {
+      setDisplayLoginModal(true);
+    }
   };
 
   const handleSubmitImage = (photoUrl: string) => {
@@ -53,12 +59,11 @@ export default function CreatePost() {
         },
         onSuccess(data: { photoId: string }) {
           console.log("success data is: ", data);
-          setPost({
+          const postObj = {
             ...post,
             photoId: data.photoId,
-          });
-          console.log("post is: ", post);
-          mutation.mutate(post, {
+          };
+          mutation.mutate(postObj, {
             onSuccess() {
               setPost({
                 content: "",
