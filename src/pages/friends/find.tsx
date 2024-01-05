@@ -43,14 +43,12 @@ export default function FindFriendsPage() {
   };
 
   const errorHandle = (err: unknown) => {
-    console.log("THERE IS AN ErRRoR", err);
+    console.error("THERE IS AN ErRRoR", err);
   };
   const users = api.friends.findFriends.useQuery(
     { distance: distance },
     { onError: errorHandle, enabled: status === "authenticated" },
   );
-
-  console.log(users.data);
 
   return (
     <div className="flex w-full flex-col  justify-center gap-3">
