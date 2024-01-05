@@ -5,6 +5,7 @@ import { supabase } from "lib/supabase";
 import { v4 as uuidv4 } from "uuid";
 import { env } from "@/env.js";
 import Avatar from "./Avatar";
+import { Loader } from "lucide-react";
 
 export default function CreatePost() {
   const [post, setPost] = useState({
@@ -140,7 +141,11 @@ export default function CreatePost() {
             className="btn btn-primary btn-sm z-10 rounded-btn uppercase text-white"
             onClick={(e) => handleSubmit(e)}
           >
-            Post
+            {photoMutation.isLoading || mutation.isLoading ? (
+              <Loader size={12} className="animate-spin" />
+            ) : (
+              <p>Post</p>
+            )}
           </button>
         </div>
       </div>
