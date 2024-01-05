@@ -3,6 +3,7 @@ import Link from "next/link";
 import { api } from "@/utils/api";
 import Image from "next/image";
 import CreateGroupModal from "@/components/Group/CreateGroupModal";
+import JoinButton from "@/components/Group/JoinBtn";
 
 export default function GroupsSearch() {
   const groupsList = api.groups.findAllGroups.useQuery();
@@ -39,6 +40,7 @@ export default function GroupsSearch() {
               </Link>
               <p>{group.description}</p>
             </div>
+            <JoinButton id={group.id} />
           </div>
         ))}
       </div>

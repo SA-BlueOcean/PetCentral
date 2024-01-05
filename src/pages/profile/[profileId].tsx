@@ -13,19 +13,16 @@ export default function ProfilePage() {
   const router = useRouter();
 
   const profileId = router.query.profileId as string;
-  const user = api.profile.get.useQuery(
-    { profileId },
-    { enabled: !!profileId },
-  );
+
   return (
     <>
       <ProfileHeader profileId={profileId} />
       <EditPhotosModal profileId={profileId} />
       <EditProfilePhotoModal profileId={profileId} />
       <EditProfileModal profileId={profileId} />
-      <AddPets profileId={profileId} />
       <Bio profileId={profileId} />
       <Pets profileId={profileId} />
+      <AddPets />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );
