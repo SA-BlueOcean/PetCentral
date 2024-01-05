@@ -54,7 +54,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           )}
         </div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center pt-52 sm:flex-row sm:items-start sm:justify-normal sm:pl-5">
+        <div className="relative z-10 flex flex-col items-center justify-center pt-52 text-center sm:flex-row sm:items-start sm:justify-normal sm:pl-5 sm:text-left">
           <div className="absolute top-0 translate-y-[calc(-50%+13rem)]">
             <div className="relative h-32 w-32 rounded-full sm:h-40 sm:w-40">
               {session.data?.user?.id === user.data?.id ? (
@@ -87,7 +87,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           </div>
           <div className="h-16 w-32 flex-none sm:h-20 sm:w-40"></div>
 
-          <div className="mx-auto ml-3 p-2 sm:m-3 sm:w-full sm:p-0">
+          <div className="p-2 sm:m-3 sm:mx-auto sm:ml-3 sm:w-full sm:p-0">
             <p className="relative text-2xl font-bold">
               {user.data?.firstName
                 ? user.data?.firstName + " " + user.data?.lastName
