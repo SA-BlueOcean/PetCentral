@@ -11,14 +11,14 @@ export default function SideNavFriends() {
         href={"/friends"}
         className="flex w-full items-center justify-center  p-4"
       >
-        <h2 className="link-hover p-4 text-2xl">Friends</h2>
+        <h2 className="link-hover text-2xl">Friends</h2>
       </Link>
       <div className="relative max-h-[40vh] w-full overflow-y-auto">
         {friends.isLoading ? (
-          <ul className="divide- flex flex-col px-3">
+          <ul className="divide-y-2 divide-base-700 flex flex-col px-3">
             {new Array(3).fill(0).map((_, i) => (
               <li key={i} className="flex w-full items-center gap-3 py-2">
-                <div className="skeleton h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200"></div>
+                <div className="skeleton h-10 w-10 rounded-full bg-secondary ring-1 ring-base-200"></div>
                 <div className="skeleton relative h-6 w-3/5 bg-primary opacity-50"></div>
               </li>
             ))}

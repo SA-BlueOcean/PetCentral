@@ -60,10 +60,10 @@ const Container = ({ Component, pageProps }: AppProps) => {
                       return (
                         <div
                           key={provider.name}
-                          className="flex justify-center"
+                          className="flex justify-center w-full"
                         >
                           <button
-                            className="full btn btn-accent my-1 rounded-full text-base-100"
+                            className="w-full btn btn-accent my-1 rounded-full text-base-100"
                             onClick={() =>
                               signIn(provider.id, {
                                 callbackUrl: `${window.location.origin}`,
