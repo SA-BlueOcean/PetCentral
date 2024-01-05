@@ -10,6 +10,7 @@ export default function CreatePost() {
   const [post, setPost] = useState({
     content: "",
     groupId: "",
+    photoId: "",
   });
   const [image, setImage] = useState<File | null>(null);
 
@@ -27,6 +28,8 @@ export default function CreatePost() {
     e: { preventDefault: () => void } | undefined,
   ) => {
     e?.preventDefault();
+    const photoId = getUrl(image);
+    console.log("photoId", photoId);
     mutation.mutate(post, {
       onError(error: { message: string }) {
         if (error.message === "UNAUTHORIZED") {
@@ -41,13 +44,14 @@ export default function CreatePost() {
         setPost({
           content: "",
           groupId: "",
+          photoId: "",
         });
         void utils.feed.get.invalidate();
       },
     });
   };
 
-  const getUrl = async (file: File | null, postId: Number | any) => {
+  const getUrl = async (file: File | null) => {
     const filename = `${uuidv4()}`;
     const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
     const { data, error } = await supabase.storage
@@ -55,19 +59,12 @@ export default function CreatePost() {
       .upload(filename, file!, {
         upsert: true,
       });
-    handleSubmitImage(postId, address);
+    handleSubmitImage(address);
     return address;
   };
 
-  const handleSubmitImage = (postId: number, photoUrl: string) => {
-    photoMutation.mutate(
-      { postId: postId, photoUrl: photoUrl },
-      {
-        onSuccess() {
-          void utils.feed.get.invalidate();
-        },
-      },
-    );
+  const handleSubmitImage = (photoUrl: string) => {
+    photoMutation.mutate({ photoUrl: photoUrl });
   };
 
   return (
@@ -105,7 +102,7 @@ export default function CreatePost() {
               });
             }}
           >
-            <option disabled selected defaultValue={undefined}>
+            <option disabled selected value="">
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (

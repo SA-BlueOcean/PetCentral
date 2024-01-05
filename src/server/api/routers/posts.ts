@@ -11,37 +11,37 @@ export const postRouter = createTRPCRouter({
       .object({
         content: z.string().min(1),
         groupId: z.string().optional(),
+        photoId: z.string(),
       }))
     .mutation(async ({ ctx, input }) => {
       const groupIdValue = input.groupId !== '' ? input.groupId : undefined;
-      const newPostId = await ctx.db.post.create({
+       return await ctx.db.post.create({
         data: {
           content: input.content,
           groupId: groupIdValue,
           createdById: ctx.session.user.id,
+          photos: {
+            connect: { id: input.photoId },
+          },
         },
       });
-
-      return {
-        postId: newPostId?.id,
-      };
   }),
 
     addPhoto: protectedProcedure
     .input(
       z.object({
-        postId: z.number(),
         photoUrl: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
-        return await ctx.db.photo.create({
+        const photo = await ctx.db.photo.create({
           data: {
             url: input.photoUrl,
-            post: {
-              connect: { id: input.postId },
-            },
           }
         });
+
+        return {
+          photoId: photo?.id,
+        }
     }),
   });
