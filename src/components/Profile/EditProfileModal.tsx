@@ -1,8 +1,7 @@
 import { api } from "@/utils/api";
-import { Axis3DIcon } from "lucide-react";
-import { HTMLInputTypeAttribute, useState } from "react";
+import { useState } from "react";
 
-export default function EditProfileModal({ profileId }: { profileId: string }) {
+export default function EditProfileModal() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [about, setAbout] = useState("");

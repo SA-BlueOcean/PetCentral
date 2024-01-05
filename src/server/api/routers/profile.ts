@@ -94,7 +94,7 @@ export const profileRouter = createTRPCRouter({
           },
         });
       }
-      if (input.zip === null || input.zip === undefined) {
+      if (input.zip === undefined || input.zip === "") {
         return;
       }
       const data = zipcode.lookup(+input.zip ?? 37660);

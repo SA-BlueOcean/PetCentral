@@ -11,18 +11,55 @@ export const feedRouter = createTRPCRouter({
     .input(
       z
         .object({
+          mode: z
+            .enum(["SUBS", "FRIENDS", "PROFILE", "GROUP", "ALL"])
+            .optional(),
           groupId: z.string().optional(),
           profileId: z.string().optional(),
           cursor: z.number().optional(),
+          searchTerm: z.string().optional(),
         })
         .optional(),
     )
     .query(async ({ input, ctx }) => {
+      if (
+        (input?.mode === "SUBS" || input?.mode === "FRIENDS") &&
+        !ctx.session?.user.id
+      ) {
+        return {
+          posts: [],
+          nextCursor: null,
+        };
+      }
       const postsPerPage = 5;
       const feed = await ctx.db.post.findMany({
         where: {
           groupId: input?.groupId,
           createdById: input?.profileId,
+          group:
+            input?.mode === "SUBS"
+              ? {
+                  members: {
+                    some: {
+                      id: ctx.session?.user.id,
+                    },
+                  },
+                }
+              : undefined,
+          createdBy:
+            input?.mode === "FRIENDS"
+              ? {
+                  friendsB: {
+                    some: {
+                      friendAId: ctx.session?.user.id,
+                    },
+                  },
+                }
+              : undefined,
+          content: {
+            contains: input?.searchTerm,
+            mode: "insensitive",
+          },
         },
         include: {
           createdBy: true,
@@ -114,7 +151,7 @@ export const feedRouter = createTRPCRouter({
                   : undefined,
           },
         });
-        return {vote, post};
+        return { vote, post };
       });
       return update;
     }),

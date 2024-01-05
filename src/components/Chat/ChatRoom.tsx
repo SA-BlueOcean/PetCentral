@@ -18,6 +18,8 @@ export default function ChatRoom({
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const utc = new Date();
+  const offset = utc.getTimezoneOffset();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -81,16 +83,28 @@ export default function ChatRoom({
             )}
           >
             {/* check for 10 minute interval between timestamps */}
-            {((i === 0) || (i > 0 &&
-              messages[i - 1]?.createdAt.getTime() &&
-              (messages[i - 1]?.createdAt.getTime() ?? 0) + 10 * 60 * 1000 <
-                m.createdAt.getTime())) && (
-                <div className="chat-header text-xs opacity-50">
-                  {m?.createdAt?.toLocaleTimeString(undefined, {
-                    timeStyle: "short",
-                  })}
-                </div>
-              )}
+            {(i === 0 ||
+              (i > 0 &&
+                messages[i - 1]?.createdAt.getTime() &&
+                (messages[i - 1]?.createdAt.getTime() ?? 0) + 10 * 60 * 1000 <
+                  m.createdAt.getTime())) && (
+              <div className="chat-header text-xs opacity-50">
+                {// utcToZonedTime(m.createdAt, userTimezone).toLocaleTimeString(
+                //   undefined,
+                //   { timeStyle: "short" },
+                // )
+                new Date(
+                  m?.createdAt.getTime() - 60000 * offset,
+                )?.toLocaleTimeString(undefined, {
+                  timeStyle: "short",
+                })
+                // utcToZonedTime(m.createdAt, userTimezone).toLocaleTimeString(
+                //   undefined,
+                //   { timeStyle: "short" },
+                // )
+                }
+              </div>
+            )}
 
             <div
               className={cn(

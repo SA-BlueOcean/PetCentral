@@ -48,6 +48,7 @@ export default function MyGroups() {
     <>
       {commonHead}
         <div className="flex flex-col gap-4 w-full">
+          Your Groups
         {groupsList.data?.groups?.map((group) => (
           <div key={group.id} className="flex ring-base-500 rounded-lg bg-base-100 ring-1 p-3">
             <Link href={`/${group.id}`} className="relative h-10 w-10 overflow-clip rounded-lg bg-secondary ring-1 ring-base-200">
@@ -55,7 +56,7 @@ export default function MyGroups() {
             </Link>
             <div className="flex flex-col mx-4">
               <Link href={`/${group.id}`} passHref>
-                <h2>{group.name}</h2>
+                <h2 className="link-hover">{group.name}</h2>
               </Link>
               <p>{group.description}</p>
             </div>
