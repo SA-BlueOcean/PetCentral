@@ -51,7 +51,7 @@ export default function CreateComment({
                   if (post.id === postId) {
                     return {
                       ...post,
-                      numComments: (post.numComments + 1),
+                      numComments: post.numComments + 1,
                     };
                   }
                   return post;
@@ -74,7 +74,7 @@ export default function CreateComment({
         <div className="flex items-center gap-2">
           <div
             className={cn(
-              "bg-base-400 relative h-6 w-6 overflow-clip rounded-full",
+              "relative h-6 w-6 overflow-clip rounded-full bg-base-400",
               user.isLoading && "skeleton",
             )}
           >
@@ -98,7 +98,7 @@ export default function CreateComment({
       />
       <button
         disabled={mutate.isLoading}
-        className="btn btn-primary ml-auto h-10 min-h-10 w-20 text-neutral"
+        className="btn btn-accent ml-auto h-10 min-h-10 w-20 text-neutral"
         onClick={handleSubmit}
       >
         submit

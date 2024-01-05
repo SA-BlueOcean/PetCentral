@@ -7,7 +7,7 @@ export default function GroupsElements() {
 
   return (
     <>
-      <ul className="w-full divide-y px-3">
+      <ul className="w-full divide-y-2 divide-base-700 px-3">
         {groupsList.data?.groups.map((group) => (
           <li key={group.id} className="py-3">
             <Link
@@ -20,8 +20,9 @@ export default function GroupsElements() {
                 width={50}
                 height={50}
                 unoptimized={true}
-                className=" flex-none h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200 object-cover"/>
-                <div  className="link-hover">{group.name}</div>
+                className=" h-10 w-10 flex-none rounded-lg bg-secondary object-cover ring-1 ring-base-200"
+              />
+              <div className="link-hover">{group.name}</div>
             </Link>
           </li>
         ))}

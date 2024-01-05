@@ -20,7 +20,7 @@ export default function GroupsSearch() {
         {groupsList.data?.groups.map((group) => (
           <div
             key={group.id}
-            className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500"
+            className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-400"
           >
             <Link
               href={`/group/${group.id}`}

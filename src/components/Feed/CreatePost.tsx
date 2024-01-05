@@ -95,8 +95,9 @@ export default function CreatePost() {
   };
 
   return (
+
     <form
-      className="ring-base-500 my-3 rounded-lg bg-base-100 ring-1"
+      className="ring-base-400 my-3 rounded-lg bg-base-100 ring-1"
       onSubmit={handleSubmit}
     >
       <div className="p-3">
@@ -183,11 +184,13 @@ export default function CreatePost() {
             </label>
           </div>
           <button
+
             disabled={
               (loading || groupsQuery.isLoading || query.isLoading) &&
               !(session.status === "unauthenticated")
             }
             className="btn btn-accent btn-sm z-10 w-16 rounded-btn uppercase text-white"
+
           >
             {loading ? <Loader className="animate-spin" size={20} /> : "Post"}
           </button>

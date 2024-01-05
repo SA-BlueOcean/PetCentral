@@ -24,7 +24,7 @@ export function GroupHeader({ groupId }: GroupProps) {
         {/* GROUP BANNER */}
         <div className="absolute h-20 w-full">
           {groupQuery.isLoading ? (
-            <div className="h-full w-full skeleton rounded-none"></div>
+            <div className="skeleton h-full w-full rounded-none"></div>
           ) : (
             <Image
               src={bannerPhotoUrl ?? defaultBannerPhotoUrl}
@@ -47,6 +47,7 @@ export function GroupHeader({ groupId }: GroupProps) {
             >
               {groupQuery.isFetched && (
                 <Image
+                  className="object-cover"
                   src={photoUrl || defaultPhotoUrl}
                   alt="group avatar"
                   unoptimized={true}
