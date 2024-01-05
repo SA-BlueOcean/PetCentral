@@ -243,17 +243,15 @@ information.
 </h4>
 <h3 align='center'> Hazel</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.hazel.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/hazelkimberly/">Linkedin</a> |
+  <a href="https://www.github.com/hazelkimberly">Github</a>
 </h4>
 <h3 align='center'> Mallory</h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in//">Linkedin</a> |
   <a href="https://www.mallory.com/">Portoflio</a> |
   <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://github.com/">Github</a>
 </h4>
 <h3 align='center'> Ming Lee Ng</h3>
 <h4 align='center'>

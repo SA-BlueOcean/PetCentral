@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { api } from "@/utils/api";
 import { useGlobalContext } from "@/providers/GlobalContext";
 
@@ -13,19 +13,18 @@ export default function CreateGroupModal() {
     bannerPhotoUrl:
       "https://media.istockphoto.com/id/1680422522/photo/group-of-pets-leaning-together-on-a-empty-web-banner-to-place-text-cats-dogs-rabbit-ferret.webp?b=1&s=170667a&w=0&k=20&c=Ut6bhDDea20-643SfrVtMv7jTmfI80nKZBy1fC4gcF4=",
   });
+
   const utils = api.useUtils();
   const mutation = api.groups.create.useMutation({});
 
-  if (modalIsOpen) {
-    if (document) {
-      const modalElement = document?.getElementById("my_modal");
-      if (modalElement) {
-        if (modalElement instanceof HTMLDialogElement) {
-          modalElement.showModal();
-        } else {
-          modalElement?.closest("dialog")?.close();
-        }
+  if (document) {
+    const modalElement = document?.getElementById("my_modal");
+    if (modalIsOpen) {
+      if (modalElement instanceof HTMLDialogElement) {
+        modalElement.showModal();
       }
+    } else {
+      modalElement?.closest("dialog")?.close();
     }
   }
 
@@ -74,7 +73,7 @@ export default function CreateGroupModal() {
           </button>
           <h3 className="text-lg font-bold ">Create A New Group</h3>
           <div className="mt- modal-action">
-            <form method="dialog">
+            <form method="dialog" onSubmit={(e) => e.preventDefault()}>
               <label className="mr-4"> Group Name:</label>
               <input
                 type="text"

@@ -48,7 +48,7 @@ export default function PostCard({ data }: PostCardProps) {
   const [displayComments, setDisplayComments] = useState(false);
   const [numComments, setNumComments] = useState(data.numComments ?? 0);
   return (
-    <div className="ring-base-500 rounded-lg bg-base-100 ring-1">
+    <div className="rounded-lg bg-base-100 ring-1 ring-base-500">
       <div className="p-3">
         <div className="flex justify-between">
           <div className="flex items-center gap-2">
@@ -72,13 +72,10 @@ export default function PostCard({ data }: PostCardProps) {
           <PostText text={data.content} />
         </div>
         {/* TODO remove true & placeholder for demo purposes */}
-        {(data?.photos?.[0]?.url ?? true) && (
+        {data?.photos?.[0]?.url && (
           <div className="relative m-1 aspect-video w-full overflow-clip rounded-lg bg-neutral-content">
             <Image
-              src={
-                data?.photos?.[0]?.url ??
-                "https://images.unsplash.com/photo-1557481944-1582c12380dd?q=80&w=2660&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
+              src={data?.photos?.[0]?.url}
               alt=""
               unoptimized
               fill
@@ -88,7 +85,7 @@ export default function PostCard({ data }: PostCardProps) {
         )}
       </div>
 
-      <div className="border-base-500 flex justify-between border-t p-3">
+      <div className="flex justify-between border-t border-base-500 p-3">
         <Votes
           postId={data.id}
           upvotes={data.upvotes}
@@ -104,7 +101,7 @@ export default function PostCard({ data }: PostCardProps) {
         </button>
       </div>
       {displayComments && (
-        <div className="border-base-500 max-h-[50vh] overflow-y-auto border-t p-3">
+        <div className="max-h-[50vh] overflow-y-auto border-t border-base-500 p-3">
           <Comments
             postId={data.id}
             initialCount={data.numComments}
