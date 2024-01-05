@@ -66,7 +66,7 @@ export default function JoinButton({ id }: { id: string }) {
           )}
           onClick={() => updateUserGroups()}
         >
-          {mutation.isLoading || disconnect.isLoading ? (
+          {mutation.isLoading || disconnect.isLoading || userIsMember.isFetching || userIsMember.isLoading ? (
             <Loader size={12} className="animate-spin" />
           ) : userIsMember.data === true ? (
             "Leave"
