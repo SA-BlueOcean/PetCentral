@@ -72,7 +72,7 @@ export default function CreatePost() {
   };
 
   return (
-    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-500">
+    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-400">
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
@@ -138,7 +138,7 @@ export default function CreatePost() {
             </label>
           </div>
           <button
-            className="btn btn-primary btn-sm z-10 rounded-btn uppercase text-white"
+            className="btn btn-accent btn-sm z-10 rounded-btn uppercase text-white"
             onClick={(e) => handleSubmit(e)}
           >
             {photoMutation.isLoading || mutation.isLoading ? (

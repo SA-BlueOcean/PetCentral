@@ -50,7 +50,7 @@ export default function PostCard({ data }: PostCardProps) {
   return (
     <>
       <dialog id={`post_modal_${data.id}`} className="modal">
-        <div className="modal-box max-h-[80vw] h-full max-w-[80vw] w-full">
+        <div className="modal-box h-full max-h-[80vw] w-full max-w-[80vw]">
           {data?.photos?.[0]?.url && (
             <Image
               src={data?.photos?.[0]?.url}
@@ -65,7 +65,7 @@ export default function PostCard({ data }: PostCardProps) {
           <button>close</button>
         </form>
       </dialog>
-      <div className="ring-base-500 rounded-lg bg-base-100 ring-1">
+      <div className="rounded-lg bg-base-100 ring-1 ring-base-400">
         <div className="p-3">
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default function PostCard({ data }: PostCardProps) {
             {data.group?.id && (
               <Link
                 href={`/group/${data?.group?.id}`}
-                className="text-sm text-secondary hover:underline"
+                className="text-sm text-base-700 hover:underline"
               >
                 {data.group.name}
               </Link>
@@ -110,7 +110,7 @@ export default function PostCard({ data }: PostCardProps) {
           )}
         </div>
 
-        <div className="border-base-500 flex justify-between border-t p-3">
+        <div className="flex justify-between border-t border-base-300 p-3">
           <Votes
             postId={data.id}
             upvotes={data.upvotes}
@@ -121,12 +121,12 @@ export default function PostCard({ data }: PostCardProps) {
             className="btn btn-ghost h-10 min-h-10 rounded-l-full rounded-r-full"
             onClick={() => setDisplayComments((d) => !d)}
           >
-            <MessageSquareText />
-            <span>{numComments}</span>
+            <MessageSquareText className="text-base-600" />
+            <span className="text-base-600">{numComments}</span>
           </button>
         </div>
         {displayComments && (
-          <div className="border-base-500 max-h-[50vh] overflow-y-auto border-t p-3">
+          <div className="max-h-[50vh] overflow-y-auto border-t border-base-300 p-3">
             <Comments
               postId={data.id}
               initialCount={data.numComments}

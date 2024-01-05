@@ -9,22 +9,22 @@ export default function SideNavFriends() {
     <nav className="relative mt-2 flex flex-col items-center justify-center rounded-lg bg-primary-content text-neutral">
       <Link
         href={"/friends"}
-        className="flex w-full items-center justify-center  p-4">
-        <h2 className="p-4 text-2xl link-hover">Friends</h2>
+        className="flex w-full items-center justify-center  p-4"
+      >
+        <h2 className="link-hover p-4 text-2xl">Friends</h2>
       </Link>
       <div className="relative max-h-[40vh] w-full overflow-y-auto">
         {friends.isLoading ? (
-          <ul className="flex flex-col divide-y px-3">
+          <ul className="divide- flex flex-col px-3">
             {new Array(3).fill(0).map((_, i) => (
               <li key={i} className="flex w-full items-center gap-3 py-2">
                 <div className="skeleton h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200"></div>
                 <div className="skeleton relative h-6 w-3/5 bg-primary opacity-50"></div>
-
               </li>
             ))}
           </ul>
         ) : (
-          <ul className="flex flex-col divide-y px-3">
+          <ul className="flex flex-col divide-y-2 divide-base-700 px-3">
             {(friends?.data?.friends?.length ?? 0) > 0 ? (
               <>
                 {friends.data?.friends.map((friend) => (
@@ -39,7 +39,7 @@ export default function SideNavFriends() {
                         width={50}
                         height={50}
                         unoptimized={true}
-                        className=" h-10 w-10 flex-none rounded-lg bg-secondary ring-1 ring-base-200"
+                        className=" h-10 w-10 flex-none rounded-full bg-secondary object-cover"
                       />
                       {friend.friendB.name}
                     </Link>

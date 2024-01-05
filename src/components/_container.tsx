@@ -11,6 +11,7 @@ import Chat from "./Chat";
 import SideNavGroups from "./Group/SideNavGroups";
 import FriendsMonitor from "./Profile/FriendsMonitor";
 import SidNavFindFriends from "./Friends/SideNavFindFriends";
+import { X } from "lucide-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,7 +52,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
           <div className="card absolute left-1/2 top-1/2 w-96 -translate-x-1/2 -translate-y-1/2 bg-base-100 shadow-xl">
             <div className="card-body items-center text-center">
-              <h2 className="card-title">Login</h2>
+              <h2 className="card-title text-2xl font-bold">Login</h2>
               <div className="card-actions flex flex-col items-center justify-center">
                 {providers &&
                   Object.values(providers).map((provider: Provider) => {
@@ -62,7 +63,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
                           className="flex justify-center"
                         >
                           <button
-                            className="btn btn-primary my-1"
+                            className="full btn btn-accent my-1 rounded-full text-base-100"
                             onClick={() =>
                               signIn(provider.id, {
                                 callbackUrl: `${window.location.origin}`,
@@ -78,10 +79,10 @@ const Container = ({ Component, pageProps }: AppProps) => {
               </div>
             </div>
             <button
-              className="btn btn-accent absolute right-2 top-2"
+              className="btn btn-accent absolute right-2 top-2 h-10 w-12 rounded-full p-0"
               onClick={() => setDisplayLoginModal(false)}
             >
-              X
+              <X className="h-8 w-8" />
             </button>
           </div>
         </div>

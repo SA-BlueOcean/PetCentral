@@ -36,11 +36,13 @@ export default function AvatarHeader({
           mode === "COMMENT" ? "items-baseline gap-2" : "flex-col",
         )}
       >
-        <Link href={`/profile/${id}`} className="hover:underline">
+        <Link href={`/profile/${id}`} className="font-semibold hover:underline">
           {name}
         </Link>
         {createdAt && (
-          <span className="text-xs">{createdAt.toLocaleString()}</span>
+          <span className="text-xs text-base-700">
+            {createdAt.toLocaleString()}
+          </span>
         )}
       </div>
     </>
