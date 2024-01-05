@@ -73,14 +73,15 @@ export default function PostCard({ data }: PostCardProps) {
         </div>
         {/* TODO remove true & placeholder for demo purposes */}
         {data?.photos?.[0]?.url && (
-          <div className="relative m-1 aspect-video w-full overflow-clip rounded-lg bg-neutral-content">
+          <div className="relative m-1 aspect-video w-full overflow-clip rounded-lg">
             <Image
               src={data?.photos?.[0]?.url}
               alt=""
               unoptimized
               fill
-              style={{ objectFit: "cover" }}
+              className="object-cover z-10"
             />
+            <div className="absolute inset-0 skeleton rounded-none bg-accent-content opacity-80"></div>
           </div>
         )}
       </div>
