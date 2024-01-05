@@ -20,11 +20,13 @@ export default function FindFriendsPage() {
 
   const handleNext = (dir: string) => {
     if (users.data[users.data?.length - current - 1] !== undefined) {
-      addFriend(users.data[users.data?.length - current - 1].id).catch(
-        (err) => {
-          console.error(err);
-        },
-      );
+      if (dir === "right") {
+        addFriend(users.data[users.data?.length - current - 1].id).catch(
+          (err) => {
+            console.error(err);
+          },
+        );
+      }
       const newAnimate = [...animate];
       newAnimate[current] = dir;
       setAnimate(newAnimate);
