@@ -3,16 +3,16 @@ import GroupsElements from "./GroupsElements";
 
 export default function SideNavGroups() {
   return (
-    <nav className="relative flex max-h-[50vh] flex-col items-center justify-center gap-2 rounded-lg bg-primary-content px-4 text-neutral">
-      <div className="sticky top-0 z-50 w-full bg-primary-content pt-4">
-        <Link
-          href={"/group"}
-          className="flex flex-col items-center justify-center gap-2"
-        >
-          <h2 className="text-2xl">Groups</h2>
-        </Link>
+    <nav className="relative rounded-lg bg-primary-content text-neutral">
+      <Link
+        href={"/group"}
+        className="flex w-full items-center justify-center  p-4"
+      >
+        <h2 className="text-2xl">Groups</h2>
+      </Link>
+      <div className="relative max-h-[40vh] overflow-y-auto">
+        <GroupsElements />
       </div>
-      <GroupsElements />
     </nav>
   );
 }
