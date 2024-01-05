@@ -1,14 +1,13 @@
-import { api } from "@/utils/api";
 import { useEffect, useState } from "react";
 import ChatRoom from "./ChatRoom";
 import { useSession } from "next-auth/react";
 import { supabase } from "lib/supabase";
-import type { ChatUsers } from "@prisma/client";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { cn } from "@/utils/cn";
 import { ArrowLeft, ChevronsDown, ChevronsUp } from "lucide-react";
 import Avatar from "../Feed/Avatar";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import useMonitorChats from "./useMonitorChats";
 
 type SupaChatsJoins = {
   User: { id: string; name: string; profilePhotoUrl?: string };
@@ -21,6 +20,11 @@ export default function Chat() {
   const [expand, setExpand] = useState(false);
   const [chats, setChats] = useState<SupaChatsJoins[]>();
   const [activeChat, setActiveChat] = useState<number | undefined>();
+  const { messages, markMessagesRead, insertMessages, notifs } =
+    useMonitorChats(
+      chats?.map((c) => c.chatsId),
+      !expand && activeChat ? undefined : activeChat,
+    );
   const { openChatTrigger, setDisplayLoginModal } = useGlobalContext();
 
   useEffect(() => {
@@ -83,6 +87,12 @@ export default function Chat() {
 
   const selectedUser = chats?.find((c) => c.chatsId === activeChat);
 
+  useEffect(() => {
+    if (activeChat) {
+      markMessagesRead(activeChat);
+    }
+  }, [activeChat]);
+
   return (
     <div
       className={cn(
@@ -91,17 +101,22 @@ export default function Chat() {
       )}
     >
       <div
-        onClick={() => !activeChat && setExpand((e) => !e)}
-        className="flex h-12 items-center justify-between border-b border-b-accent px-4"
+        onClick={() => (!activeChat || !expand) && setExpand((e) => !e)}
+        className="relative flex h-12 items-center justify-between border-b border-b-accent px-4"
       >
+        {Object.keys(notifs).length > 0 && (
+          <div className="absolute left-0 top-0 z-50 h-1.5 w-1.5 animate-ping rounded-full bg-white ring-1 ring-accent"></div>
+        )}
         {activeChat ? (
           <div className="flex items-center gap-2">
-            <button
-              className="btn btn-circle btn-ghost"
-              onClick={() => setActiveChat(undefined)}
-            >
-              <ArrowLeft />
-            </button>
+            {expand && (
+              <button
+                className="btn btn-circle btn-ghost"
+                onClick={() => setActiveChat(undefined)}
+              >
+                <ArrowLeft />
+              </button>
+            )}
 
             <h2 className="text-lg">{selectedUser?.User?.name}</h2>
           </div>
@@ -111,7 +126,7 @@ export default function Chat() {
 
         <button
           className="btn btn-circle btn-ghost p-1"
-          onClick={() => activeChat && setExpand((e) => !e)}
+          onClick={() => (activeChat && expand) && setExpand((e) => !e)}
         >
           {expand ? <ChevronsDown /> : <ChevronsUp />}
         </button>
@@ -132,20 +147,36 @@ export default function Chat() {
           </button>
         )}
         {activeChat ? (
-          <ChatRoom chatId={activeChat} />
+          <ChatRoom
+            chatId={activeChat}
+            messages={messages[activeChat] ?? []}
+            insertNewMessage={insertMessages}
+          />
         ) : (
-          <ul className="max-h-[calc(100%-3rem)] overflow-auto">
+          <ul className={cn("max-h-[calc(100%-3rem)] overflow-auto")}>
             {chats?.map((chat) => (
               <li
                 key={chat.id}
                 onClick={() => setActiveChat(chat.chatsId)}
                 className="flex items-center gap-2 p-4 hover:cursor-pointer hover:bg-accent"
               >
-                <div className="relative h-8 w-8 overflow-clip rounded-full">
-                  <Avatar profilePhotoUrl={chat.User.profilePhotoUrl} />
+                <div className="relative">
+                  {(notifs[chat.chatsId]?.count ?? 0 > 0) && (
+                    <div className="absolute left-0 top-0 z-50 h-1.5 w-1.5 animate-ping rounded-full bg-white ring-1 ring-accent"></div>
+                  )}
+                  <div className="relative h-8 w-8 overflow-clip rounded-full">
+                    <Avatar profilePhotoUrl={chat.User.profilePhotoUrl} />
+                  </div>
                 </div>
 
-                {chat.User.name}
+                <div className="relative">
+                  <div className="font-semibold">{chat.User.name}</div>
+                  <div className="absolute -bottom-2 text-xs opacity-50">
+                    {notifs[chat.chatsId]?.last?.content ?? (
+                      <span className="select-none opacity-0">?</span>
+                    )}
+                  </div>
+                </div>
               </li>
             ))}
           </ul>

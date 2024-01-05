@@ -1,15 +1,21 @@
 import { cn } from "@/utils/cn";
 import type { Messages } from "@prisma/client";
-import type { RealtimeChannel } from "@supabase/supabase-js";
 import { supabase } from "lib/supabase";
 import { SendHorizontal } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { type FormEvent, useEffect, useState, useRef } from "react";
 
-export default function ChatRoom({ chatId }: { chatId: number }) {
+export default function ChatRoom({
+  chatId,
+  messages,
+  insertNewMessage,
+}: {
+  chatId: number;
+  messages: Messages[];
+  insertNewMessage: (chatId: number, messages: Messages[]) => void;
+}) {
   const session = useSession();
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<Messages[]>();
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -25,35 +31,22 @@ export default function ChatRoom({ chatId }: { chatId: number }) {
         .from("Messages")
         .select("*")
         .eq("chatsId", chatId);
-      messages.data && setMessages(messages.data);
+      messages.data &&
+        insertNewMessage &&
+        insertNewMessage(
+          chatId,
+          messages.data.map((m) => {
+            if (m["createdAt"] && typeof m["createdAt"] === "string") {
+              m["createdAt"] = new Date(Date.parse(m["createdAt"]));
+            }
+            return m;
+          }),
+        );
     };
-    let messagesWatcher: RealtimeChannel;
     if (chatId) {
       void getAllMessages(chatId);
-      messagesWatcher = supabase
-        .channel(`message-channel`)
-        .on(
-          "postgres_changes",
-          {
-            event: "INSERT",
-            schema: "public",
-            table: "Messages",
-            filter: `chatsId=eq.${chatId}`,
-          },
-          (payload) => {
-            console.log("payload?", payload);
-            if (payload.new) {
-              const newMessage = payload.new as Messages;
-              setMessages((m) => (m ? [...m, newMessage] : [newMessage]));
-            }
-          },
-        )
-        .subscribe();
     }
-    return () => {
-      messagesWatcher?.unsubscribe();
-    };
-  }, [chatId]);
+  }, [chatId, insertNewMessage]);
 
   const handleSend = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,8 +68,11 @@ export default function ChatRoom({ chatId }: { chatId: number }) {
 
   return (
     <div className="relative h-full">
-      <div ref={scrollRef} className="max-h-[calc(100%-6rem)] overflow-auto overscroll-none">
-        {messages?.map((m) => (
+      <div
+        ref={scrollRef}
+        className="max-h-[calc(100%-6rem)] overflow-auto overscroll-none"
+      >
+        {messages?.map((m, i) => (
           <div
             key={m.id}
             className={cn(
@@ -84,10 +80,28 @@ export default function ChatRoom({ chatId }: { chatId: number }) {
               m.userId === session.data?.user.id ? "chat-end" : "chat-start",
             )}
           >
-            {/* <div className="chat-header text-xs opacity-50">
-              {m?.createdAt?.toTimeString()}
-            </div> */}
-            <div className="chat-bubble">{m.content}</div>
+            {/* check for 10 minute interval between timestamps */}
+            {((i === 0) || (i > 0 &&
+              messages[i - 1]?.createdAt.getTime() &&
+              (messages[i - 1]?.createdAt.getTime() ?? 0) + 10 * 60 * 1000 <
+                m.createdAt.getTime())) && (
+                <div className="chat-header text-xs opacity-50">
+                  {m?.createdAt?.toLocaleTimeString(undefined, {
+                    timeStyle: "short",
+                  })}
+                </div>
+              )}
+
+            <div
+              className={cn(
+                "chat-bubble",
+                m.userId === session.data?.user.id
+                  ? ""
+                  : "chat-bubble-secondary",
+              )}
+            >
+              {m.content}
+            </div>
           </div>
         ))}
       </div>
