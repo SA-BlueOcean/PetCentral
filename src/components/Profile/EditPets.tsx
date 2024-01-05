@@ -44,9 +44,17 @@ export default function EditPets({
 
   const breedQuery = api.pets.getBreeds.useQuery({ animalId });
 
+  const resetFields = () => {
+    setFirstName(pet?.firstName);
+    setDOB(pet?.dateOfBirth?.toISOString().split("T")[0]);
+    setBreedId(pet?.breedId);
+    setPhotoUrl(pet?.photoUrl);
+  };
+
   const mutation = api.pets.updatePet.useMutation();
   const utils = api.useUtils();
-  const handleUpdate = () => {
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     mutation.mutate(
       {
         petId: pet?.id ?? "",
@@ -60,16 +68,13 @@ export default function EditPets({
           utils.profile.get.invalidate({ profileId }).catch((err) => {
             console.log(err);
           });
+          (
+            document.getElementById("my_modal_7") as HTMLDialogElement | null
+          )?.close?.();
+          resetFields();
         },
       },
     );
-  };
-
-  const resetFields = () => {
-    setFirstName(pet?.firstName);
-    setDOB(pet?.dateOfBirth?.toISOString().split("T")[0]);
-    setBreedId(pet?.breedId);
-    setPhotoUrl(pet?.photoUrl);
   };
 
   return (
@@ -84,7 +89,7 @@ export default function EditPets({
           </button>
         </form>
         <p>{`Update ${pet?.firstName}'s Information`}</p>
-        <form>
+        <form onSubmit={handleUpdate}>
           <label>First Name</label>
           <input
             type="text"
@@ -123,7 +128,7 @@ export default function EditPets({
             }
           />
           <button>Upload</button>
-          <button onClick={handleUpdate}>Update</button>
+          <button type="submit">Update</button>
         </form>
       </div>
     </dialog>

@@ -22,7 +22,7 @@ export default function ProfilePage() {
       <EditProfileModal profileId={profileId} />
       <Bio profileId={profileId} />
       <Pets profileId={profileId} />
-      <AddPets />
+      <AddPets profileId={profileId} />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );

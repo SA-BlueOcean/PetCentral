@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
 import { useState } from "react";
 
-export default function AddPets() {
+export default function AddPets({ profileId }: { profileId: string }) {
   type Breed = {
     id: number;
     name: string;
@@ -16,21 +16,36 @@ export default function AddPets() {
   const [breedId, setBreedId] = useState(0);
   const [photoUrl, setPhotoUrl] = useState("");
 
-  const mutation = api.pets.addPet.useMutation();
-  const handleSubmit = () => {
-    mutation.mutate({
-      firstName,
-      dateOfBirth: new Date(Date.parse(dateOfBirth ?? "")),
-      breedId,
-      photoUrl,
-    });
-  };
-
   const resetFields = () => {
     setFirstName("");
     setDOB("mm/dd/yyyy");
     setAnimalId(0);
     setBreedId(0);
+  };
+
+  const mutation = api.pets.addPet.useMutation();
+  const utils = api.useUtils();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutation.mutate(
+      {
+        firstName,
+        dateOfBirth: new Date(Date.parse(dateOfBirth ?? "")),
+        breedId,
+        photoUrl,
+      },
+      {
+        onSuccess: () => {
+          utils.profile.get.invalidate({ profileId }).catch((err) => {
+            console.log(err);
+          });
+          (
+            document.getElementById("my_modal_6") as HTMLDialogElement | null
+          )?.close?.();
+          resetFields();
+        },
+      },
+    );
   };
 
   return (
@@ -45,7 +60,7 @@ export default function AddPets() {
           </button>
         </form>
         <p className="mt-5 text-center text-lg font-semibold">Add Your Pet</p>
-        <form className="mx-20 my-5 flex flex-col">
+        <form className="mx-20 my-5 flex flex-col" onSubmit={handleSubmit}>
           <label>First Name</label>
           <input
             type="text"
@@ -110,7 +125,7 @@ export default function AddPets() {
             />
             <button type="button">Upload Photo</button>
           </div>
-          <button onClick={handleSubmit}>Add Pet</button>
+          <button type="submit">Add Pet</button>
         </form>
       </div>
     </dialog>
