@@ -3,6 +3,7 @@ import { useState } from "react";
 import { supabase } from "lib/supabase";
 import { v4 as uuidv4 } from "uuid";
 import { env } from "@/env.js";
+import { Loader } from "lucide-react";
 
 export default function AddPets({ profileId }: { profileId: string }) {
   type Breed = {
@@ -31,17 +32,19 @@ export default function AddPets({ profileId }: { profileId: string }) {
   const utils = api.useUtils();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!file) {
-      return;
+
+    let address = "";
+
+    if (file) {
+      const filename = `${uuidv4()}`;
+      address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(filename, file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
     }
-    const filename = `${uuidv4()}`;
-    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(filename, file, {
-        cacheControl: "3600",
-        upsert: true,
-      });
     mutation.mutate(
       {
         firstName,
@@ -164,7 +167,11 @@ export default function AddPets({ profileId }: { profileId: string }) {
             />
           </label>
           <button type="submit" className="btn btn-outline btn-success w-full">
-            Add Pet
+            {mutation.isLoading ? (
+              <Loader className="animate-spin" size={24} />
+            ) : (
+              "Add Pet"
+            )}
           </button>
         </form>
       </div>
