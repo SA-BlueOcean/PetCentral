@@ -117,9 +117,6 @@ export default function SideNavElements() {
               ? "Sign in"
               : ""}
         </button>
-        <button className="btn mt-2 h-8 min-h-8 w-full rounded-full">
-          New Post
-        </button>
       </div>
     </>
   );

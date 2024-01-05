@@ -7,7 +7,7 @@ import { Loader } from "lucide-react";
 import CreatePost from "./CreatePost";
 
 type FeedProps = {
-  mode: "PROFILE" | "GROUP" | "ALL";
+  mode: "PROFILE" | "GROUP" | "ALL" | "SUBS" | "FRIENDS";
   profileId?: string;
   groupId?: string;
 };
@@ -18,11 +18,14 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
     {
       profileId,
       groupId,
+      mode,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       enabled: !!(
         mode === "ALL" ||
+        mode == "SUBS" ||
+        mode === "FRIENDS" ||
         (mode === "PROFILE" && profileId) ||
         (mode === "GROUP" && groupId)
       ),
@@ -65,16 +68,17 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
       <div
         ref={scrollRef}
         className={cn(
-          posts.hasNextPage ? "h-20" : "h-0",
-          "w-full",
+          "h-20 flex items-center justify-center w-full",
           (posts.isLoading || posts.isFetching || posts.isFetchingNextPage) &&
             "flex items-center justify-center",
         )}
       >
         {posts.isLoading || posts.isFetching || posts.isFetchingNextPage ? (
           <Loader className="animate-spin" />
+        ) : (posts.data?.pages?.flatMap(p => p.posts).length ?? 0) < 1 ? (
+          <div className="text-center opacity-50">nothing here</div>
         ) : (
-          ""
+          <></>
         )}
       </div>
     </div>

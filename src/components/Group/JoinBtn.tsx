@@ -28,7 +28,7 @@ export default function JoinButton({ id }: { id: string }) {
       return;
     }
     if (userIsMember.data === false) {
-      disconnect.mutate(
+      mutation.mutate(
         { groupId: id },
         {
           onSuccess() {
@@ -38,7 +38,7 @@ export default function JoinButton({ id }: { id: string }) {
         },
       );
     } else {
-      mutation.mutate(
+      disconnect.mutate(
         { groupId: id },
         {
           onSuccess() {

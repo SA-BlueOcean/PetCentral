@@ -10,6 +10,7 @@ import SideNavFriends from "./Friends/SideNavFriends";
 import Chat from "./Chat";
 import SideNavGroups from "./Group/SideNavGroups";
 import FriendsMonitor from "./Profile/FriendsMonitor";
+import SidNavFindFriends from "./Friends/SideNavFindFriends";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,7 +45,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <div className={inter.className}>
+    <div className={`overflow-x-clip ${inter.className}`}>
       {session.status == "authenticated" && <FriendsMonitor />}
       {displayLoginModal && (
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
@@ -117,11 +118,11 @@ const Container = ({ Component, pageProps }: AppProps) => {
               </main>
             </div>
             <div className="sticky top-4 hidden self-start p-4 md:block">
-              <div>component b</div>
+              <SidNavFindFriends />
               <SideNavGroups />
             </div>
           </div>
-          <div className="fixed bottom-0 right-0 sm:right-10 z-50 pointer-events-none">
+          <div className="pointer-events-none fixed bottom-0 right-0 z-50 sm:right-10">
             <Chat />
           </div>
         </div>

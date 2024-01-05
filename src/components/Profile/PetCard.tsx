@@ -64,7 +64,7 @@ export default function PetCard({
 
   return (
     <div className="flex gap-x-3 py-4">
-      <div className="relative size-16 flex-none overflow-clip rounded-lg">
+      <div className="relative size-20 flex-none overflow-clip rounded-lg border border-neutral-400">
         <Image
           src={
             pet?.photoUrl
@@ -79,7 +79,7 @@ export default function PetCard({
       </div>
       <div className="flex w-full flex-col justify-between">
         <div className="flex justify-between">
-          <p className="font-medium">{capitalize(pet?.firstName ?? "")}</p>
+          <p className="font-semibold">{capitalize(pet?.firstName ?? "")}</p>
           {session.data?.user?.id === profileId ? (
             <div className="flex gap-x-2">
               <button
