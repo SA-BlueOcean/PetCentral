@@ -75,7 +75,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               )}
               <div
                 className={cn(
-                  "relative h-32 w-32 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:h-40 sm:w-40",
+                  "relative h-32 w-32 overflow-hidden rounded-full ring ring-base-300  ring-offset-base-100 sm:h-40 sm:w-40",
                   user.isLoading && "skeleton",
                 )}
               >
@@ -121,7 +121,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
             </div>
           </div>
           {session.data?.user.id !== profileId && (
-            <div className="-mt-6 mr-4 flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-row items-center justify-center gap-2 sm:-mt-6 sm:mr-4">
               <AddFriend userId={profileId} />
               <AddChat userId={user.data?.id} />
             </div>
