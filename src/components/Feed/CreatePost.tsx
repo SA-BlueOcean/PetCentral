@@ -143,7 +143,7 @@ export default function CreatePost() {
           <select
             className="select select-ghost z-50 max-w-xs grow pl-1 text-secondary-content"
             value={post.groupId ?? ""}
-            defaultValue={"default"}
+            defaultValue={""}
             onChange={(e) => {
               setPost((p) => ({
                 ...p,
