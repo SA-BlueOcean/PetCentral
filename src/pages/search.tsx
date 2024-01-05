@@ -12,7 +12,6 @@ export default function Search() {
   const groupsResults = api.groups.searchGroups.useQuery(
     searchTerm ? { searchTerm: searchTerm, } : { searchTerm: '' }
   );
-
   return (
     <>
       <Head>
@@ -43,6 +42,5 @@ export default function Search() {
       )}
     </>
   );
-
 }
 

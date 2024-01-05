@@ -108,7 +108,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
               </div>
             </div>
             <div className="relative col-span-1 w-full max-w-xl">
-              <header className="sticky top-0 z-10 h-16 w-full">
+              <header className="sticky top-0 z-50 h-16 w-full">
                 <TopNav />
               </header>
               <main className="min-h-[calc(100vh-4rem)] bg-base-300 p-3">
@@ -120,7 +120,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
               <SideNavGroups />
             </div>
           </div>
-          <div className="fixed bottom-0 right-10">
+          <div className="fixed bottom-0 right-0 sm:right-10 z-50 pointer-events-none">
             <Chat />
           </div>
         </div>
