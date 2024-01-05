@@ -136,4 +136,26 @@ export const groupRouter = createTRPCRouter({
       groups: allGroups,
     };
   }),
+  searchGroups: publicProcedure
+  .input(
+    z
+    .object({
+      searchTerm: z.string().optional(),
+    })
+  )
+  .query(async ({ ctx, input }) => {
+    const searchGroups = await ctx.db.group.findMany({
+      where: {
+        name: {
+          contains: input.searchTerm,
+          mode: "insensitive",
+        },
+      },
+    });
+
+    return {
+      groups: searchGroups,
+    };
+  }),
+
 });
