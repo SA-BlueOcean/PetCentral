@@ -64,18 +64,19 @@ export default function PetCard({
 
   return (
     <div className="flex gap-x-3 py-4">
-      <Image
-        src={
-          pet?.photoUrl
-            ? pet?.photoUrl
-            : "https://static.vecteezy.com/system/resources/previews/012/049/155/original/isolated-dog-animal-silhouette-icon-simple-black-shape-graphic-symbol-illustration-abstract-design-element-vet-clinic-logo-pet-portrait-shadow-flat-style-vector.jpg"
-        }
-        alt={pet?.firstName ?? ""}
-        width={68}
-        height={68}
-        unoptimized
-        className="rounded-lg"
-      ></Image>
+      <div className="relative size-16 flex-none overflow-clip rounded-lg">
+        <Image
+          src={
+            pet?.photoUrl
+              ? pet?.photoUrl
+              : "https://static.vecteezy.com/system/resources/previews/012/049/155/original/isolated-dog-animal-silhouette-icon-simple-black-shape-graphic-symbol-illustration-abstract-design-element-vet-clinic-logo-pet-portrait-shadow-flat-style-vector.jpg"
+          }
+          alt={pet?.firstName ?? ""}
+          unoptimized
+          fill
+          className="object-cover"
+        ></Image>
+      </div>
       <div className="flex w-full flex-col justify-between">
         <div className="flex justify-between">
           <p className="font-medium">{capitalize(pet?.firstName ?? "")}</p>
