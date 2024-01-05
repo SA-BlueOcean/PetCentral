@@ -60,7 +60,14 @@ export default function CreatePost() {
   };
 
   const handleSubmitImage = (postId: number, photoUrl: string) => {
-    photoMutation.mutate({ postId: postId, photoUrl: photoUrl });
+    photoMutation.mutate(
+      { postId: postId, photoUrl: photoUrl },
+      {
+        onSuccess() {
+          void utils.feed.get.invalidate();
+        },
+      },
+    );
   };
 
   return (
