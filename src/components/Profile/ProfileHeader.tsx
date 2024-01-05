@@ -121,7 +121,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
             </div>
           </div>
           {session.data?.user.id !== profileId && (
-            <div className="sm:jusify-right flex flex-row items-center justify-center gap-2 sm:absolute sm:-mt-6">
+            <div className="flex flex-row items-center justify-center gap-2 sm:absolute sm:right-5 sm:-mt-6">
               <AddFriend userId={profileId} />
               <AddChat userId={user.data?.id} />
             </div>
