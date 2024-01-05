@@ -8,7 +8,7 @@ export default function SideNavGroups() {
         href={"/group"}
         className="flex w-full items-center justify-center p-4"
       >
-        <h2 className="text-2xl link-hover">Groups</h2>
+        <h2 className="text-2xl link-hover">All Groups</h2>
       </Link>
       <div className="relative max-h-[40vh] overflow-y-auto">
         <GroupsElements />
