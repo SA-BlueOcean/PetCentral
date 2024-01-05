@@ -50,7 +50,7 @@ export default function PostCard({ data }: PostCardProps) {
   return (
     <>
       <dialog id={`post_modal_${data.id}`} className="modal">
-        <div className="modal-box max-h-[70vw] h-full max-w-[80vw] w-full">
+        <div className="modal-box max-h-[70vh] h-full max-w-[80vw] w-full">
           {data?.photos?.[0]?.url && (
             <Image
               src={data?.photos?.[0]?.url}
