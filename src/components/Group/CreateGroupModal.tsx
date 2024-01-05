@@ -4,7 +4,6 @@ import { useGlobalContext } from "@/providers/GlobalContext";
 
 export default function CreateGroupModal() {
   const { setDisplayLoginModal } = useGlobalContext();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [groupDetails, setGroupDetails] = useState({
     name: "",
     description: "",
@@ -16,17 +15,15 @@ export default function CreateGroupModal() {
 
   const utils = api.useUtils();
   const mutation = api.groups.create.useMutation({});
+  // const modalElement = document?.getElementById("my_modal");
 
-  if (document) {
-    const modalElement = document?.getElementById("my_modal");
-    if (modalIsOpen) {
-      if (modalElement instanceof HTMLDialogElement) {
-        modalElement.showModal();
-      }
-    } else {
-      modalElement?.closest("dialog")?.close();
-    }
-  }
+  // if (modalIsOpen) {
+  //   if (modalElement instanceof HTMLDialogElement) {
+  //     modalElement.showModal();
+  //   }
+  // } else {
+  //   modalElement?.closest("dialog")?.close();
+  // }
 
   const createGroup = async () => {
     mutation.mutate(
@@ -59,7 +56,11 @@ export default function CreateGroupModal() {
     <>
       <button
         className="btn-s btn btn-primary basis-1/5 rounded-btn uppercase text-white"
-        onClick={() => setModalIsOpen(true)}
+        onClick={() => {
+          (
+            document.getElementById("my_modal") as HTMLDialogElement | null
+          )?.showModal?.();
+        }}
       >
         Create A Group
       </button>
@@ -67,7 +68,11 @@ export default function CreateGroupModal() {
         <div className="modal-box bg-primary text-white">
           <button
             className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-            onClick={() => setModalIsOpen(false)}
+            onClick={() => {
+              (document.getElementById("my_modal") as HTMLDialogElement | null)
+                ?.closest("dialog")
+                ?.close();
+            }}
           >
             ✕
           </button>

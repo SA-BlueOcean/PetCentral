@@ -24,6 +24,7 @@ export default function JoinButton({ id }: { id: string }) {
   const utils = api.useUtils();
 
   const updateUserGroups = async () => {
+    console.log(userIsMember.data);
     if (userIsMember.isLoading) {
       return;
     }
