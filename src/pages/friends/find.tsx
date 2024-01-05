@@ -10,27 +10,28 @@ import useAddFriend from "@/components/Profile/useAddFriend";
 //const utils = api.useUtils();
 
 export default function FindFriendsPage() {
-  const [distance, setDistance] = useState(50);
-  const [current, setCurrent] = useState(0);
-  const [animate, setAnimate] = useState([]);
-  const [hide, setHide] = useState([]);
+  const [distance, setDistance] = useState<number>(50);
+  const [current, setCurrent] = useState<number>(0);
+  const [animate, setAnimate] = useState<string[]>([]);
+  const [hide, setHide] = useState<boolean[]>([]);
 
   const { data: sessionData, status } = useSession();
   const { addFriend } = useAddFriend();
 
   const handleNext = (dir: string) => {
-    if (users.data[users.data?.length - current - 1] !== undefined) {
+    if (users?.data) {
       if (dir === "right") {
-        addFriend(users.data[users.data?.length - current - 1].id).catch(
-          (err) => {
+        const userId = users?.data[users.data?.length - current - 1]?.id;
+        if (userId) {
+          addFriend(userId).catch((err) => {
             console.error(err);
-          },
-        );
+          });
+        }
       }
-      const newAnimate = [...animate];
+      const newAnimate: string[] = [...animate];
       newAnimate[current] = dir;
       setAnimate(newAnimate);
-      const newHide = [...hide];
+      const newHide: boolean[] = [...hide];
       newHide[current] = true;
       setCurrent((current) => current + 1);
       setTimeout(() => {
@@ -201,11 +202,11 @@ const ProfileCard = ({
     name: string | null;
     id: string;
     profilePhotoUrl: string | null;
-    location: { locationName: string | null };
-    pets: object[];
+    location: { locationName: string | null } | undefined | null;
+    pets: object[] | undefined;
   };
   fly: string | null | undefined;
-  hide: boolean | null;
+  hide: boolean | null | undefined;
   loading: boolean;
 }) => {
   return (
@@ -237,7 +238,9 @@ const ProfileCard = ({
         </div>
         <div className="mr-3 flex gap-2">
           <PawPrint />
-          <p className="font-normal">{user.pets.length}</p>
+          <p className="font-normal">
+            {user.pets?.length ? user.pets.length : "0"}
+          </p>
           <p className="font-normal">Pets</p>
         </div>
       </div>
