@@ -54,7 +54,7 @@ export const groupRouter = createTRPCRouter({
       where: {
         id: userId,
       },
-      include: {
+      select: {
         groups: true,
       },
     });

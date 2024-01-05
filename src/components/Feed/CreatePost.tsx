@@ -1,78 +1,104 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import { useSession } from "next-auth/react";
 import { api } from "@/utils/api";
 import { supabase } from "lib/supabase";
 import { v4 as uuidv4 } from "uuid";
 import { env } from "@/env.js";
 import Avatar from "./Avatar";
+import Image from "next/image";
 import { Loader } from "lucide-react";
 
 export default function CreatePost() {
+  const session = useSession();
   const [post, setPost] = useState({
     content: "",
     groupId: "",
   });
   const [image, setImage] = useState<File | null>(null);
-
+  const [loading, setLoading] = useState(false);
   const mutation = api.posts.createPost.useMutation({});
-  const photoMutation = api.posts.addPhoto.useMutation({});
   const { setDisplayLoginModal } = useGlobalContext();
 
   // Fetch User Details & Session Info
-  const query = api.users.fetchUser.useQuery();
+  const query = api.users.fetchUser.useQuery(undefined, {
+    enabled: session.status === "authenticated",
+  });
 
   // Fetch User's Groups
-  const groupsQuery = api.groups.fetchGroups.useQuery();
+  const groupsQuery = api.groups.fetchGroups.useQuery(undefined, {
+    enabled: session.status === "authenticated",
+  });
   const utils = api.useUtils();
-  const handleSubmit = async (
-    e: { preventDefault: () => void } | undefined,
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
-    mutation.mutate(post, {
-      onError(error: { message: string }) {
-        if (error.message === "UNAUTHORIZED") {
-          setDisplayLoginModal(true);
-        }
-      },
-      onSuccess(data: Number | any) {
-        const postId = data.postId;
-        if (image) {
-          getUrl(image, postId);
-        }
-        setPost({
-          content: "",
-          groupId: "",
+    try {
+      setLoading(true);
+      if (image) {
+        await submitWithImage(image);
+      } else {
+        await handleSubmitPost();
+      }
+    } catch (err) {
+      console.log("post error", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const submitWithImage = async (file: File | null) => {
+    if (session.status === "authenticated") {
+      const filename = `${uuidv4()}`;
+      const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+      const { data, error } = await supabase.storage
+        .from("images")
+        .upload(filename, file!, {
+          upsert: true,
         });
-        void utils.feed.get.invalidate();
-      },
+      if (!error) {
+        await handleSubmitPost(address);
+      }
+    } else {
+      setDisplayLoginModal(true);
+    }
+  };
+
+  const handleSubmitPost = async (photoUrl?: string) => {
+    await new Promise((res, rej) => {
+      mutation.mutate(
+        { ...post, photoUrl: photoUrl },
+        {
+          onError(error: { message: string }) {
+            if (error.message === "UNAUTHORIZED") {
+              setDisplayLoginModal(true);
+            }
+            rej(error);
+          },
+          onSuccess: () => {
+            utils.feed.get
+              .invalidate()
+              .catch((err) => {
+                console.log("feedvalidateerr", err);
+              })
+              .finally(() => {
+                setPost({
+                  content: "",
+                  groupId: "",
+                });
+                setImage(null);
+                res(null);
+              });
+          },
+        },
+      );
     });
   };
 
-  const getUrl = async (file: File | null, postId: Number | any) => {
-    const filename = `${uuidv4()}`;
-    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(filename, file!, {
-        upsert: true,
-      });
-    handleSubmitImage(postId, address);
-    return address;
-  };
-
-  const handleSubmitImage = (postId: number, photoUrl: string) => {
-    photoMutation.mutate(
-      { postId: postId, photoUrl: photoUrl },
-      {
-        onSuccess() {
-          void utils.feed.get.invalidate();
-        },
-      },
-    );
-  };
-
   return (
-    <form className="my-3 rounded-lg bg-base-100 ring-1 ring-base-500">
+    <form
+      className="ring-base-500 my-3 rounded-lg bg-base-100 ring-1"
+      onSubmit={handleSubmit}
+    >
       <div className="p-3">
         <div className="flex">
           <div className="flex w-full items-center gap-2">
@@ -95,18 +121,37 @@ export default function CreatePost() {
             </div>
           </div>
         </div>
+        {image && (
+          <div className="relative m-1 my-2 aspect-video w-full overflow-clip rounded-lg">
+            <button
+              className="btn btn-circle absolute right-2 top-2 z-10 h-6 min-h-6 w-6 min-w-6"
+              type="button"
+              onClick={() => setImage(null)}
+            >
+              &times;
+            </button>
+            <Image
+              src={URL.createObjectURL(image)}
+              alt=""
+              unoptimized
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
         <div className="flex items-center justify-between p-1">
           <select
             className="select select-ghost z-50 max-w-xs grow pl-1 text-secondary-content"
-            value={post.groupId ?? undefined}
+            value={post.groupId ?? ""}
+            defaultValue={""}
             onChange={(e) => {
-              setPost({
-                ...post,
+              setPost((p) => ({
+                ...p,
                 groupId: e.target.value,
-              });
+              }));
             }}
           >
-            <option disabled selected defaultValue={undefined}>
+            <option value={""}>
               Choose a community
             </option>
             {groupsQuery?.data?.groups && (
@@ -138,14 +183,13 @@ export default function CreatePost() {
             </label>
           </div>
           <button
-            className="btn btn-primary btn-sm z-10 rounded-btn uppercase text-white"
-            onClick={(e) => handleSubmit(e)}
+            disabled={
+              (loading || groupsQuery.isLoading || query.isLoading) &&
+              !(session.status === "unauthenticated")
+            }
+            className="btn btn-accent btn-sm z-10 w-16 rounded-btn uppercase text-white"
           >
-            {photoMutation.isLoading || mutation.isLoading ? (
-              <Loader size={12} className="animate-spin" />
-            ) : (
-              <p>Post</p>
-            )}
+            {loading ? <Loader className="animate-spin" size={20} /> : "Post"}
           </button>
         </div>
       </div>
