@@ -20,7 +20,9 @@ export default function Search() {
             Search
           </label>
           <div className="join">
-            <Link href='' onClick={handleSearch} className="join-item btn rounded-l-full"><SearchIcon size={20} /></Link>
+            <button onClick={handleSearch} className="join-item btn rounded-l-full">
+              <SearchIcon size={20} />
+            </button>
           <input
             id="search"
             type="text"
