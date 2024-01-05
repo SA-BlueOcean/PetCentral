@@ -1,5 +1,7 @@
 import { api } from "@/utils/api";
+import { disconnect } from "process";
 import { useState } from "react";
+import { Loader } from "lucide-react";
 
 export default function EditProfileModal() {
   const [firstName, setFirstName] = useState("");
@@ -73,9 +75,15 @@ export default function EditProfileModal() {
               />
             </div>
             <button
+              disabled={mutation.isLoading}
               className="btn mt-6 bg-primary px-3 text-white"
               onClick={() => onUpdateClick()}
             >
+              {mutation.isLoading ? (
+                <Loader size={12} className="animate-spin" />
+              ) : (
+                ""
+              )}
               UPDATE INFORMATION
             </button>
           </form>
