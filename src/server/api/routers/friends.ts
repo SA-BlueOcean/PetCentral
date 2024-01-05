@@ -30,13 +30,11 @@ export const friendsRouter = createTRPCRouter({
           id: {
             not: ctx.session.user.id,
           },
-
-          // friend: {
-          //   none: {
-          //     friendAId: ctx.session.user.id,
-          //     status: "ACCEPTED",
-          //   },
-          // }
+          friendsB: {
+            none: {
+              friendAId: ctx.session.user.id,
+            },
+          },
           location: {
             zipCode: {
               in: zips,
