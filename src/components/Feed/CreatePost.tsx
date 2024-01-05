@@ -60,7 +60,14 @@ export default function CreatePost() {
   };
 
   const handleSubmitImage = (postId: number, photoUrl: string) => {
-    photoMutation.mutate({ postId: postId, photoUrl: photoUrl });
+    photoMutation.mutate(
+      { postId: postId, photoUrl: photoUrl },
+      {
+        onSuccess() {
+          void utils.feed.get.invalidate();
+        },
+      },
+    );
   };
 
   return (
@@ -130,7 +137,7 @@ export default function CreatePost() {
             </label>
           </div>
           <button
-            className="btn btn-primary btn-sm z-50 rounded-btn uppercase text-white"
+            className="btn btn-primary btn-sm z-10 rounded-btn uppercase text-white"
             onClick={(e) => handleSubmit(e)}
           >
             Post

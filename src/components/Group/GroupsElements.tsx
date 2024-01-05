@@ -7,13 +7,15 @@ export default function GroupsElements() {
 
   return (
     <>
-      <ul className="w-full divide-y overflow-scroll">
+      <ul className="w-full divide-y px-3">
         {groupsList.data?.groups.map((group) => (
           <li key={group.id} className="py-3">
             <Link
-              href={`/${group.id}`}
-              className="flex flex-none items-center gap-3 object-cover">
-                <Image src={`${group.photoUrl}`}
+              href={`/group/${group.id}`}
+              className="flex items-center gap-3 pl-px"
+            >
+              <Image
+                src={`${group.photoUrl}`}
                 alt={`Image for ${group.name}`}
                 width={50}
                 height={50}

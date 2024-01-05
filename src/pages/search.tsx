@@ -19,7 +19,7 @@ export default function Search() {
   return (
     <>
       <Head>
-        <title>{searchTerm ? `Search results for: ${searchTerm} | PetCentral` : 'Search | PetCentral'}</title>
+        <title>{searchTerm ? `Search results for: ${searchTerm} | PetPals` : 'Search | PetPals'}</title>
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -75,6 +75,5 @@ export default function Search() {
       )}
     </>
   );
-
 }
 
