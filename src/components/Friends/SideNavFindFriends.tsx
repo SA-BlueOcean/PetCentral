@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { setTimeout } from "timers";
 import Link from "next/link";
 import useAddFriend from "@/components/Profile/useAddFriend";
+import { useGlobalContext } from "@/providers/GlobalContext";
 
 const ProfileCard = ({
   user,
@@ -90,6 +91,7 @@ export default function SideNavFindFriends() {
 
   const { data: sessionData, status } = useSession();
   const { addFriend } = useAddFriend();
+  const { setDisplayLoginModal } = useGlobalContext();
 
   const handleNext = (dir: string) => {
     if (users?.data) {
@@ -131,9 +133,14 @@ export default function SideNavFindFriends() {
         <h2 className="text mb-8 pl-16 pr-16 text-center text-base-100">
           To see friends in your area, please sign in
         </h2>
-        <Link className="btn btn-wide rounded-full text-lg" href="/login">
+        <button
+          onClick={() => {
+            setDisplayLoginModal(true);
+          }}
+          className="btn btn-wide rounded-full text-lg"
+        >
           Sign In
-        </Link>
+        </button>
       </aside>
     );
   }
