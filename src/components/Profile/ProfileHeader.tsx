@@ -37,7 +37,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
         )}
         <div className="absolute h-52 w-full">
           {user.isLoading ? (
-            <div className="skeleton w-full h-full rounded-none"></div>
+            <div className="skeleton h-full w-full rounded-none"></div>
           ) : (
             <Image
               src={
@@ -54,7 +54,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           )}
         </div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center pt-52 sm:flex-row sm:items-start sm:justify-normal">
+        <div className="relative z-10 flex flex-col items-center justify-center pt-52 text-center sm:flex-row sm:items-start sm:justify-normal sm:pl-5 sm:text-left">
           <div className="absolute top-0 translate-y-[calc(-50%+13rem)]">
             <div className="relative h-32 w-32 rounded-full sm:h-40 sm:w-40">
               {session.data?.user?.id === user.data?.id ? (
@@ -75,7 +75,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               )}
               <div
                 className={cn(
-                  "relative h-32 w-32 overflow-hidden rounded-full ring ring-primary ring-offset-2 ring-offset-base-100 sm:h-40 sm:w-40",
+                  "relative h-32 w-32 overflow-hidden rounded-full ring ring-base-300 ring-offset-base-100   sm:h-40 sm:w-40",
                   user.isLoading && "skeleton",
                 )}
               >
@@ -87,7 +87,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
           </div>
           <div className="h-16 w-32 flex-none sm:h-20 sm:w-40"></div>
 
-          <div className="mx-auto p-2 sm:m-3 sm:w-full sm:p-0">
+          <div className="p-2 sm:m-3 sm:mx-auto sm:ml-3 sm:w-full sm:p-0">
             <p className="relative text-2xl font-bold">
               {user.data?.firstName
                 ? user.data?.firstName + " " + user.data?.lastName
@@ -121,7 +121,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
             </div>
           </div>
           {session.data?.user.id !== profileId && (
-            <div className="-mt-6 mr-4 flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-row items-center justify-center gap-2 sm:absolute sm:right-5 sm:-mt-6">
               <AddFriend userId={profileId} />
               <AddChat userId={user.data?.id} />
             </div>
