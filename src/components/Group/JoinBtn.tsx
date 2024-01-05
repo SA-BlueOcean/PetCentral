@@ -24,12 +24,12 @@ export default function JoinButton({ id }: { id: string }) {
   const utils = api.useUtils();
 
   const updateUserGroups = async () => {
-    console.log(userIsMember.data);
+    console.log("test data: ", userIsMember.data);
     if (userIsMember.isLoading) {
       return;
     }
     if (userIsMember.data === false) {
-      disconnect.mutate(
+      mutation.mutate(
         { groupId: id },
         {
           onSuccess() {
@@ -39,7 +39,7 @@ export default function JoinButton({ id }: { id: string }) {
         },
       );
     } else {
-      mutation.mutate(
+      disconnect.mutate(
         { groupId: id },
         {
           onSuccess() {
