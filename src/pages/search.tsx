@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { api } from '@/utils/api';
-import { Link } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 
