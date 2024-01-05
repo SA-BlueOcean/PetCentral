@@ -15,15 +15,6 @@ export default function CreateGroupModal() {
 
   const utils = api.useUtils();
   const mutation = api.groups.create.useMutation({});
-  // const modalElement = document?.getElementById("my_modal");
-
-  // if (modalIsOpen) {
-  //   if (modalElement instanceof HTMLDialogElement) {
-  //     modalElement.showModal();
-  //   }
-  // } else {
-  //   modalElement?.closest("dialog")?.close();
-  // }
 
   const createGroup = async () => {
     mutation.mutate(
@@ -104,7 +95,13 @@ export default function CreateGroupModal() {
                 className="btn mx-auto mt-4 border-none bg-secondary text-white"
                 onClick={() => {
                   createGroup();
-                  setModalIsOpen(false);
+                  (
+                    document.getElementById(
+                      "my_modal",
+                    ) as HTMLDialogElement | null
+                  )
+                    ?.closest("dialog")
+                    ?.close();
                 }}
               >
                 Create Group
