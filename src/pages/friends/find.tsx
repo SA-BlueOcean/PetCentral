@@ -7,8 +7,6 @@ import { useMutation } from "@tanstack/react-query";
 import { setTimeout } from "timers";
 import useAddFriend from "@/components/Profile/useAddFriend";
 
-//const utils = api.useUtils();
-
 export default function FindFriendsPage() {
   const [distance, setDistance] = useState<number>(50);
   const [current, setCurrent] = useState<number>(0);
@@ -45,14 +43,12 @@ export default function FindFriendsPage() {
   };
 
   const errorHandle = (err: unknown) => {
-    console.log("THERE IS AN ErRRoR", err);
+    console.error("THERE IS AN ErRRoR", err);
   };
   const users = api.friends.findFriends.useQuery(
     { distance: distance },
     { onError: errorHandle, enabled: status === "authenticated" },
   );
-
-  console.log(users.data);
 
   return (
     <div className="flex w-full flex-col  justify-center gap-3">
@@ -125,68 +121,7 @@ export default function FindFriendsPage() {
               className="range"
             />
           </div>
-          {/* <button
-            onClick={handleSearch}
-            className="btn btn-primary btn-lg rounded-full text-base-100"
-          >
-            Search
-          </button> */}
         </div>
-        {/* <ul className="flex flex-wrap gap-3">
-          <li className="flex gap-1">
-            <input type="checkbox" name="dog" id="dog" className="checkbox" />
-            <label htmlFor="dog" className="font-semibold">
-              Dog
-            </label>
-          </li>
-          <li className="flex gap-1">
-            <input type="checkbox" name="Cat" id="Cat" className="checkbox" />
-            <label htmlFor="Cat" className="font-semibold">
-              Cat
-            </label>
-          </li>
-          <li className="flex gap-1">
-            <input type="checkbox" name="Fish" id="Fish" className="checkbox" />
-            <label htmlFor="Fish" className="font-semibold">
-              Fish
-            </label>
-          </li>
-
-          <li className="flex gap-1">
-            <input
-              type="checkbox"
-              name="Rabbit"
-              id="Rabbit"
-              className="checkbox"
-            />
-            <label htmlFor="Rabbit" className="font-semibold">
-              Rabbit
-            </label>
-          </li>
-          <li className="flex gap-1">
-            <input
-              type="checkbox"
-              name="Other"
-              id="Other"
-              className="checkbox"
-            />
-            <label htmlFor="Other" className="font-semibold">
-              Other
-            </label>
-          </li>
-
-          <li className="flex gap-1">
-            <input
-              type="checkbox"
-              name="Hamster"
-              id="Hamster"
-              className="checkbox"
-            />
-            <label htmlFor="Hamster" className="font-semibold">
-              Hamster
-            </label>
-          </li>
-        </ul> */}
       </section>
     </div>
   );
