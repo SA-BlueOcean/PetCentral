@@ -74,8 +74,9 @@ export default function FindFriendsPage() {
               key={"sdfaljasdfl"}
               fly={null}
               hide={null}
+              loading={true}
               user={{
-                name: "loading friends ...",
+                name: "Loading Friends",
                 id: "aafadsffd",
                 profilePhotoUrl: null,
                 location: { locationName: null },
@@ -90,6 +91,7 @@ export default function FindFriendsPage() {
                   fly={animate[users.data.length - index - 1]}
                   hide={hide[users.data.length - index - 1]}
                   user={user}
+                  loading={false}
                 />
               );
             })
@@ -191,6 +193,7 @@ const ProfileCard = ({
   user,
   fly,
   hide,
+  loading,
 }: {
   user: {
     name: string | null;
@@ -201,10 +204,11 @@ const ProfileCard = ({
   };
   fly: string | null | undefined;
   hide: boolean | null;
+  loading: boolean;
 }) => {
   return (
     <div
-      className={`card  absolute left-0 top-0 h-[464px] w-[400px]
+      className={`card skeleton absolute left-0 top-0 h-[464px] w-[400px]
       ${fly === "left" ? "animate-flyL" : null} ${
         fly === "right" ? "animate-flyR" : null
       } ${hide ? "hidden" : null} overflow-hidden bg-base-500`}
@@ -218,7 +222,12 @@ const ProfileCard = ({
       />
       <div className="card-title flex h-16 justify-between bg-base-100 p-3">
         <div className="ml-3 flex flex-col">
-          <h2>{user.name}</h2>
+          <h2>
+            {user.name}{" "}
+            {loading ? (
+              <span className="loading loading-dots loading-sm"></span>
+            ) : null}
+          </h2>
           <h3 className="text-sm font-normal text-base-600">
             {" "}
             {user.location?.locationName}

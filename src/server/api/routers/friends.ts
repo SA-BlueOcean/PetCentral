@@ -27,6 +27,16 @@ export const friendsRouter = createTRPCRouter({
       let zips = zipcodes.radius(userZip?.location?.zipCode, input?.distance);
       const users = await ctx.db.user.findMany({
         where: {
+          id: {
+            not: ctx.session.user.id,
+          },
+
+          // friend: {
+          //   none: {
+          //     friendAId: ctx.session.user.id,
+          //     status: "ACCEPTED",
+          //   },
+          // }
           location: {
             zipCode: {
               in: zips,

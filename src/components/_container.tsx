@@ -43,7 +43,7 @@ const Container = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <div className={inter.className}>
+    <div className={`overflow-hidden ${inter.className}`}>
       {session.status == "authenticated" && <FriendsMonitor />}
       {displayLoginModal && (
         <div className="fixed inset-0 z-[99] bg-black/80 backdrop-blur-md">
