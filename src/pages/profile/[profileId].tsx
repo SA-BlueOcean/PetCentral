@@ -17,10 +17,10 @@ export default function ProfilePage() {
       <ProfileHeader profileId={profileId} />
       <EditPhotosModal profileId={profileId} />
       <EditProfilePhotoModal profileId={profileId} />
-      <EditProfileModal profileId={profileId} />
+      <EditProfileModal />
       <Bio profileId={profileId} />
       <Pets profileId={profileId} />
-      <AddPets />
+      <AddPets profileId={profileId} />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );

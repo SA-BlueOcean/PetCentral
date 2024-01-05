@@ -17,6 +17,7 @@ export const feedRouter = createTRPCRouter({
           groupId: z.string().optional(),
           profileId: z.string().optional(),
           cursor: z.number().optional(),
+          searchTerm: z.string().optional(),
         })
         .optional(),
     )
@@ -55,6 +56,10 @@ export const feedRouter = createTRPCRouter({
                   },
                 }
               : undefined,
+          content: {
+            contains: input?.searchTerm,
+            mode: "insensitive",
+          },
         },
         include: {
           createdBy: true,

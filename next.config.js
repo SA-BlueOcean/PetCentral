@@ -3,6 +3,9 @@
  * for Docker builds.
  */
 await import("./src/env.js");
+// import {env} from "./src/env";
+
+
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -19,7 +22,16 @@ const config = {
   },
   experimental: {
     scrollRestoration: true
-  }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        // hostname: env.NEXT_PUBLIC_SUPABASE_URL?.slice('https://'),
+        hostname: 'wbcribkoduulenxqfpyg.supabase.co',
+      },
+    ],
+  },
 };
 
 export default config;

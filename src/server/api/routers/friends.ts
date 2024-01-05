@@ -1,4 +1,5 @@
 import { z } from "zod";
+import zipcodes from "zipcodes";
 
 import {
   createTRPCRouter,
@@ -7,10 +8,86 @@ import {
 } from "@/server/api/trpc";
 
 export const friendsRouter = createTRPCRouter({
-  findFriends: publicProcedure
+  findFriends: protectedProcedure
     .input(z.object({ distance: z.number().optional() }))
     .query(async ({ ctx, input }) => {
-      const users = await ctx.db.user.findMany({});
+      const userZip = await ctx.db.user.findUnique({
+        where: {
+          id: ctx.session?.user.id,
+        },
+        select: {
+          location: {
+            select: {
+              zipCode: true,
+            },
+          },
+        },
+      });
+
+      let zips = zipcodes.radius(userZip?.location?.zipCode, input?.distance);
+      const users = await ctx.db.user.findMany({
+        where: {
+          OR: [
+            {
+              AND: [
+                {
+                  id: {
+                    not: ctx.session.user.id,
+                  },
+                },
+                {
+                  friendsB: {
+                    none: {
+                      friendAId: ctx.session.user.id,
+                    },
+                  },
+                },
+                {
+                  location: {
+                    zipCode: {
+                      in: zips,
+                    },
+                  },
+                },
+              ],
+            },
+
+            {
+              friendsA: {
+                some: {
+                  friendBId: ctx.session.user.id,
+                  status: {
+                    not: "ACCEPTED",
+                  },
+                },
+              },
+              // other condition
+            },
+          ],
+        },
+        select: {
+          id: true,
+          name: true,
+          profilePhotoUrl: true,
+          bio: true,
+          pets: {
+            select: {
+              id: true,
+              breed: {
+                select: {
+                  animalId: true,
+                },
+              },
+            },
+          },
+          location: {
+            select: {
+              zipCode: true,
+              locationName: true,
+            },
+          },
+        },
+      });
 
       return users;
     }),
