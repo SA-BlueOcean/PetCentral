@@ -28,27 +28,7 @@ export default function CreatePost() {
     e: { preventDefault: () => void } | undefined,
   ) => {
     e?.preventDefault();
-    const photoId = getUrl(image);
-    console.log("photoId", photoId);
-    mutation.mutate(post, {
-      onError(error: { message: string }) {
-        if (error.message === "UNAUTHORIZED") {
-          setDisplayLoginModal(true);
-        }
-      },
-      onSuccess(data: Number | any) {
-        const postId = data.postId;
-        if (image) {
-          getUrl(image, postId);
-        }
-        setPost({
-          content: "",
-          groupId: "",
-          photoId: "",
-        });
-        void utils.feed.get.invalidate();
-      },
-    });
+    await getUrl(image);
   };
 
   const getUrl = async (file: File | null) => {
@@ -60,11 +40,37 @@ export default function CreatePost() {
         upsert: true,
       });
     handleSubmitImage(address);
-    return address;
   };
 
   const handleSubmitImage = (photoUrl: string) => {
-    photoMutation.mutate({ photoUrl: photoUrl });
+    photoMutation.mutate(
+      { photoUrl: photoUrl },
+      {
+        onError(error: { message: string }) {
+          if (error.message === "UNAUTHORIZED") {
+            setDisplayLoginModal(true);
+          }
+        },
+        onSuccess(data: { photoId: string }) {
+          console.log("success data is: ", data);
+          setPost({
+            ...post,
+            photoId: data.photoId,
+          });
+          console.log("post is: ", post);
+          mutation.mutate(post, {
+            onSuccess() {
+              setPost({
+                content: "",
+                groupId: "",
+                photoId: "",
+              });
+              void utils.feed.get.invalidate();
+            },
+          });
+        },
+      },
+    );
   };
 
   return (
