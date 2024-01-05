@@ -50,14 +50,14 @@ export default function PostCard({ data }: PostCardProps) {
   return (
     <>
       <dialog id={`post_modal_${data.id}`} className="modal">
-        <div className="modal-box max-h-[70vh] h-full max-w-[80vw] w-full">
+        <div className="modal-box h-full max-h-[70vh] w-full max-w-[80vw]">
           {data?.photos?.[0]?.url && (
             <Image
               src={data?.photos?.[0]?.url}
               alt=""
               unoptimized
               fill
-              className="object-cover z-10"
+              className="z-10 object-cover"
             />
           )}
         </div>
@@ -90,7 +90,7 @@ export default function PostCard({ data }: PostCardProps) {
           </div>
           {data?.photos?.[0]?.url && (
             <div
-              className="relative m-1 aspect-video w-full overflow-clip rounded-lg bg-neutral-content hover:cursor-pointer"
+              className="relative m-1 aspect-video w-full overflow-clip rounded-lg hover:cursor-pointer"
               onClick={() =>
                 (
                   document?.getElementById(
@@ -104,8 +104,9 @@ export default function PostCard({ data }: PostCardProps) {
                 alt=""
                 unoptimized
                 fill
-                style={{ objectFit: "cover" }}
+                className="z-10 object-cover"
               />
+              <div className="skeleton absolute inset-0 rounded-none bg-accent-content opacity-80"></div>
             </div>
           )}
         </div>
