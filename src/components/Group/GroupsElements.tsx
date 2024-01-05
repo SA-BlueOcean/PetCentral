@@ -20,9 +20,8 @@ export default function GroupsElements() {
                 width={50}
                 height={50}
                 unoptimized={true}
-                className="relative h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200"
-              />
-              {group.name}
+                className=" flex-none h-10 w-10 rounded-lg bg-secondary ring-1 ring-base-200"/>
+                {group.name}
             </Link>
           </li>
         ))}
