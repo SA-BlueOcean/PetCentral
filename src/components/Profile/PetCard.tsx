@@ -1,6 +1,7 @@
 import { api } from "@/utils/api";
 import { PenSquare } from "lucide-react";
 import { Trash2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 interface Pet {
@@ -59,8 +60,10 @@ export default function PetCard({
         ? `${ageInYears} ${ageInYears === 1 ? "year" : "years"}`
         : "<1 year";
 
+  const session = useSession();
+
   return (
-    <div className="flex">
+    <div className="flex gap-x-3 py-4">
       <Image
         src={
           pet?.photoUrl
@@ -68,28 +71,38 @@ export default function PetCard({
             : "https://static.vecteezy.com/system/resources/previews/012/049/155/original/isolated-dog-animal-silhouette-icon-simple-black-shape-graphic-symbol-illustration-abstract-design-element-vet-clinic-logo-pet-portrait-shadow-flat-style-vector.jpg"
         }
         alt={pet?.firstName ?? ""}
-        width={75}
-        height={75}
+        width={68}
+        height={68}
         unoptimized
+        className="rounded-lg"
       ></Image>
-      <div className="flex flex-col justify-between">
-        <p>{capitalize(pet?.firstName ?? "")}</p>
-        <div className="flex gap-x-12">
-          <p>{ageDisplay}</p>
-          <p>{capitalize(pet?.breed?.animal?.name ?? "")}</p>
+      <div className="flex w-full flex-col justify-between">
+        <div className="flex justify-between">
+          <p className="font-medium">{capitalize(pet?.firstName ?? "")}</p>
+          {session.data?.user?.id === profileId ? (
+            <div className="flex gap-x-2">
+              <button
+                className="hover:text-accent"
+                onClick={() => {
+                  handleEditPet(pet, pet?.breed?.animalId ?? 0);
+                }}
+              >
+                <PenSquare size={18} strokeWidth={1.25} absoluteStrokeWidth />
+              </button>
+              <button className="hover:text-error" onClick={handleDelete}>
+                <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="flex gap-x-3">
+          <p>{ageDisplay}</p>|
+          <p>{capitalize(pet?.breed?.animal?.name ?? "")}</p>|
           <p>{capitalize(pet?.breed?.name ?? "")}</p>
         </div>
       </div>
-      <button
-        onClick={() => {
-          handleEditPet(pet, pet?.breed?.animalId ?? 0);
-        }}
-      >
-        <PenSquare size={18} strokeWidth={1.25} absoluteStrokeWidth />
-      </button>
-      <button onClick={handleDelete}>
-        <Trash2 size={20} strokeWidth={1.25} absoluteStrokeWidth />
-      </button>
     </div>
   );
 }

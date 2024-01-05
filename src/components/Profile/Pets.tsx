@@ -39,11 +39,12 @@ export default function Pets({ profileId }: { profileId: string }) {
   const session = useSession();
 
   return (
-    <div className="mt-10">
+    <div className="my-10 px-3">
       <div className="flex justify-between">
         <p className="text-xl font-semibold">My Pets</p>
         {session.data?.user?.id === profileId ? (
           <button
+            className="hover:text-accent"
             onClick={() =>
               (
                 document.getElementById(
@@ -58,7 +59,7 @@ export default function Pets({ profileId }: { profileId: string }) {
           ""
         )}
       </div>
-      <div className="flex flex-col gap-y-10">
+      <div className="flex flex-col divide-y divide-neutral-400">
         {pets?.map((pet) => (
           <PetCard
             key={pet.id}
