@@ -1,106 +1,68 @@
 import { api } from "@/utils/api";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
-
-type Group = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  name: string;
-  description: string | null;
-  photoUrl: string | null;
-  bannerPhotoUrl: string | null;
-};
+import JoinButton from "./JoinBtn";
+import { cn } from "@/utils/cn";
 
 type GroupProps = {
-  group: Group | null;
-  members: number;
+  groupId: string; //Group | null;
 };
 
-export function GroupHeader({ group, members }: GroupProps) {
-  // Add a null check before destructuring
-  let name, description;
-  let id = "";
-  let bannerPhotoUrl = "https://placekitten.com/500/100";
-  let photoUrl = "https://placekitten.com/300/300";
-  if (group) {
-    id = group.id;
-    name = group.name;
-    description = group.description;
-    photoUrl = group.photoUrl ?? photoUrl;
-    bannerPhotoUrl = group.bannerPhotoUrl ?? bannerPhotoUrl;
-  }
+const defaultBannerPhotoUrl = "https://placekitten.com/500/100";
+const defaultPhotoUrl = "https://placekitten.com/300/300";
 
-  const mutation = api.users.updateUserGroups.useMutation({});
-  const disconnect = api.users.removeUserGroup.useMutation({});
+export function GroupHeader({ groupId }: GroupProps) {
+  const groupQuery = api.groups.fetchDetails.useQuery({
+    groupID: groupId,
+  });
 
-  const getMemberIds = api.groups.fetchMembers.useQuery(
-    { groupId: id },
-    { enabled: !!id },
-  );
-
-  const memberIdArr = getMemberIds?.data?.users?.map((user) => user.id);
-  const user = useSession().data?.user?.id;
-
-  const userIsMember = memberIdArr?.includes(user ?? "");
-
-  const updateUserGroups = async () => {
-    if (userIsMember) {
-      disconnect.mutate({ groupId: id });
-    } else {
-      mutation.mutate({ groupId: id });
-    }
-  };
+  const { id, bannerPhotoUrl, photoUrl, name, description } =
+    groupQuery?.data?.group || {};
 
   return (
     <>
-      <div>
+      <div className="relative -m-3 pb-4">
         {/* GROUP BANNER */}
-        <Image
-          src={bannerPhotoUrl}
-          alt={`${name} banner background`}
-          width={700}
-          height={100}
-          unoptimized={true}
-          className="h-20 w-full object-cover"
-        ></Image>
-
-        {/* GROUP AVATAR */}
-        <div className="avatar mx-auto block max-h-28 w-11/12 sm:-mt-8">
-          <div className="relative max-h-20 w-full overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 sm:w-20">
+        <div className="absolute h-20 w-full">
+          {groupQuery.isLoading ? (
+            <div className="h-full w-full skeleton rounded-none"></div>
+          ) : (
             <Image
-              src={photoUrl}
-              alt="group avatar"
+              src={bannerPhotoUrl ?? defaultBannerPhotoUrl}
+              alt={`${name} banner background`}
+              width={700}
+              height={100}
               unoptimized={true}
-              fill={true}
-            />
-          </div>
-          {/* GROUP META */}
-          <div className="-mt-10 ml-24 inline-block">
-            <div className="flex flex-row">
-              <span className="text-l basis-3/5 font-bold">{name}</span>
-              <span className="basis-2/5 text-right">
-                {members} {members === 1 ? <>Member</> : <>Members</>}
-              </span>
-            </div>
-            <div className="flex flex-row">
-              <p className="basis-4/5 text-sm">{description}</p>
-              {userIsMember ? (
-                <button
-                  className="btn btn-primary btn-xs z-50 basis-1/5 rounded-btn uppercase text-white"
-                  onClick={() => updateUserGroups()}
-                >
-                  Leave
-                </button>
-              ) : (
-                <button
-                  className="btn btn-primary btn-xs z-50 basis-1/5 rounded-btn uppercase text-white"
-                  onClick={() => updateUserGroups()}
-                >
-                  Join
-                </button>
+              className="h-full max-h-20 max-w-full object-cover"
+            ></Image>
+          )}
+        </div>
+
+        <div className="z-10 flex w-full gap-4 px-10 pt-20">
+          <div className="absolute top-0 translate-y-1/2">
+            <div
+              className={cn(
+                "relative h-20 w-20 overflow-hidden rounded ring ring-base-300 ring-offset-2 ring-offset-base-300 ",
+                groupQuery.isLoading && "skeleton",
+              )}
+            >
+              {groupQuery.isFetched && (
+                <Image
+                  src={photoUrl || defaultPhotoUrl}
+                  alt="group avatar"
+                  unoptimized={true}
+                  fill={true}
+                />
               )}
             </div>
+          </div>
+          <div className="w-20"></div>
+
+          <div className="flex w-full justify-between p-2">
+            <div className="flex flex-col">
+              <span className="text-l font-bold">{name}</span>
+              <p className="text-sm">{description}</p>
+            </div>
+            <JoinButton id={groupId} />
           </div>
         </div>
       </div>

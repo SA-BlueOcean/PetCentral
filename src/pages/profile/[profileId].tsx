@@ -18,9 +18,9 @@ export default function ProfilePage() {
       <EditPhotosModal profileId={profileId} />
       <EditProfilePhotoModal profileId={profileId} />
       <EditProfileModal profileId={profileId} />
-      <AddPets profileId={profileId} />
       <Bio profileId={profileId} />
       <Pets profileId={profileId} />
+      <AddPets />
       <Feed mode="PROFILE" profileId={profileId} />
     </>
   );
