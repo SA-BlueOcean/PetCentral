@@ -52,6 +52,7 @@ export default function FriendsBasePage() {
     <>
       {commonHead}
       <div className="flex w-full flex-col gap-4">
+        Your Friends
         {friends.map((friend) => (
           <div
             key={friend.friendB.id}
