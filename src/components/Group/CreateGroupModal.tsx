@@ -8,9 +8,9 @@ export default function CreateGroupModal() {
     name: "",
     description: "",
     photoUrl:
-      "https://i0.wp.com/www.maisonette.gr/wp-content/uploads/2018/01/pet-icon.png?ssl=1",
+      "https://wbcribkoduulenxqfpyg.supabase.co/storage/v1/object/public/images/62498a2f-a76f-4100-9ff4-d433412d1384",
     bannerPhotoUrl:
-      "https://media.istockphoto.com/id/1680422522/photo/group-of-pets-leaning-together-on-a-empty-web-banner-to-place-text-cats-dogs-rabbit-ferret.webp?b=1&s=170667a&w=0&k=20&c=Ut6bhDDea20-643SfrVtMv7jTmfI80nKZBy1fC4gcF4=",
+      "https://wbcribkoduulenxqfpyg.supabase.co/storage/v1/object/public/images/056f8594-59c3-4fb1-b361-721576312c8b",
   });
 
   const utils = api.useUtils();
@@ -49,18 +49,27 @@ export default function CreateGroupModal() {
         className="btn-s btn btn-primary basis-1/5 rounded-btn uppercase text-white"
         onClick={() => {
           (
-            document.getElementById("my_modal") as HTMLDialogElement | null
+            document.getElementById(
+              "create_group_modal",
+            ) as HTMLDialogElement | null
           )?.showModal?.();
         }}
       >
         Create A Group
       </button>
-      <dialog id="my_modal" className="modal modal-bottom sm:modal-middle">
+      <dialog
+        id="create_group_modal"
+        className="modal modal-bottom sm:modal-middle"
+      >
         <div className="modal-box bg-primary text-white">
           <button
             className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
             onClick={() => {
-              (document.getElementById("my_modal") as HTMLDialogElement | null)
+              (
+                document.getElementById(
+                  "create_group_modal",
+                ) as HTMLDialogElement | null
+              )
                 ?.closest("dialog")
                 ?.close();
             }}
@@ -97,7 +106,7 @@ export default function CreateGroupModal() {
                   createGroup();
                   (
                     document.getElementById(
-                      "my_modal",
+                      "create_group_modal",
                     ) as HTMLDialogElement | null
                   )
                     ?.closest("dialog")
