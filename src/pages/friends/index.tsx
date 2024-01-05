@@ -3,6 +3,7 @@ import Link from "next/link";
 import { api } from "@/utils/api";
 import Image from "next/image";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import AddChat from "@/components/Chat/AddChat";
 // import AddFriend from "@/components/Profile/AddFriend";
 
 export default function FriendsBasePage() {
@@ -54,8 +55,9 @@ export default function FriendsBasePage() {
         {friends.map((friend) => (
           <div
             key={friend.friendB.id}
-            className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500"
+            className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500 justify-between items-center"
           >
+            <div className="flex">
             <Link
               href={`/profile/${friend.friendB.name}`}
               className="relative h-10 w-10 overflow-clip rounded-full bg-secondary ring-1 ring-base-200 object-cover"
@@ -73,6 +75,10 @@ export default function FriendsBasePage() {
               <Link href={`/profile/${friend.friendB.id}`}>
                 <h2 className="link-hover">{friend.friendB.name}</h2>
               </Link>
+            </div>
+            </div>
+            <div className="justify-end">
+              <AddChat userId={friend.friendB.id}></AddChat>
             </div>
           </div>
         ))}
