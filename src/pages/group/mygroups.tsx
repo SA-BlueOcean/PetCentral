@@ -10,7 +10,7 @@ export default function MyGroups() {
 
   const commonHead = (
     <Head>
-      <title>My Groups | PetCentral</title>
+      <title>My Groups | PetPals</title>
       <meta name="description" content="App description" />
       <link rel="icon" href="/favicon.ico" />
     </Head>

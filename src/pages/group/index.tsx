@@ -11,7 +11,7 @@ export default function GroupsSearch() {
   return (
     <>
       <Head>
-        <title>Groups Search | PetCentral</title>
+        <title>Groups Search | PetPals</title>
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
