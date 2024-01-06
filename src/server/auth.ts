@@ -7,6 +7,14 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
+declare module "next-auth" {
+  interface Session extends nextAuth.DefaultSession {
+    user: nextAuth.DefaultSession["user"] & {
+      id: string;
+    };
+  }
+}
+
 export const authOptions: nextAuth.NextAuthOptions = {
   callbacks: {
     session: ({ session, user }) => ({
