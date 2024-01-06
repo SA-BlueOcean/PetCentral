@@ -1,23 +1,17 @@
-import { api } from "@/utils/api";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import AddPersonalInfo from "@/components/Onboarding/AddPersonalInfo";
 import AddBio from "@/components/Onboarding/AddBio";
+import AddPersonalInfo from "@/components/Onboarding/AddPersonalInfo";
 import AddPets from "@/components/Onboarding/AddPets";
+import { api } from "@/utils/api";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Onboarding() {
   const router = useRouter();
   const { data: sessionData, status } = useSession();
   const infoMutation = api.profile.updateInfo.useMutation();
   const [step, setStep] = useState(1);
-  const personalInfo = {
-    firstName: "",
-    lastName: "",
-    about: "",
-    zipCode: "",
-  };
 
   useEffect(() => {
     const checkSession = async () => {
@@ -28,17 +22,18 @@ export default function Onboarding() {
     checkSession().catch(console.error);
   }, [sessionData]);
 
-  const updateInfo = (firstName: string, lastName: string, zipCode: string) => {
-    personalInfo.firstName = firstName;
-    personalInfo.lastName = lastName;
-    personalInfo.zipCode = zipCode;
+  const updateInfo = (
+    firstName: string,
+    lastName: string,
+    zip: string,
+  ): void => {
+    infoMutation.mutate({ firstName, lastName, zip });
     setStep(2);
     document.getElementById("stepTwo")?.classList.add("step-primary");
   };
 
-  const updateBio = (bio: string) => {
-    personalInfo.about = bio ?? "";
-    infoMutation.mutate(personalInfo);
+  const updateBio = (about: string): void => {
+    infoMutation.mutate({ about });
     setStep(3);
     document.getElementById("stepThree")?.classList.add("step-primary");
   };
