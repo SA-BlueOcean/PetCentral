@@ -1,20 +1,16 @@
+import { api } from "@/utils/api";
 import {
   Loader,
   UserRoundCheck,
   UserRoundCog,
   UserRoundPlus,
 } from "lucide-react";
-import useAddFriend from "./useAddFriend";
 import { useState } from "react";
-import { api } from "@/utils/api";
+import useAddFriend from "./useAddFriend";
 
-export default function AddFriend({
-  userId,
-}: {
-  userId: string;
-}) {
+export default function AddFriend({ userId }: { userId: string }) {
   const utils = api.useUtils();
-  const friendStatus = api.friends.getStatus.useQuery({userId});
+  const friendStatus = api.friends.getStatus.useQuery({ userId });
   const friendState = friendStatus.data;
   const [loading, setLoading] = useState(false);
   const { addFriend } = useAddFriend();
@@ -23,9 +19,13 @@ export default function AddFriend({
     if (!loading && friendStatus.isFetched && friendState === undefined) {
       setLoading(true);
       try {
-        await addFriend(userId, () => {}, (data) => {
-          utils.friends.getStatus.setData({userId}, (p) => data)
-        });
+        await addFriend(
+          userId,
+          () => {},
+          (data) => {
+            utils.friends.getStatus.setData({ userId }, () => data);
+          },
+        );
       } catch (error) {
       } finally {
         setLoading(false);
