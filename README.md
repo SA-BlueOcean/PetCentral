@@ -100,7 +100,8 @@ Some of our key features are:
     </li>
     <li>
       <span>Search Bar: Filter through groups and posts for dynamically rendered content.</span>
-      <img src="./demo/searchdemo.gif" alt="post demo" width="1154px" />
+      <br />
+      <img src="./demo/searchdemo.gif" alt="post demo" width="200px" />
     </li>
   </ol>
 </p>
