@@ -96,10 +96,9 @@ Some of our key features are:
       Forums: Dive into dedicated forums tailored to your pet's specific needs and characteristics.
     </li>
     <li>
-      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
-      <video width="1280" height="720" controls>
-       <source src="./public/find-friends.webm" type="video/webm">
-      </video>
+      <h3>Friend-Finding: Discover new friends for both you and your pet!</h3>
+      Utilize our friendly friend-finding feature to connect with local pet owners!  If you both match, you are friends! Find friends within a selectable radius to show friends near you.  This is built to filter the database for users within a selected distance range, that you have not already sent a friend request to, and that you are not already friends with.  Additionally it will also return users who have sent you a friend request regardless of distance to facilitate more matches.  Adding a friend will add a request to the datatabase and trigger a custom animation mangaged by state.
+      <img src="./demo/find-friends.gif"
     </li>
   </ol>
 </p>
