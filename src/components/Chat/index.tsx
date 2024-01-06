@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
-import ChatRoom from "./ChatRoom";
-import { useSession } from "next-auth/react";
-import { supabase } from "lib/supabase";
-import type { RealtimeChannel } from "@supabase/supabase-js";
-import { cn } from "@/utils/cn";
-import {
-  ArrowLeft,
-  ChevronsDown,
-  ChevronsUp,
-  ExternalLink,
-} from "lucide-react";
-import Avatar from "../Feed/Avatar";
 import { useGlobalContext } from "@/providers/GlobalContext";
-import useMonitorChats from "./useMonitorChats";
+import { cn } from "@/utils/cn";
+import type { RealtimeChannel } from "@supabase/supabase-js";
+import { supabase } from "lib/supabase";
+import { ArrowLeft, ChevronsDown, ChevronsUp } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import Avatar from "../Feed/Avatar";
+import ChatRoom from "./ChatRoom";
+import useMonitorChats from "./useMonitorChats";
 
 type SupaChatsJoins = {
   User: {
@@ -51,7 +46,7 @@ export default function Chat() {
         .eq("userId", session.data?.user.id);
       if (chats.data) {
         const chatIds = chats.data?.map((d) => d.chatsId) as string[];
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from("ChatUsers")
           .select(
             `
@@ -134,7 +129,10 @@ export default function Chat() {
 
             <h2 className="py-1 text-lg">
               {selectedUser?.User.id && (
-                <Link href={`/profile/${selectedUser?.User.id}`} className="link-hover">
+                <Link
+                  href={`/profile/${selectedUser?.User.id}`}
+                  className="link-hover"
+                >
                   <span className="truncate">
                     {selectedUser?.User?.firstName
                       ? `${selectedUser?.User?.firstName}${

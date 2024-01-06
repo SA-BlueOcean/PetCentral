@@ -1,5 +1,5 @@
-import type { Messages } from "@prisma/client";
-import type { RealtimeChannel } from "@supabase/supabase-js";
+import { type Messages } from "@prisma/client";
+import { type RealtimeChannel } from "@supabase/supabase-js";
 import { supabase } from "lib/supabase";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";

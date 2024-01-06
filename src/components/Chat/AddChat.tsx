@@ -16,12 +16,12 @@ export default function AddChat({ userId }: { userId?: string }) {
           mutation.mutate(
             { userId },
             {
-              onError(error, variables, context) {
+              onError(error) {
                 if (error.message === "UNAUTHORIZED") {
                   setDisplayLoginModal(true);
                 }
               },
-              onSuccess(data, variables, context) {
+              onSuccess() {
                 triggerOpenChat();
               },
             },

@@ -1,9 +1,9 @@
 import { cn } from "@/utils/cn";
-import type { Messages } from "@prisma/client";
+import { type Messages } from "@prisma/client";
 import { supabase } from "lib/supabase";
 import { SendHorizontal } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { type FormEvent, useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 export default function ChatRoom({
   chatId,
@@ -18,8 +18,6 @@ export default function ChatRoom({
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const utc = new Date();
-  const offset = utc.getTimezoneOffset();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -54,7 +52,7 @@ export default function ChatRoom({
     e.preventDefault();
     if (message.length > 0 && !loading) {
       setLoading(true);
-      const { data, error } = await supabase.from("Messages").insert([
+      const { error } = await supabase.from("Messages").insert([
         {
           chatsId: chatId,
           userId: session.data?.user.id,
@@ -89,20 +87,9 @@ export default function ChatRoom({
                 (messages[i - 1]?.createdAt.getTime() ?? 0) + 10 * 60 * 1000 <
                   m.createdAt.getTime())) && (
               <div className="chat-header text-xs opacity-50">
-                {// utcToZonedTime(m.createdAt, userTimezone).toLocaleTimeString(
-                //   undefined,
-                //   { timeStyle: "short" },
-                // )
-                new Date(
-                  m?.createdAt.getTime() - 60000 * offset,
-                )?.toLocaleTimeString(undefined, {
+                {m?.createdAt?.toLocaleTimeString(undefined, {
                   timeStyle: "short",
-                })
-                // utcToZonedTime(m.createdAt, userTimezone).toLocaleTimeString(
-                //   undefined,
-                //   { timeStyle: "short" },
-                // )
-                }
+                })}
               </div>
             )}
 
