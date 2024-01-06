@@ -1,19 +1,35 @@
 import Link from "next/link";
 import Search from "./Search";
 import { BookUser, UsersRound } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useGlobalContext } from "@/providers/GlobalContext";
 
 export default function TopNav() {
+  const session = useSession();
+  const { setDisplayLoginModal } = useGlobalContext();
   return (
     <nav className="flex h-full w-full items-center justify-between bg-primary-content p-2 px-4 text-neutral shadow">
       <ul className="hidden flex-row gap-4 sm:flex">
         <li>
-          <Link href={"/friends"} className="flex items-center gap-2">
+          <Link href={"/?mode=FRIENDS"} className="flex items-center gap-2"
+          onClick={(e) => {
+            if (session.status === "unauthenticated") {
+              e.preventDefault();
+              setDisplayLoginModal(true);
+            }
+          }}>
             <UsersRound />
             My Friends
           </Link>
         </li>
         <li>
-          <Link href={"/group/mygroups"} className="flex items-center gap-2">
+          <Link href={"/?mode=SUBS"} className="flex items-center gap-2"
+          onClick={(e) => {
+            if (session.status === "unauthenticated") {
+              e.preventDefault();
+              setDisplayLoginModal(true);
+            }
+          }}>
             <BookUser /> My Groups
           </Link>
         </li>

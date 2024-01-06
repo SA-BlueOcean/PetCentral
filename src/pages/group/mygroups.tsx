@@ -1,8 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import { api } from "@/utils/api";
-// import { useRouter } from "next/router";
 import Image from "next/image";
+import { api } from "@/utils/api";
 import { useGlobalContext } from "@/providers/GlobalContext";
 
 export default function MyGroups() {
@@ -11,7 +10,7 @@ export default function MyGroups() {
 
   const commonHead = (
     <Head>
-      <title>My Groups | PetCentral</title>
+      <title>My Groups | PetPals</title>
       <meta name="description" content="App description" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
@@ -20,32 +19,50 @@ export default function MyGroups() {
   if (groupsList.isLoading) {
     return (
       <>
-      {commonHead}
+        {commonHead}
         <div>Loading Groups...</div>
       </>
-    )
+    );
   }
   if (groupsList.isError) {
-    setDisplayLoginModal(true)
+    setDisplayLoginModal(true);
     return (
       <>
-      {commonHead}
-        <div>eError: Unable to fetch groups. Please log in.</div>
+        {commonHead}
+        <div>Error: Unable to fetch groups. Please log in.</div>
       </>
-    )
+    );
+  }
+  if (groupsList.data?.groups?.length === 0) {
+    return (
+      <>
+        {commonHead}
+        <div className="my-2 flex h-full w-full justify-center text-xl">
+          You are not a member of any groups.
+        </div>
+        <div className="flex h-full w-full justify-center text-xl">
+          <Link href="/group" className="text-primary-content underline">
+            Create one?
+          </Link>
+        </div>
+      </>
+    );
   }
   return (
     <>
       {commonHead}
-        <div className="flex flex-col gap-4 w-full">
+      <div className="flex w-full flex-col gap-4">
+        Your Groups
         {groupsList.data?.groups?.map((group) => (
-          <div key={group.id} className="flex ring-base-500 rounded-lg bg-base-100 ring-1 p-3">
-            <Link href={`/${group.id}`} className="relative h-10 w-10 overflow-clip rounded-lg bg-secondary ring-1 ring-base-200">
+
+          <div key={group.id} className="flex ring-base-400 rounded-lg bg-base-100 ring-1 p-3">
+            <Link href={`/group/${group.id}`} className="relative h-10 w-10 overflow-clip rounded-lg bg-secondary ring-1 ring-base-200">
               <Image src={`${group.photoUrl}`} alt={`Image for ${group.name}`} width={50} height={50} unoptimized={true}/>
             </Link>
             <div className="flex flex-col mx-4">
-              <Link href={`/${group.id}`} passHref>
-                <h2>{group.name}</h2>
+              <Link href={`/group/${group.id}`} passHref>
+
+                <h2 className="link-hover">{group.name}</h2>
               </Link>
               <p>{group.description}</p>
             </div>

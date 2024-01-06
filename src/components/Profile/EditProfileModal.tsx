@@ -1,8 +1,9 @@
 import { api } from "@/utils/api";
-import { Axis3DIcon } from "lucide-react";
-import { HTMLInputTypeAttribute, useState } from "react";
+import { Loader } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 
-export default function EditProfileModal({ profileId }: { profileId: string }) {
+export default function EditProfileModal() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [about, setAbout] = useState("");
@@ -10,8 +11,33 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
 
   // setup mutations for updating profile at Profile ID
   const mutation = api.profile.updateInfo.useMutation();
-  const onUpdateClick = () => {
-    mutation.mutate({ firstName, lastName, about, zip });
+
+  const close = () => {
+    const modalElement = document.getElementById("my_modal_4");
+    if (modalElement instanceof HTMLDialogElement) {
+      modalElement.close();
+    }
+  };
+  const utils = api.useUtils();
+  const session = useSession();
+
+  const onUpdateClick = (e: React.FormEvent) => {
+    e.preventDefault();
+    mutation.mutate(
+      { firstName, lastName, about, zip },
+      {
+        onSuccess() {
+          utils.profile.get
+            .invalidate({ profileId: session.data?.user?.id })
+            .catch((err) => console.log(err));
+        },
+      },
+    );
+    setFirstName("");
+    setLastName("");
+    setAbout("");
+    setZip("");
+    close();
   };
 
   return (
@@ -29,7 +55,7 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
         </div>
         <h3 className="text-center text-lg font-bold">Edit Your Profile:</h3>
         <div className="flex justify-center pl-3">
-          <form>
+          <form onSubmit={(e) => onUpdateClick(e)}>
             <label> First Name: </label>
             <div>
               <input
@@ -74,9 +100,14 @@ export default function EditProfileModal({ profileId }: { profileId: string }) {
               />
             </div>
             <button
+              disabled={mutation.isLoading}
               className="btn mt-6 bg-primary px-3 text-white"
-              onClick={() => onUpdateClick()}
             >
+              {mutation.isLoading ? (
+                <Loader size={12} className="animate-spin" />
+              ) : (
+                ""
+              )}
               UPDATE INFORMATION
             </button>
           </form>

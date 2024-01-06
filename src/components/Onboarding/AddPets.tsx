@@ -1,7 +1,7 @@
 import { env } from "@/env.js";
 import { api } from "@/utils/api";
 import { supabase } from "lib/supabase";
-import { Loader } from "lucide-react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -12,13 +12,13 @@ export default function AddPets({ profileId }: { profileId: string }) {
   };
 
   const animalQuery = api.pets.getAnimals.useQuery().data?.animals;
-
   const [firstName, setFirstName] = useState("");
   const [dateOfBirth, setDOB] = useState("mm/dd/yyyy");
   const [animalId, setAnimalId] = useState(0);
   const [breeds, setBreeds] = useState([] as Breed[]);
   const [breedId, setBreedId] = useState(0);
   const [file, setFile] = useState<File | null>(null);
+  const router = useRouter();
 
   const resetFields = () => {
     setFirstName("");
@@ -32,17 +32,15 @@ export default function AddPets({ profileId }: { profileId: string }) {
   const utils = api.useUtils();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    let address = "";
-
-    if (file) {
-      const filename = `${uuidv4()}`;
-      address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-      await supabase.storage.from("images").upload(filename, file, {
-        cacheControl: "3600",
-        upsert: true,
-      });
+    if (!file) {
+      return;
     }
+    const filename = `${uuidv4()}`;
+    const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+    await supabase.storage.from("images").upload(filename, file, {
+      cacheControl: "3600",
+      upsert: true,
+    });
     mutation.mutate(
       {
         firstName,
@@ -65,21 +63,11 @@ export default function AddPets({ profileId }: { profileId: string }) {
   };
 
   return (
-    <dialog id="my_modal_6" className="modal">
-      <div className="modal-box">
-        <form method="dialog">
-          <button
-            className="btn btn-sm absolute right-5 top-5"
-            onClick={resetFields}
-          >
-            &times;
-          </button>
-        </form>
-        <p className="mt-5 text-center text-lg font-semibold">Add Your Pet</p>
-        <form
-          className="mx-20 my-5 flex flex-col gap-y-5"
-          onSubmit={handleSubmit}
-        >
+    <div className="card mx-auto my-10 flex w-96 bg-neutral text-neutral-content">
+      <div className="card-body  text-center">
+        <h2 className="card-title"></h2>
+        <form onSubmit={handleSubmit}>
+          <label className="form-control w-full max-w-xs">Add Your pet!</label>
           <label className="form-control w-full max-w-xs">
             <div className="label">
               <span className="label-text">First Name</span>
@@ -164,15 +152,22 @@ export default function AddPets({ profileId }: { profileId: string }) {
               className="file-input-neutral file-input file-input-bordered file-input-sm w-full max-w-xs hover:file-input-secondary"
             />
           </label>
-          <button type="submit" className="btn btn-outline btn-success w-full">
-            {mutation.isLoading ? (
-              <Loader className="animate-spin" size={24} />
-            ) : (
-              "Add Pet"
-            )}
+          <button
+            type="submit"
+            className="btn btn-outline btn-success mt-4 w-full"
+          >
+            Add Pet
           </button>
+          <div className="card-actions justify-end"></div>
         </form>
+
+        <button
+          className="btn btn-primary mt-2"
+          onClick={() => router.push(`/profile/${profileId}`)}
+        >
+          Done Adding Pets
+        </button>
       </div>
-    </dialog>
+    </div>
   );
 }

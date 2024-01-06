@@ -1,6 +1,5 @@
 import { api } from "@/utils/api";
-import { PenSquare } from "lucide-react";
-import { Trash2 } from "lucide-react";
+import { PenSquare, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
@@ -81,9 +80,11 @@ export default function PetCard({
           className="object-cover"
         ></Image>
       </div>
-      <div className="flex w-full flex-col justify-between">
+      <div className="flex w-full flex-col justify-between py-3">
         <div className="flex justify-between">
-          <p className="font-semibold">{capitalize(pet?.firstName ?? "")}</p>
+          <p className="text-lg font-semibold">
+            {capitalize(pet?.firstName ?? "")}
+          </p>
           {session.data?.user?.id === profileId ? (
             <div className="flex gap-x-2">
               <button

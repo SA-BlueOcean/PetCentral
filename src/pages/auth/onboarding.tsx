@@ -1,12 +1,17 @@
+import AddBio from "@/components/Onboarding/AddBio";
+import AddPersonalInfo from "@/components/Onboarding/AddPersonalInfo";
+import AddPets from "@/components/Onboarding/AddPets";
 import { api } from "@/utils/api";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Onboarding() {
   const router = useRouter();
   const { data: sessionData, status } = useSession();
+  const infoMutation = api.profile.updateInfo.useMutation();
+  const [step, setStep] = useState(1);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -17,77 +22,45 @@ export default function Onboarding() {
     checkSession().catch(console.error);
   }, [sessionData]);
 
-  const mutation = api.auth.editUser.useMutation();
+  const updateInfo = (
+    firstName: string,
+    lastName: string,
+    zip: string,
+  ): void => {
+    infoMutation.mutate({ firstName, lastName, zip });
+    setStep(2);
+    document.getElementById("stepTwo")?.classList.add("step-primary");
+  };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      firstName: formData.get("firstName") as string,
-      lastName: formData.get("lastName") as string,
-      zipCode: formData.get("zipCode") as string,
-    };
-
-    mutation.mutate(data, {
-      onSuccess() {
-        router.push(`/profile/${sessionData?.user.id}`).catch(console.error);
-      },
-    });
+  const updateBio = (about: string): void => {
+    infoMutation.mutate({ about });
+    setStep(3);
+    document.getElementById("stepThree")?.classList.add("step-primary");
   };
 
   return (
     <>
       <Head>
-        <title>Pet Pals Sign In</title>
+        <title>Pet Pals | Welcome</title>
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="card mx-auto my-10 flex w-96 bg-neutral text-neutral-content">
-        <div className="card-body  text-center">
-          <h2 className="card-title"></h2>
-          <form onSubmit={handleSubmit}>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">First Name:</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Olive"
-                name="firstName"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">Last Name:</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Maipetz"
-                name="lastName"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">Zipcode:</span>
-              </div>
-              <input
-                type="text"
-                placeholder="12345"
-                name="zipCode"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary mt-2" type="submit">
-                SUBMIT
-              </button>
-            </div>
-          </form>
+      <ul className="steps w-full">
+        <li className="step step-neutral step-primary">Add Personal Info</li>
+        <li id="stepTwo" className="step step-neutral">
+          Add Bio
+        </li>
+        <li id="stepThree" className="step step-neutral">
+          Add Pets
+        </li>
+      </ul>
+      {step === 1 && <AddPersonalInfo updateInfo={updateInfo} />}
+      {step === 2 && <AddBio updateBio={updateBio} />}
+      {step === 3 && (
+        <div>
+          <AddPets profileId={sessionData?.user.id ?? "profileId"} />
         </div>
-      </div>
+      )}
     </>
   );
 }

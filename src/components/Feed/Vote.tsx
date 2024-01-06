@@ -4,10 +4,7 @@ import { cn } from "@/utils/cn";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import {
-  useQueryClient,
-  InfiniteData,
-} from "@tanstack/react-query";
+import { useQueryClient, InfiniteData } from "@tanstack/react-query";
 import { getQueryKey } from "@trpc/react-query";
 
 type VotesProps = {
@@ -31,11 +28,7 @@ export default function Votes({
   const session = useSession();
   const { setDisplayLoginModal } = useGlobalContext();
   const queryClient = useQueryClient();
-  const queryKey = getQueryKey(
-    api.feed.get,
-    undefined,
-    "infinite",
-  );
+  const queryKey = getQueryKey(api.feed.get, undefined, "infinite");
   const voteMutation = api.feed.vote.useMutation({
     // updates the post vote data on voting
     onSuccess: async (data) => {
@@ -43,6 +36,7 @@ export default function Votes({
       queryClient.setQueriesData<InfiniteData<FeedQuery>>(queryKey, (prev) => {
         const update = prev?.pages.map((page) => ({
           ...page,
+          props: page.props,
           posts: page.posts.map((post) => {
             if (post.id === postId) {
               return {
@@ -129,8 +123,12 @@ export default function Votes({
           doVote(voteDir === 1 ? 0 : 1);
         }}
       >
-        <ThumbsUp />
-        <span>{upvoteCount}</span>
+        <ThumbsUp
+          className={cn(voteDir === 1 ? "text-base-100" : "text-base-600")}
+        />
+        <span className={cn(voteDir === 1 ? "text-base-100" : "text-base-600")}>
+          {upvoteCount}
+        </span>
       </button>
       <button
         disabled={voteMutation.isLoading}
@@ -142,8 +140,8 @@ export default function Votes({
           doVote(voteDir === -1 ? 0 : -1);
         }}
       >
-        <ThumbsDown />
-        <span>{downvoteCount}</span>
+        <ThumbsDown className="text-base-600" />
+        <span className="text-base-600">{downvoteCount}</span>
       </button>
     </div>
   );
