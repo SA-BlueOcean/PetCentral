@@ -47,6 +47,7 @@ export default function CreateComment({
             (prev) => {
               const update = prev?.pages.map((page) => ({
                 ...page,
+                props: page.props,
                 posts: page.posts.map((post) => {
                   if (post.id === postId) {
                     return {

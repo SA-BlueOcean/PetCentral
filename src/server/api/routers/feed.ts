@@ -52,6 +52,7 @@ export const feedRouter = createTRPCRouter({
                   friendsB: {
                     some: {
                       friendAId: ctx.session?.user.id,
+                      status: "ACCEPTED"
                     },
                   },
                 }

@@ -29,9 +29,9 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-      // notifyOnChangeProps: (change) => {console.log("change?", change)},
       enabled: enabled,
       keepPreviousData: true,
+      refetchInterval: 20000
     },
   );
 
