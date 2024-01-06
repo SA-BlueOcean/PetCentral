@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
-import { useState } from "react";
 import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 export default function EditProfileModal() {
   const [firstName, setFirstName] = useState("");

@@ -1,12 +1,11 @@
-import { api } from "@/utils/api";
-import Image from "next/image";
 import Avatar from "@/components/Feed/Avatar";
-import { PenSquare } from "lucide-react";
-import { Camera } from "lucide-react";
-import { useSession } from "next-auth/react";
-import AddFriend from "./AddFriend";
-import AddChat from "../Chat/AddChat";
+import { api } from "@/utils/api";
 import { cn } from "@/utils/cn";
+import { Camera, PenSquare } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import AddChat from "../Chat/AddChat";
+import AddFriend from "./AddFriend";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(

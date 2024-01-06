@@ -1,8 +1,8 @@
-import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { api } from "@/utils/api";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Search() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function Search() {
               {groupsResults.data?.groups.map((group) => (
                 <div
                   key={group.id}
-                  className="ring-base-500 flex rounded-lg bg-base-100 p-3 ring-1"
+                  className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500"
                 >
                   <Link
                     href={`/group/${group.id}`}
@@ -67,7 +67,7 @@ export default function Search() {
               {postsResults.data?.posts.map((post) => (
                 <div
                   key={post.id}
-                  className="ring-base-500 flex rounded-lg bg-base-100 p-3 ring-1"
+                  className="flex rounded-lg bg-base-100 p-3 ring-1 ring-base-500"
                 >
                   <Link
                     href={`profile/${post.createdById}`}

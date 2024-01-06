@@ -1,9 +1,9 @@
-import { api } from "@/utils/api";
-import { useState } from "react";
-import { supabase } from "lib/supabase";
-import { v4 as uuidv4 } from "uuid";
 import { env } from "@/env.js";
+import { api } from "@/utils/api";
+import { supabase } from "lib/supabase";
 import { Loader } from "lucide-react";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddPets({ profileId }: { profileId: string }) {
   type Breed = {
@@ -38,12 +38,10 @@ export default function AddPets({ profileId }: { profileId: string }) {
     if (file) {
       const filename = `${uuidv4()}`;
       address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-      const { data, error } = await supabase.storage
-        .from("images")
-        .upload(filename, file, {
-          cacheControl: "3600",
-          upsert: true,
-        });
+      await supabase.storage.from("images").upload(filename, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
     }
     mutation.mutate(
       {
