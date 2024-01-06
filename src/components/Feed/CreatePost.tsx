@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { env } from "@/env.js";
 import { useGlobalContext } from "@/providers/GlobalContext";
-import { useSession } from "next-auth/react";
 import { api } from "@/utils/api";
 import { supabase } from "lib/supabase";
-import { v4 as uuidv4 } from "uuid";
-import { env } from "@/env.js";
-import Avatar from "./Avatar";
-import Image from "next/image";
 import { Loader } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Avatar from "./Avatar";
 
 export default function CreatePost() {
   const session = useSession();
@@ -50,7 +50,7 @@ export default function CreatePost() {
     if (session.status === "authenticated") {
       const filename = `${uuidv4()}`;
       const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from("images")
         .upload(filename, file!, {
           upsert: true,
@@ -95,9 +95,8 @@ export default function CreatePost() {
   };
 
   return (
-
     <form
-      className="ring-base-400 my-3 rounded-lg bg-base-100 ring-1"
+      className="my-3 rounded-lg bg-base-100 ring-1 ring-base-400"
       onSubmit={handleSubmit}
     >
       <div className="p-3">
@@ -152,9 +151,7 @@ export default function CreatePost() {
               }));
             }}
           >
-            <option value={""}>
-              Choose a community
-            </option>
+            <option value={""}>Choose a community</option>
             {groupsQuery?.data?.groups && (
               <>
                 {groupsQuery?.data?.groups?.map((g) => (
@@ -184,13 +181,11 @@ export default function CreatePost() {
             </label>
           </div>
           <button
-
             disabled={
               (loading || groupsQuery.isLoading || query.isLoading) &&
               !(session.status === "unauthenticated")
             }
             className="btn btn-accent btn-sm z-10 w-16 rounded-btn uppercase text-white"
-
           >
             {loading ? <Loader className="animate-spin" size={20} /> : "Post"}
           </button>

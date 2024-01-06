@@ -1,11 +1,11 @@
 import { useGlobalContext } from "@/providers/GlobalContext";
-import { type RouterOutputs, api } from "@/utils/api";
+import { api, type RouterOutputs } from "@/utils/api";
+import { cn } from "@/utils/cn";
+import { useQueryClient, type InfiniteData } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Avatar from "../Avatar";
-import { cn } from "@/utils/cn";
-import { getQueryKey } from "@trpc/react-query";
-import { type InfiniteData, useQueryClient } from "@tanstack/react-query";
 
 export default function CreateComment({
   postId,
@@ -33,12 +33,12 @@ export default function CreateComment({
         postId,
       },
       {
-        onError(error, variables, context) {
+        onError(error) {
           if (error.message === "UNAUTHORIZED") {
             setDisplayLoginModal(true);
           }
         },
-        onSuccess(data, variables, context) {
+        onSuccess() {
           setComment("");
           onAddComment && onAddComment();
           void utils.comments.get.invalidate({ postId });
@@ -75,7 +75,7 @@ export default function CreateComment({
         <div className="flex items-center gap-2">
           <div
             className={cn(
-              "bg-base-400 relative h-6 w-6 overflow-clip rounded-full",
+              "relative h-6 w-6 overflow-clip rounded-full bg-base-400",
               user.isLoading && "skeleton",
             )}
           >
