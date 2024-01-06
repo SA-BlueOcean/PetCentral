@@ -100,7 +100,7 @@ Some of our key features are:
     </li>
     <li>
       Search Bar:
-      ![](<public/2024-01-06 11-38-22.gif>)
+      ![](<./public/2024-01-06 11-38-22.gif>)
     </li>
   </ol>
 </p>
