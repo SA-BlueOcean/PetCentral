@@ -7,6 +7,7 @@ import Head from "next/head";
 export default function Onboarding() {
   const router = useRouter();
   const { data: sessionData, status } = useSession();
+  const mutation = api.auth.editUser.useMutation();
 
   useEffect(() => {
     const checkSession = async () => {
@@ -16,8 +17,6 @@ export default function Onboarding() {
     };
     checkSession().catch(console.error);
   }, [sessionData]);
-
-  const mutation = api.auth.editUser.useMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +38,7 @@ export default function Onboarding() {
   return (
     <>
       <Head>
-        <title>Pet Pals Sign In</title>
+        <title>Pet Pals | Welcome</title>
         <meta name="description" content="App description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
