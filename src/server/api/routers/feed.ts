@@ -89,6 +89,7 @@ export const feedRouter = createTRPCRouter({
       return {
         posts: feed,
         nextCursor,
+        props: input,
       };
     }),
   vote: protectedProcedure
