@@ -78,7 +78,7 @@ export default function PetCard({
           unoptimized
           fill
           className="object-cover"
-        ></Image>
+        />
       </div>
       <div className="flex w-full flex-col justify-between py-3">
         <div className="flex justify-between">
