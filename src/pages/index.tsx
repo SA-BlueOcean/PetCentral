@@ -1,8 +1,8 @@
-import Head from "next/head";
 import Feed from "@/components/Feed";
-import type { GetServerSideProps } from "next";
+import { type GetServerSideProps } from "next";
+import Head from "next/head";
 import Link from "next/link";
-import { ParsedUrlQuery } from "querystring";
+import { type ParsedUrlQuery } from "querystring";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { query } = ctx;

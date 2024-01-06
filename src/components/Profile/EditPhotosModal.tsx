@@ -1,5 +1,5 @@
-import { api } from "@/utils/api";
 import UploadFiles from "@/components/Profile/UploadFile";
+import { api } from "@/utils/api";
 
 export default function EditPhotosModal({ profileId }: { profileId: string }) {
   const mutation = api.profile.updatePhotos.useMutation();
