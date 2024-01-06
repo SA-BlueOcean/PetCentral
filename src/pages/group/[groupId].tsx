@@ -1,7 +1,7 @@
-import Head from "next/head";
 import Feed from "@/components/Feed";
-import { useRouter } from "next/router";
 import { GroupHeader } from "@/components/Group/GroupHeader";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 export default function GroupPage() {
   const router = useRouter();
