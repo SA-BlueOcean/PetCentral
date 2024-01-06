@@ -2,6 +2,7 @@ import { api } from "@/utils/api";
 import { disconnect } from "process";
 import { useState } from "react";
 import { Loader } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function EditProfileModal() {
   const [firstName, setFirstName] = useState("");
@@ -12,8 +13,32 @@ export default function EditProfileModal() {
   // setup mutations for updating profile at Profile ID
   const mutation = api.profile.updateInfo.useMutation();
 
-  const onUpdateClick = () => {
-    mutation.mutate({ firstName, lastName, about, zip });
+  var close = () => {
+    const modalElement = document.getElementById("my_modal_4");
+    if (modalElement instanceof HTMLDialogElement) {
+      modalElement.close();
+    }
+  };
+  const utils = api.useUtils();
+  const session = useSession();
+
+  const onUpdateClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    mutation.mutate(
+      { firstName, lastName, about, zip },
+      {
+        onSuccess() {
+          utils.profile.get
+            .invalidate({ profileId: session.data?.user?.id })
+            .catch((err) => console.log(err));
+        },
+      },
+    );
+    setFirstName("");
+    setLastName("");
+    setAbout("");
+    setZip("");
+    close();
   };
 
   return (
@@ -78,7 +103,7 @@ export default function EditProfileModal() {
             <button
               disabled={mutation.isLoading}
               className="btn mt-6 bg-primary px-3 text-white"
-              onClick={onUpdateClick}
+              onClick={(e) => onUpdateClick(e)}
             >
               {mutation.isLoading ? (
                 <Loader size={12} className="animate-spin" />
