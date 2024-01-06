@@ -1,6 +1,6 @@
-import { MouseEvent, useState } from "react";
-import { api } from "@/utils/api";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import { api } from "@/utils/api";
+import { useState } from "react";
 
 export default function CreateGroupModal() {
   const { setDisplayLoginModal } = useGlobalContext();
