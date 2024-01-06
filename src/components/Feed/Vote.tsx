@@ -36,6 +36,7 @@ export default function Votes({
       queryClient.setQueriesData<InfiniteData<FeedQuery>>(queryKey, (prev) => {
         const update = prev?.pages.map((page) => ({
           ...page,
+          props: page.props,
           posts: page.posts.map((post) => {
             if (post.id === postId) {
               return {

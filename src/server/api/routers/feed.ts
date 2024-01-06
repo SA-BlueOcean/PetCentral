@@ -52,6 +52,7 @@ export const feedRouter = createTRPCRouter({
                   friendsB: {
                     some: {
                       friendAId: ctx.session?.user.id,
+                      status: "ACCEPTED"
                     },
                   },
                 }
@@ -89,6 +90,7 @@ export const feedRouter = createTRPCRouter({
       return {
         posts: feed,
         nextCursor,
+        props: input,
       };
     }),
   vote: protectedProcedure
