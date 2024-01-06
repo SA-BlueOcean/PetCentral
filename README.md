@@ -73,9 +73,9 @@
 </details>
 
 ## About
-
 <div align="center">
     <!-- TODO: Add landing page image -->
+
   <!-- <img src="" alt="project landing page image" width="700px" /> -->
 </div>
 
@@ -85,22 +85,35 @@
 
 Some of our key features are:
 
-  <ol>
+  <ul>
     <li>
       Secure Sign-in:  Rest easy knowing that your pet's safety and privacy are our priorities too!
     </li>
-    <li>
-      Messaging Platform: Stay connected with fellow pet lovers through our intiuative messaging system.
+     <li>
+      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
     </li>
     <li>
+      <span>Messaging Platform: Stay connected with fellow pet lovers through our intuitive realtime messaging system.</span>
+        <img src="./demo/PetPalsChatDemo.gif" alt="chat demo" width="1154px" />
+    </li>
+     <li>
       Forums: Dive into dedicated forums tailored to your pet's specific needs and characteristics.
     </li>
     <li>
       <h3>Friend-Finding: Discover new friends for both you and your pet!</h3>
       Utilize our friendly friend-finding feature to connect with local pet owners!  If you both match, you are friends! Find friends within a selectable radius to show friends near you.  This is built to filter the database for users within a selected distance range, that you have not already sent a friend request to, and that you are not already friends with.  Additionally it will also return users who have sent you a friend request regardless of distance to facilitate more matches.  Adding a friend will add a request to the datatabase and trigger a custom animation mangaged by state.
-      <img src="./demo/find-friends.gif"
+      <img src="./demo/find-friends.gif" alt="friends demo" />
+     </li>
+    <li>
+      <span>Posts: Create posts to your profile or a forum with images, vote and comment!</span>
+      <img src="./demo/PetPalsPostDemo.gif" alt="post demo" width="1154px" />
     </li>
-  </ol>
+    <li>
+      <span>Search Bar: Filter through groups and posts for dynamically rendered content.</span>
+      <br />
+      <img src="./demo/searchdemo.gif" alt="post demo" width="200px" />
+    </li>
+  </ul>
 </p>
 
 ### Built With
@@ -224,10 +237,8 @@ information.
 
 <h3 align='center'> Burhan</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.burhan.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/burhan-syed/">Linkedin</a> |
+  <a href="https://www.github.com/burhan-syed">Github</a>
 </h4>
 <h3 align='center'> Clay</h3>
 <h4 align='center'>
@@ -237,10 +248,9 @@ information.
 </h4>
 <h3 align='center'> Derek</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.derek.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/derek-williams33/">Linkedin</a> |
+  <a href="https://github.com/squeakypickles33?tab=repositories">Portoflio</a> |
+  <a href="https://github.com/squeakypickles33">Github</a>
 </h4>
 <h3 align='center'> Hazel</h3>
 <h4 align='center'>
@@ -249,10 +259,9 @@ information.
 </h4>
 <h3 align='center'> Mallory</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.mallory.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://github.com/">Github</a>
+  <a href="https://github.com/malloryporche">Github</a> |
+  <a href="https://www.linkedin.com/in/mallory-burke/">Linkedin</a> |
+  <a href="https://www.malloryburke.com/">Portoflio</a>
 </h4>
 <h3 align='center'> Ming Lee Ng</h3>
 <h4 align='center'>

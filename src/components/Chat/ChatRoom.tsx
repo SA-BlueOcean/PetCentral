@@ -16,6 +16,7 @@ export default function ChatRoom({
 }) {
   const session = useSession();
   const [message, setMessage] = useState("");
+  const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const utc = new Date();
@@ -44,6 +45,7 @@ export default function ChatRoom({
             return m;
           }),
         );
+      setInitialLoading(false);
     };
     if (chatId) {
       void getAllMessages(chatId);
@@ -74,66 +76,68 @@ export default function ChatRoom({
         ref={scrollRef}
         className="max-h-[calc(100%-6rem)] overflow-auto overscroll-none"
       >
-        {messages?.map((m, i) => (
-          <div
-            key={m.id}
-            className={cn(
-              "chat",
-              m.userId === session.data?.user.id ? "chat-end" : "chat-start",
-            )}
-          >
-            {/* check for 10 minute interval between timestamps */}
-            {(i === 0 ||
-              (i > 0 &&
-                messages[i - 1]?.createdAt.getTime() &&
-                (messages[i - 1]?.createdAt.getTime() ?? 0) + 10 * 60 * 1000 <
-                  m.createdAt.getTime())) && (
-              <div className="chat-header text-xs opacity-50">
-                {// utcToZonedTime(m.createdAt, userTimezone).toLocaleTimeString(
-                //   undefined,
-                //   { timeStyle: "short" },
-                // )
-                new Date(
-                  m?.createdAt.getTime() - 60000 * offset,
-                )?.toLocaleTimeString(undefined, {
-                  timeStyle: "short",
-                })
-                // utcToZonedTime(m.createdAt, userTimezone).toLocaleTimeString(
-                //   undefined,
-                //   { timeStyle: "short" },
-                // )
-                }
-              </div>
-            )}
+        {initialLoading ? (
+          <div className="skeleton absolute inset-0 rounded-none opacity-20"></div>
+        ) : (
+          <>
+            {messages?.map((m, i) => (
+              <div
+                key={m.id}
+                className={cn(
+                  "chat",
+                  m.userId === session.data?.user.id
+                    ? "chat-end"
+                    : "chat-start",
+                )}
+              >
+                {/* check for 10 minute interval between timestamps */}
+                {(i === 0 ||
+                  (i > 0 &&
+                    messages[i - 1]?.createdAt.getTime() &&
+                    (messages[i - 1]?.createdAt.getTime() ?? 0) +
+                      10 * 60 * 1000 <
+                      m.createdAt.getTime())) && (
+                  <div className="chat-header text-xs opacity-50">
+                    {new Date(
+                      m?.createdAt.getTime() - 60000 * offset,
+                    )?.toLocaleTimeString(undefined, {
+                      timeStyle: "short",
+                    })}
+                  </div>
+                )}
 
-            <div
-              className={cn(
-                "chat-bubble",
-                m.userId === session.data?.user.id
-                  ? ""
-                  : "chat-bubble-secondary",
-              )}
-            >
-              {m.content}
-            </div>
-          </div>
-        ))}
+                <div
+                  className={cn(
+                    "chat-bubble",
+                    m.userId === session.data?.user.id
+                      ? ""
+                      : "chat-bubble-secondary",
+                  )}
+                >
+                  {m.content}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
       <form
         onSubmit={handleSend}
         className="join absolute bottom-12 left-0 right-0 flex w-full items-center bg-accent text-black"
       >
         <input
+          disabled={initialLoading}
           onChange={(e) => {
             setMessage(e.target.value);
           }}
           value={message}
           type="text"
-          className="join-item h-12 flex-grow rounded-none px-2 focus:outline-none"
+          className="join-item h-12 flex-grow rounded-none disabled:rounded-none px-2 focus:outline-none"
         ></input>
         <button
+          disabled={initialLoading || loading}
           aria-label="send"
-          className="btn join-item h-12 min-h-12 rounded-none"
+          className="btn join-item h-12 min-h-12 rounded-none disabled:rounded-none"
         >
           <SendHorizontal />
         </button>

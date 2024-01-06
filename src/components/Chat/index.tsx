@@ -4,13 +4,25 @@ import { useSession } from "next-auth/react";
 import { supabase } from "lib/supabase";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { cn } from "@/utils/cn";
-import { ArrowLeft, ChevronsDown, ChevronsUp } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronsDown,
+  ChevronsUp,
+  ExternalLink,
+} from "lucide-react";
 import Avatar from "../Feed/Avatar";
 import { useGlobalContext } from "@/providers/GlobalContext";
 import useMonitorChats from "./useMonitorChats";
+import Link from "next/link";
 
 type SupaChatsJoins = {
-  User: { id: string; name: string; profilePhotoUrl?: string };
+  User: {
+    id: string;
+    name: string;
+    firstName?: string;
+    lastName?: string;
+    profilePhotoUrl?: string;
+  };
   chatsId: number;
   id: number;
 };
@@ -18,6 +30,7 @@ type SupaChatsJoins = {
 export default function Chat() {
   const session = useSession();
   const [expand, setExpand] = useState(false);
+  const [openUserChat, setOpenUserChat] = useState("");
   const [chats, setChats] = useState<SupaChatsJoins[]>();
   const [activeChat, setActiveChat] = useState<number | undefined>();
   const { messages, markMessagesRead, insertMessages, notifs } =
@@ -28,8 +41,21 @@ export default function Chat() {
   const { openChatTrigger, setDisplayLoginModal } = useGlobalContext();
 
   useEffect(() => {
-    openChatTrigger > 0 && setExpand(true);
+    if (openChatTrigger?.[0] > 0) {
+      setExpand(true);
+      openChatTrigger[1] && setOpenUserChat(openChatTrigger[1]);
+    }
   }, [openChatTrigger]);
+
+  useEffect(() => {
+    if (openUserChat) {
+      const foundChat = chats?.find((c) => c.User.id === openUserChat);
+      if (foundChat) {
+        setActiveChat(foundChat.chatsId);
+        setOpenUserChat("");
+      }
+    }
+  }, [openUserChat, chats]);
 
   useEffect(() => {
     const getChats = async () => {
@@ -48,6 +74,8 @@ export default function Chat() {
           User (
             id,
             name,
+            firstName,
+            lastName,
             profilePhotoUrl
           )          
           `,
@@ -96,7 +124,7 @@ export default function Chat() {
   return (
     <div
       className={cn(
-        "h-[50vh] w-80 rounded-lg rounded-b-none bg-accent/80 text-neutral backdrop-blur-md transition-transform pointer-events-auto",
+        "pointer-events-auto h-[50vh] w-80 rounded-lg rounded-b-none bg-accent/80 text-neutral backdrop-blur-md transition-transform",
         expand ? "translate-y-0" : "translate-y-[calc(100%-3rem)] ",
       )}
     >
@@ -118,7 +146,24 @@ export default function Chat() {
               </button>
             )}
 
-            <h2 className="text-lg">{selectedUser?.User?.name}</h2>
+            <h2 className="py-1 text-lg">
+              {selectedUser?.User.id && (
+                <Link
+                  href={`/profile/${selectedUser?.User.id}`}
+                  className="link-hover"
+                >
+                  <span className="truncate">
+                    {selectedUser?.User?.firstName
+                      ? `${selectedUser?.User?.firstName}${
+                          selectedUser?.User?.lastName
+                            ? ` ${selectedUser.User.lastName}`
+                            : ""
+                        }`
+                      : `${selectedUser?.User?.name ?? "?"}`}
+                  </span>
+                </Link>
+              )}
+            </h2>
           </div>
         ) : (
           <h2 className="text-lg">Messages</h2>
@@ -126,7 +171,7 @@ export default function Chat() {
 
         <button
           className="btn btn-circle btn-ghost p-1"
-          onClick={() => (activeChat && expand) && setExpand((e) => !e)}
+          onClick={() => activeChat && expand && setExpand((e) => !e)}
         >
           {expand ? <ChevronsDown /> : <ChevronsUp />}
         </button>
@@ -170,8 +215,19 @@ export default function Chat() {
                 </div>
 
                 <div className="relative">
-                  <div className="font-semibold">{chat.User.name}</div>
-                  <div className="absolute -bottom-2 text-xs opacity-50">
+                  <div
+                    className={cn(
+                      "font-semibold",
+                      notifs[chat.chatsId]?.last?.content && "-mt-3",
+                    )}
+                  >
+                    {chat?.User?.firstName
+                      ? `${chat?.User?.firstName}${
+                          chat?.User?.lastName ? ` ${chat.User.lastName}` : ""
+                        }`
+                      : `${chat?.User?.name ?? "?"}`}
+                  </div>
+                  <div className="absolute max-w-60 truncate text-xs opacity-50">
                     {notifs[chat.chatsId]?.last?.content ?? (
                       <span className="select-none opacity-0">?</span>
                     )}

@@ -72,7 +72,7 @@ export default function SideNavElements() {
                     <>
                       <div
                         className={cn(
-                          "relative h-10 w-10 overflow-clip rounded-full bg-base-400",
+                          "relative h-10 w-10 flex-none overflow-clip rounded-full bg-base-400",
                           profile.isLoading && "skeleton",
                         )}
                       >

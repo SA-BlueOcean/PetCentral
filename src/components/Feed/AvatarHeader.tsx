@@ -5,6 +5,8 @@ import Avatar from "./Avatar";
 type AvatarHeaderProps = {
   id: string;
   createdAt?: Date;
+  firstName?: string | null;
+  lastName?: string | null;
   name?: string | null;
   profilePhotoUrl?: string | null;
   mode?: "POST" | "COMMENT";
@@ -12,6 +14,8 @@ type AvatarHeaderProps = {
 
 export default function AvatarHeader({
   id,
+  firstName,
+  lastName,
   name,
   profilePhotoUrl,
   createdAt,
@@ -37,10 +41,12 @@ export default function AvatarHeader({
         )}
       >
         <Link href={`/profile/${id}`} className="font-semibold hover:underline">
-          {name}
+          {firstName
+            ? `${firstName}${lastName ? ` ${lastName}` : ""}`
+            : `${name ?? "?"}`}
         </Link>
         {createdAt && (
-          <span className="text-xs text-base-700">
+          <span className="text-base-700 text-xs">
             {createdAt.toLocaleString()}
           </span>
         )}

@@ -1,4 +1,5 @@
 import { api } from "@/utils/api";
+
 export default function Bio({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(
     { profileId },

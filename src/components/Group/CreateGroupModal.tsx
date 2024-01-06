@@ -1,6 +1,6 @@
-import { MouseEvent, useState } from "react";
-import { api } from "@/utils/api";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import { api } from "@/utils/api";
+import { useState } from "react";
 
 export default function CreateGroupModal() {
   const { setDisplayLoginModal } = useGlobalContext();
@@ -10,7 +10,7 @@ export default function CreateGroupModal() {
     photoUrl:
       "https://wbcribkoduulenxqfpyg.supabase.co/storage/v1/object/public/images/62498a2f-a76f-4100-9ff4-d433412d1384",
     bannerPhotoUrl:
-      "https://wbcribkoduulenxqfpyg.supabase.co/storage/v1/object/public/images/056f8594-59c3-4fb1-b361-721576312c8b",
+      "https://wbcribkoduulenxqfpyg.supabase.co/storage/v1/object/public/images/62498a2f-a76f-4100-9ff4-d433412d1384",
   });
 
   const utils = api.useUtils();
@@ -37,7 +37,7 @@ export default function CreateGroupModal() {
             description: "",
           });
           console.log(groupDetails);
-          void utils.groups.findAllGroups.invalidate();
+          void utils.groups.fetchGroups.invalidate();
         },
       },
     );

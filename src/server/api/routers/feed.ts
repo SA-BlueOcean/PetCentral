@@ -1,10 +1,9 @@
-import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import { z } from "zod";
 
 export const feedRouter = createTRPCRouter({
   get: publicProcedure
@@ -52,6 +51,7 @@ export const feedRouter = createTRPCRouter({
                   friendsB: {
                     some: {
                       friendAId: ctx.session?.user.id,
+                      status: "ACCEPTED"
                     },
                   },
                 }
@@ -89,6 +89,7 @@ export const feedRouter = createTRPCRouter({
       return {
         posts: feed,
         nextCursor,
+        props: input,
       };
     }),
   vote: protectedProcedure

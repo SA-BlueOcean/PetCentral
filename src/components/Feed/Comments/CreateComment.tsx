@@ -47,6 +47,7 @@ export default function CreateComment({
             (prev) => {
               const update = prev?.pages.map((page) => ({
                 ...page,
+                props: page.props,
                 posts: page.posts.map((post) => {
                   if (post.id === postId) {
                     return {
@@ -74,7 +75,7 @@ export default function CreateComment({
         <div className="flex items-center gap-2">
           <div
             className={cn(
-              "relative h-6 w-6 overflow-clip rounded-full bg-base-400",
+              "bg-base-400 relative h-6 w-6 overflow-clip rounded-full",
               user.isLoading && "skeleton",
             )}
           >
@@ -82,8 +83,14 @@ export default function CreateComment({
               <Avatar profilePhotoUrl={user.data?.profilePhotoUrl} />
             )}
           </div>
-          {user?.data?.name ? (
-            <span>{user.data.name}</span>
+          {!user.isLoading ? (
+            <span>
+              {user?.data?.firstName
+                ? `${user?.data?.firstName}${
+                    user?.data?.lastName ? ` ${user.data.lastName}` : ""
+                  }`
+                : `${user?.data?.name ?? "?"}`}
+            </span>
           ) : (
             <div className="skeleton h-6 w-20 rounded-md bg-base-200 "></div>
           )}
