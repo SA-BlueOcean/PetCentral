@@ -22,9 +22,7 @@ export default function SignIn({ providers }: { providers: Provider[] }) {
                 <button
                   className="btn btn-accent"
                   onClick={() =>
-                    signIn(provider.id, {
-                      callbackUrl: `${window.location.origin}`,
-                    })
+                    signIn(provider.id)
                   }
                 >
                   Sign in with {provider.name}
