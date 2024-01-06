@@ -4,8 +4,8 @@ import type { Dispatch, SetStateAction } from "react";
 type GlobalContextType = {
   displayLoginModal: boolean;
   setDisplayLoginModal: Dispatch<SetStateAction<boolean>>;
-  triggerOpenChat: () => void;
-  openChatTrigger: number;
+  triggerOpenChat: (userId?: string) => void;
+  openChatTrigger: [number, string];
 };
 
 export const GlobalContext = createContext<GlobalContextType | undefined>(
@@ -16,8 +16,12 @@ export const GlobalContextProvider = (
   props: React.PropsWithChildren<object>,
 ) => {
   const [displayLoginModal, setDisplayLoginModal] = useState(false);
-  const [openChatTrigger, setOpenChatTrigger] = useState(0);
-  const triggerOpenChat = () => setOpenChatTrigger((t) => t + 1);
+  const [openChatTrigger, setOpenChatTrigger] = useState<[number, string]>([
+    0,
+    "",
+  ]);
+  const triggerOpenChat = (userId?: string) =>
+    setOpenChatTrigger((t) => [t[0] + 1, userId ?? ""]);
   return (
     <GlobalContext.Provider
       value={{
