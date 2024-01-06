@@ -1,11 +1,11 @@
-import { Check, X, PawPrint } from "lucide-react";
-import Image from "next/image";
-import { api } from "@/utils/api";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { setTimeout } from "timers";
 import useAddFriend from "@/components/Profile/useAddFriend";
 import { useGlobalContext } from "@/providers/GlobalContext";
+import { api } from "@/utils/api";
+import { Check, PawPrint, X } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { useState } from "react";
+import { setTimeout } from "timers";
 
 const ProfileCard = ({
   user,
@@ -33,7 +33,7 @@ const ProfileCard = ({
       className={`card absolute left-0 top-0 h-[384px] w-[320px] rounded-lg border-4 border-primary-content bg-primary-content
       ${fly === "left" ? "animate-flyL" : null} ${
         fly === "right" ? "animate-flyR" : null
-      } ${hide ? "hidden" : null} bg-base-500 overflow-hidden`}
+      } ${hide ? "hidden" : null} overflow-hidden bg-base-500`}
     >
       <Image
         className="card-body h-[320px] w-[320px] object-cover p-0"
@@ -89,12 +89,12 @@ const ProfileCard = ({
 };
 
 export default function SideNavFindFriends() {
-  const [distance, setDistance] = useState<number>(50);
   const [current, setCurrent] = useState<number>(0);
   const [animate, setAnimate] = useState<string[]>([]);
   const [hide, setHide] = useState<boolean[]>([]);
+  const distance = 50;
 
-  const { data: sessionData, status } = useSession();
+  const { status } = useSession();
   const { addFriend } = useAddFriend();
   const { setDisplayLoginModal } = useGlobalContext();
 
@@ -118,10 +118,6 @@ export default function SideNavFindFriends() {
         setHide(newHide);
       }, 300);
     }
-  };
-
-  const handleDistance = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDistance(Number(e.target.value));
   };
 
   const errorHandle = (err: unknown) => {
@@ -153,7 +149,7 @@ export default function SideNavFindFriends() {
   return (
     <aside className="mb-2 flex w-full items-center justify-between rounded-lg bg-primary-content">
       <div className="relative h-[384px] w-[320px]">
-        <p className="text-base-500 mt-48 text-center">
+        <p className="mt-48 text-center text-base-500">
           No more friends for now.
         </p>
 
