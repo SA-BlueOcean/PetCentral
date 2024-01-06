@@ -1,9 +1,9 @@
 import { api } from "@/utils/api";
 import { PlusCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
-import PetCard from "./PetCard";
 import { useState } from "react";
 import EditPets from "./EditPets";
+import PetCard from "./PetCard";
 
 export default function Pets({ profileId }: { profileId: string }) {
   type Pet = {

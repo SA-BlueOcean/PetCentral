@@ -1,6 +1,5 @@
 import { api } from "@/utils/api";
-import { PenSquare } from "lucide-react";
-import { Trash2 } from "lucide-react";
+import { PenSquare, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
