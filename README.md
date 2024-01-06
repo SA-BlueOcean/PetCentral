@@ -98,6 +98,10 @@ Some of our key features are:
     <li>
       Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
     </li>
+    <li>
+      Search Bar:
+      ![](<public/2024-01-06 11-38-22.gif>)
+    </li>
   </ol>
 </p>
 
@@ -236,10 +240,9 @@ information.
 </h4>
 <h3 align='center'> Derek</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.derek.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/derek-williams33/">Linkedin</a> |
+  <a href="https://github.com/squeakypickles33?tab=repositories">Portoflio</a> |
+  <a href="https://github.com/squeakypickles33">Github</a>
 </h4>
 <h3 align='center'> Hazel</h3>
 <h4 align='center'>
