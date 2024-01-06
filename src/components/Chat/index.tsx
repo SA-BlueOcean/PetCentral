@@ -69,7 +69,6 @@ export default function Chat() {
           .in("chatsId", chatIds)
           .neq("userId", session.data?.user.id);
         if (data) {
-          console.log("DATA?", data);
           setChats(data as unknown as SupaChatsJoins[]);
         }
       }
