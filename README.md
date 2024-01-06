@@ -100,11 +100,11 @@ Some of our key features are:
     </li>
     <li>
       Search Bar:
-      ![](<./public/2024-01-06 11-38-22.gif>)
     </li>
   </ol>
 </p>
-
+      ![](<./public/2024-01-06 11-38-22.gif>)
+![Alt text](<public/2024-01-06 11-38-22.gif>)
 ### Built With
 
 <!-- TODO Add proper colors for each badge -->
