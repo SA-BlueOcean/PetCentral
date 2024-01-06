@@ -30,6 +30,7 @@ type SupaChatsJoins = {
 export default function Chat() {
   const session = useSession();
   const [expand, setExpand] = useState(false);
+  const [openUserChat, setOpenUserChat] = useState("");
   const [chats, setChats] = useState<SupaChatsJoins[]>();
   const [activeChat, setActiveChat] = useState<number | undefined>();
   const { messages, markMessagesRead, insertMessages, notifs } =
@@ -40,8 +41,21 @@ export default function Chat() {
   const { openChatTrigger, setDisplayLoginModal } = useGlobalContext();
 
   useEffect(() => {
-    openChatTrigger > 0 && setExpand(true);
+    if (openChatTrigger?.[0] > 0) {
+      setExpand(true);
+      openChatTrigger[1] && setOpenUserChat(openChatTrigger[1]);
+    }
   }, [openChatTrigger]);
+
+  useEffect(() => {
+    if (openUserChat) {
+      const foundChat = chats?.find((c) => c.User.id === openUserChat);
+      if (foundChat) {
+        setActiveChat(foundChat.chatsId);
+        setOpenUserChat("");
+      }
+    }
+  }, [openUserChat, chats]);
 
   useEffect(() => {
     const getChats = async () => {
@@ -134,7 +148,10 @@ export default function Chat() {
 
             <h2 className="py-1 text-lg">
               {selectedUser?.User.id && (
-                <Link href={`/profile/${selectedUser?.User.id}`} className="link-hover">
+                <Link
+                  href={`/profile/${selectedUser?.User.id}`}
+                  className="link-hover"
+                >
                   <span className="truncate">
                     {selectedUser?.User?.firstName
                       ? `${selectedUser?.User?.firstName}${

@@ -1,11 +1,10 @@
-import { z } from "zod";
-import zipcode from "zipcodes";
-
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
+import zipcode from "zipcodes";
+import { z } from "zod";
 
 export const profileRouter = createTRPCRouter({
   get: publicProcedure
