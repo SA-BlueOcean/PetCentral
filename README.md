@@ -2,6 +2,7 @@
 
 <br />
 <div align="center">
+  <img src="./public/logo-100.png" alt="pet central" />
   <a href="https://github.com/SA-BlueOcean/PetCentral">
     <!-- TODO: Create an LOGO for PetCentral -->
     <!-- <img src="" alt="Pet Central Logo" width="50" height="50" /> -->
@@ -10,14 +11,7 @@
     PetCentral
   </h3>
   <p align="center">
-      PetCentral is a vibrant and secure community-driven platform designed exclusively for pet owners who share a passion for their furry, feathery, or scaly companions. Whether you're a proud dog parent, a cat enthusiast, or an advocate for more exotic pets, PetCentral is the ultimate destination to meet like-mineded individuals and forge meaningful connections.
-      We pride ourselves on not just being an app; we're a commuinity where pet owners come together to celebrate the joys of pet companionship. Join us today, and embark on a journey filled with friendship, shared experiences, and the unconditional love that only pets can provide. Connect, communicate, and create lasting bonds on PetCentral!
-    <br />
-    <a href="https://github.com/SA-BlueOcean/PetCentral"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <!-- TODO: After deployed add link HERE   -->
-    <a href="#">View Live</a>
+    <a href="https://pet-central.vercel.app/">View Live</a>
     |
     <a href="https://github.com/SA-BlueOcean/PetCentral/issues">Report Bug</a>
     |
@@ -49,18 +43,6 @@
       </ul>
     </li>
     <li>
-      <a href="#usage">Usage</a>
-    </li>
-    <li>
-      <a href="#roadmap">Roadmap</a>
-    </li>
-    <li>
-      <a href="#optimizations">Optimizations</a>
-    </li>
-    <li>
-      <a href="#lessons-learned">Lessons Learned</a>
-    </li>
-    <li>
       <a href="#contributing">Contributing</a>
     </li>
     <li>
@@ -69,57 +51,63 @@
     <li>
       <a href="#contact">Contact</a>
     </li>
+      <li>
+      <a href="#attribution">Attribution</a>
+    </li>
   </ol>
 </details>
 
 ## About
 
-<div align="center">
-    <!-- TODO: Add landing page image -->
-
-  <!-- <img src="" alt="project landing page image" width="700px" /> -->
-</div>
-
-<br />
-<p>
+<div>
   PetCentral is a full-stack application that allows users to connect with other pet owners in their area.
 
 Some of our key features are:
 
   <ul>
     <li>
-      Secure Sign-in:  Rest easy knowing that your pet's safety and privacy are our priorities too!
+      <h3>Secure Sign-in</h3>
+      <p>Sign in with GitHub, Google, or Facebook OAuth. Rest easy knowing that your pet's safety and privacy are our priorities too!</p>
     </li>
+    <br/>
     <li>
-      <span>Profile Page: Curate your pet's story and your own, showcasing cherished moments and forming connections within our vibrant community of pet enthusiasts!</span>
+      <h3>Profile Page</h3>
+      <p> Curate your pet's story and your own, showcasing cherished moments and forming connections within our vibrant community of pet enthusiasts!</p>
         <img src="./demo/PetPalsProfileDemo.gif" alt="profile demo" width="1080" />
     </li>
-     <li>
-      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
-    </li>
+    <br/>
     <li>
-      <span>Messaging Platform: Stay connected with fellow pet lovers through our intuitive realtime messaging system.</span>
-        <img src="./demo/PetPalsChatDemo.gif" alt="chat demo" width="1154px" />
+      <h3>Messaging Platform</h3>
+      <p>Stay connected with fellow pet lovers through our intuitive realtime messaging system.</p>
+      <img src="./demo/PetPalsChatDemo.gif" alt="chat demo" width="1154px" />
     </li>
+    <br/>
      <li>
-      Forums: Dive into dedicated forums tailored to your pet's specific needs and characteristics.
+     <h3>Forums</h3>
+      <p>Dive into dedicated forums tailored to your pet's specific needs and characteristics.</p>
     </li>
+        <br/>
     <li>
       <h3>Friend-Finding: Discover new friends for both you and your pet!</h3>
-      Utilize our friendly friend-finding feature to connect with local pet owners!  If you both match, you are friends! Find friends within a selectable radius to show friends near you.  This is built to filter the database for users within a selected distance range, that you have not already sent a friend request to, and that you are not already friends with.  Additionally it will also return users who have sent you a friend request regardless of distance to facilitate more matches.  Adding a friend will add a request to the datatabase and trigger a custom animation mangaged by state.
+      <p>
+        Utilize our friendly friend-finding feature to connect with local pet owners!  If you both match, you are friends! Find friends within a selectable radius to show friends near you.  This is built to filter the database for users within a selected distance range, that you have not already sent a friend request to, and that you are not already friends with.  Additionally it will also return users who have sent you a friend request regardless of distance to facilitate more matches.  Adding a friend will add a request to the datatabase and trigger a custom animation mangaged by state.
+      </p>
       <img src="./demo/find-friends.gif" alt="friends demo" />
-     </li>
+    </li>
+    <br/>
     <li>
-      <span>Posts: Create posts to your profile or a forum with images, vote and comment!</span>
+      <h3>Posts</h3>
+      <p>Create posts to your profile or a forum with images, vote and comment!</p>
       <img src="./demo/PetPalsPostDemo.gif" alt="post demo" width="1154px" />
     </li>
+    <br/>
     <li>
-      <span>Search Bar: Filter through groups and posts for dynamically rendered content.</span>
-      <br />
+      <h3>Search Bar</h3>
+      <p>Filter through groups and posts for dynamically rendered content.</p>
       <img src="./demo/searchdemo.gif" alt="post demo" width="200px" />
     </li>
   </ul>
-</p>
+</div>
 
 ### Built With
 
@@ -132,7 +120,7 @@ Some of our key features are:
 <br />
 ![Prisma](https://img.shields.io/badge/Prisma-%23000000.svg?style=for-the-badge&logo=Prisma)
 ![Supabase](https://img.shields.io/badge/Supabase-%23000000.svg?style=for-the-badge&logo=Supabase)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%230000.svg?style=for-the-badge&logo=tailwind-css)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-000000?style=for-the-badge&logo=tailwind-css&logoColor=0EA5E9)
 ![DaisyUI](https://img.shields.io/badge/DaisyUI-%23000000.svg?style=for-the-badge&logo=DaisyUI)
 
 <p align="right">
@@ -155,12 +143,12 @@ npm install npm@latest -g
 
 ![Node.js](https://img.shields.io/badge/Node.js-%23000000.svg?style=for-the-badge&logo=node.js)
 
+Node version is expected to be v20.10.0 or higher
+
 ```sh
 nvm install --lts
 node --version
 ```
-
-Node version is expected to be v20.10.0 or higher
 
 ### Installation
 
@@ -168,24 +156,26 @@ Node version is expected to be v20.10.0 or higher
    ```sh
    git clone https://github.com/SA-BlueOcean/PetCentral.git
    ```
-1. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-1. Rename `.env.example` to `.env` and fill in the following fields:
-   - `DATABASE_URL`
-   - `NEXTAUTH_URL`
-   - `NEXTAUTH_SECRET` (use `# openssl rand -base64 32` to generate)
-   - `GITHUB_CLIENT_ID`
-   - `GITHUB_CLIENT_SECRET`
-   - `GOOGLE_CLIENT_ID`
-   - `GOOGLE_CLIENT_SECRET`
-   - `FACEBOOK_CLIENT_ID`
-   - `FACEBOOK_CLIENT_SECRET`
-   - NEXT_PUBLIC_SUPABASE_URL
-   - NEXT_PUBLIC_SUPABASE_ANON_KEY
-   - Check NextAuth.js documentation for more information on how to set up OAuth providers
-1. Run Prisma generate to generate the Prisma client
+3. Rename `.env.example` to `.env` and fill in the following fields:
+   ```
+   DATABASE_URL
+   NEXTAUTH_URL
+   NEXTAUTH_SECRET (use # openssl rand base64 32 to generate)
+   GITHUB_CLIENT_ID
+   GITHUB_CLIENT_SECRET
+   GOOGLE_CLIENT_ID
+   GOOGLE_CLIENT_SECRET
+   FACEBOOK_CLIENT_ID
+   FACEBOOK_CLIENT_SECRET
+   NEXT_PUBLIC_SUPABASE_URL
+   NEXT_PUBLIC_SUPABASE_ANON_KEY
+   ```
+   Check NextAuth.js documentation for more information on how to set up OAuth providers
+4. Run Prisma generate to generate the Prisma client
 
 ```sh
 npx prisma generate
@@ -199,28 +189,6 @@ npm run dev
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ROADMAP -->
-
-## Roadmap
-
-- [x] We did this
-- [ ] Then we did that
-- [ ] We'll do this next
-
-See the [open issues](https://github.com/SA-BlueOcean/PetCentral/issues) for a
-full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Optimizations
-
-- Optimizations go here!
-
-## Lessons Learned
-
-- We learned more about how to \_\_\_ here!
-
-<!-- CONTRIBUTING -->
 
 ## Contributing
 
@@ -266,7 +234,7 @@ information.
 <h4 align='center'>
   <a href="https://github.com/malloryporche">Github</a> |
   <a href="https://www.linkedin.com/in/mallory-burke/">Linkedin</a> |
-  <a href="https://www.malloryburke.com/">Portoflio</a>
+  <a href="https://www.malloryburke.com/">Portfolio</a>
 </h4>
 <h3 align='center'> Ming Lee Ng</h3>
 <h4 align='center'>
@@ -282,6 +250,8 @@ information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<p> Attribution <p>
+## Attribution
+
+Project bootstrapped with <a target="_blank" href="https://create.t3.gg/">T3 Stack  
 
 <a target="_blank" href="https://icons8.com/icon/NI-py7EAFhDr/animal-shelter">Animal Shelter</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
