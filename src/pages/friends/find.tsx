@@ -1,4 +1,3 @@
-import useAddFriend from "@/components/Profile/useAddFriend";
 import { api } from "@/utils/api";
 import { Check, PawPrint, X } from "lucide-react";
 import { useSession } from "next-auth/react";
