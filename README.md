@@ -99,8 +99,8 @@ Some of our key features are:
       Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
     </li>
     <li>
-      <p>Search Bar:</p>
-      <video src="public/2024-01-06%2011-38-22.mp4" controls title="Search Bar"></video>
+      <span>Search Bar: Filter through groups and posts for dynamically rendered content.</span>
+      <img src="./demo/searchdemo.gif" alt="post demo" width="1154px" />
     </li>
   </ol>
 </p>
