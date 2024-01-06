@@ -21,8 +21,8 @@ export default function AddChat({ userId }: { userId?: string }) {
                   setDisplayLoginModal(true);
                 }
               },
-              onSuccess() {
-                triggerOpenChat();
+              onSuccess(data, variables, context) {
+                triggerOpenChat(userId);
               },
             },
           )
