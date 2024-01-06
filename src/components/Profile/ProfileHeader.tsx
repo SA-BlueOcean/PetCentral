@@ -75,7 +75,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
               )}
               <div
                 className={cn(
-                  "relative h-32 w-32 overflow-hidden rounded-full ring ring-base-300 ring-offset-base-100   sm:h-40 sm:w-40",
+                  "relative h-32 w-32 overflow-hidden rounded-full ring-4 ring-base-300 ring-offset-base-100   sm:h-40 sm:w-40",
                   user.isLoading && "skeleton",
                 )}
               >
@@ -109,11 +109,10 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
                 ""
               )}
             </p>
-            <div className="flex items-baseline gap-4">
+            <div className="flex items-baseline gap-4 text-base-700">
               {user.data?.location?.locationName && (
                 <>
-                  <span className="">{user.data?.location?.locationName} </span>
-                  |
+                  <span>{user.data?.location?.locationName} </span>|
                 </>
               )}
               <span className=""> {user.data?.pets.length} Pets </span>|

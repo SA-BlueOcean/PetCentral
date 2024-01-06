@@ -5,7 +5,7 @@ import { FileSearch, LogIn, UserRoundSearch } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Avatar from "../Feed/Avatar";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 const links = [
   {
@@ -34,7 +34,7 @@ export default function SideNavElements() {
   );
   return (
     <>
-      <ul className="w-full divide-y">
+      <ul className="w-full divide-y-2 divide-base-700">
         {links.map((link) => (
           <li key={link.name} className="py-3">
             <Link
@@ -45,7 +45,12 @@ export default function SideNavElements() {
                     : `/profile/${profile.data?.id}`
                   : link.href
               }
-              className={cn("flex items-center gap-2", link.name === "My Profile" && session.status === "unauthenticated" && "pointer-events-none")}
+              className={cn(
+                "flex items-center gap-2",
+                link.name === "My Profile" &&
+                  session.status === "unauthenticated" &&
+                  "pointer-events-none",
+              )}
             >
               {link.name === "My Profile" ? (
                 <>
@@ -57,7 +62,7 @@ export default function SideNavElements() {
                           e.preventDefault();
                           setDisplayLoginModal(true);
                         }}
-                        className="flex items-center gap-2 pointer-events-auto w-full"
+                        className="pointer-events-auto flex w-full items-center gap-2"
                       >
                         <LogIn />
                         Sign in
@@ -67,7 +72,7 @@ export default function SideNavElements() {
                     <>
                       <div
                         className={cn(
-                          "bg-base-400 relative h-6 w-6 overflow-clip rounded-full",
+                          "relative h-10 w-10 overflow-clip rounded-full bg-base-400",
                           profile.isLoading && "skeleton",
                         )}
                       >
@@ -105,7 +110,7 @@ export default function SideNavElements() {
             if (session.status === "authenticated") {
               signOut().then(() => {
                 router.push("/");
-            })
+              });
             } else {
               setDisplayLoginModal(true);
             }

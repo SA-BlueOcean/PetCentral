@@ -46,7 +46,7 @@ export default function CreateGroupModal() {
   return (
     <>
       <button
-        className="btn-s btn btn-primary basis-1/5 rounded-btn uppercase text-white"
+        className="btn-s btn btn-accent basis-1/5 rounded-btn uppercase text-base-100"
         onClick={() => {
           (
             document.getElementById(
@@ -61,7 +61,7 @@ export default function CreateGroupModal() {
         id="create_group_modal"
         className="modal modal-bottom sm:modal-middle"
       >
-        <div className="modal-box bg-primary text-white">
+        <div className="modal-box bg-base-300 text-base-700">
           <button
             className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
             onClick={() => {
@@ -83,7 +83,7 @@ export default function CreateGroupModal() {
               <input
                 type="text"
                 placeholder="Adopt-Dont-Shop"
-                className="input my-3 w-full max-w-xs bg-primary focus:outline-none"
+                className="input my-3 w-full max-w-xs bg-base-100 focus:outline-none"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setGroupDetails({ ...groupDetails, name: e.target.value });
                 }}
@@ -92,7 +92,7 @@ export default function CreateGroupModal() {
               <input
                 type="textarea"
                 placeholder="We love to rescue animals!"
-                className="max-w-s input my-3 w-full bg-primary focus:outline-none"
+                className="max-w-s input my-3 w-full bg-base-100 focus:outline-none"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setGroupDetails({
                     ...groupDetails,
@@ -101,7 +101,7 @@ export default function CreateGroupModal() {
                 }}
               />
               <button
-                className="btn mx-auto mt-4 border-none bg-secondary text-white"
+                className="btn mx-auto mt-4 border-none bg-accent text-base-100"
                 onClick={() => {
                   createGroup();
                   (

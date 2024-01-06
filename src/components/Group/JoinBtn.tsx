@@ -53,7 +53,7 @@ export default function JoinButton({ id }: { id: string }) {
   return (
     <>
       <div className="ml-auto flex flex-col">
-        <span className="r-0 basis-2/5 text-right text-xs text-gray-400">
+        <span className="r-0 basis-2/5 text-right text-xs text-gray-500">
           {membersCount} {membersCount === 1 ? <>Member</> : <>Members</>}
         </span>
         <button
@@ -61,12 +61,12 @@ export default function JoinButton({ id }: { id: string }) {
             mutation.isLoading || disconnect.isLoading || userIsMember.isLoading
           }
           className={cn(
-            "btn btn-xs basis-1/5 rounded-btn uppercase text-white",
-            userIsMember.data === true ? "btn-secondary" : "btn-primary",
+            "btn btn-xs basis-1/5 rounded-btn uppercase text-base-100",
+            userIsMember.data === true ? "btn-primary" : "btn-accent",
           )}
           onClick={() => updateUserGroups()}
         >
-          {mutation.isLoading || disconnect.isLoading ? (
+          {mutation.isLoading || disconnect.isLoading || userIsMember.isFetching || userIsMember.isLoading ? (
             <Loader size={12} className="animate-spin" />
           ) : userIsMember.data === true ? (
             "Leave"
