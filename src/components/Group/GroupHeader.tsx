@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
+import { cn } from "@/utils/cn";
 import Image from "next/image";
 import JoinButton from "./JoinBtn";
-import { cn } from "@/utils/cn";
 
 type GroupProps = {
   groupId: string; //Group | null;
@@ -15,7 +15,7 @@ export function GroupHeader({ groupId }: GroupProps) {
     groupID: groupId,
   });
 
-  const { id, bannerPhotoUrl, photoUrl, name, description } =
+  const { bannerPhotoUrl, photoUrl, name, description } =
     groupQuery?.data?.group || {};
 
   return (
