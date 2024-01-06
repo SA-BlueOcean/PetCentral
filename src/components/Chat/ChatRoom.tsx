@@ -19,6 +19,8 @@ export default function ChatRoom({
   const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const utc = new Date();
+  const offset = utc.getTimezoneOffset();
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -130,7 +132,7 @@ export default function ChatRoom({
           }}
           value={message}
           type="text"
-          className="join-item h-12 flex-grow rounded-none disabled:rounded-none px-2 focus:outline-none"
+          className="join-item h-12 flex-grow rounded-none px-2 focus:outline-none disabled:rounded-none"
         ></input>
         <button
           disabled={initialLoading || loading}
