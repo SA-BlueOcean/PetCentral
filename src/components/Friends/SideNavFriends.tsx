@@ -15,7 +15,7 @@ export default function SideNavFriends() {
       </Link>
       <div className="relative max-h-[40vh] w-full overflow-y-auto">
         {friends.isLoading ? (
-          <ul className="divide-y-2 divide-base-700 flex flex-col px-3">
+          <ul className="divide-base-700 flex flex-col divide-y-2 px-3">
             {new Array(3).fill(0).map((_, i) => (
               <li key={i} className="flex w-full items-center gap-3 py-2">
                 <div className="skeleton h-10 w-10 rounded-full bg-secondary ring-1 ring-base-200"></div>
@@ -24,11 +24,11 @@ export default function SideNavFriends() {
             ))}
           </ul>
         ) : (
-          <ul className="flex flex-col divide-y-2 divide-base-700 px-3">
+          <ul className="divide-base-700 flex flex-col divide-y-2 px-3">
             {(friends?.data?.friends?.length ?? 0) > 0 ? (
               <>
                 {friends.data?.friends.map((friend) => (
-                  <li key={friend.friendB.name} className="flex w-full py-3">
+                  <li key={friend.friendB.id} className="flex w-full py-3">
                     <Link
                       href={`/profile/${friend.friendB.id}`}
                       className="flex items-center gap-3 pl-px"
@@ -41,7 +41,13 @@ export default function SideNavFriends() {
                         unoptimized={true}
                         className=" h-10 w-10 flex-none rounded-full bg-secondary object-cover"
                       />
-                      {friend.friendB.name}
+                      {friend.friendB?.firstName
+                        ? `${friend.friendB?.firstName}${
+                            friend.friendB?.lastName
+                              ? ` ${friend.friendB.lastName}`
+                              : ""
+                          }`
+                        : `${friend.friendB?.name ?? "?"}`}
                     </Link>
                   </li>
                 ))}

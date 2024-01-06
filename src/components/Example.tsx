@@ -16,7 +16,7 @@ export function Example() {
         onSuccess: () => {
           console.log("success");
           // invalidate current query to clear current local cache
-          // and trigger a refetch (? - needs to be validated, might need a .fetch call after invalidate)
+          // and trigger a refetch
           void utils.example.hello.invalidate();
         },
       },
