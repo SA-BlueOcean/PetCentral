@@ -103,8 +103,10 @@ Some of our key features are:
     </li>
   </ol>
 </p>
-      ![](<./public/2024-01-06 11-38-22.gif>)
+<br />
+      <!-- ![](<./public/2024-01-06 11-38-22.gif>) -->
 ![Alt text](<public/2024-01-06 11-38-22.gif>)
+<br />
 ### Built With
 
 <!-- TODO Add proper colors for each badge -->
