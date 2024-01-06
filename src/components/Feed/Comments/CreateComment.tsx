@@ -1,11 +1,11 @@
 import { useGlobalContext } from "@/providers/GlobalContext";
-import { type RouterOutputs, api } from "@/utils/api";
+import { api, type RouterOutputs } from "@/utils/api";
+import { cn } from "@/utils/cn";
+import { useQueryClient, type InfiniteData } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Avatar from "../Avatar";
-import { cn } from "@/utils/cn";
-import { getQueryKey } from "@trpc/react-query";
-import { type InfiniteData, useQueryClient } from "@tanstack/react-query";
 
 export default function CreateComment({
   postId,
@@ -33,12 +33,12 @@ export default function CreateComment({
         postId,
       },
       {
-        onError(error, variables, context) {
+        onError(error) {
           if (error.message === "UNAUTHORIZED") {
             setDisplayLoginModal(true);
           }
         },
-        onSuccess(data, variables, context) {
+        onSuccess() {
           setComment("");
           onAddComment && onAddComment();
           void utils.comments.get.invalidate({ postId });
@@ -47,6 +47,7 @@ export default function CreateComment({
             (prev) => {
               const update = prev?.pages.map((page) => ({
                 ...page,
+                props: page.props,
                 posts: page.posts.map((post) => {
                   if (post.id === postId) {
                     return {
@@ -82,8 +83,14 @@ export default function CreateComment({
               <Avatar profilePhotoUrl={user.data?.profilePhotoUrl} />
             )}
           </div>
-          {user?.data?.name ? (
-            <span>{user.data.name}</span>
+          {!user.isLoading ? (
+            <span>
+              {user?.data?.firstName
+                ? `${user?.data?.firstName}${
+                    user?.data?.lastName ? ` ${user.data.lastName}` : ""
+                  }`
+                : `${user?.data?.name ?? "?"}`}
+            </span>
           ) : (
             <div className="skeleton h-6 w-20 rounded-md bg-base-200 "></div>
           )}

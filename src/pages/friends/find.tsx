@@ -1,12 +1,12 @@
-import { Check, X, PawPrint } from "lucide-react";
-import Image from "next/image";
 import { api } from "@/utils/api";
-import { useState, useEffect } from "react";
+import { Check, PawPrint, X } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
+import { useState } from "react";
 import { setTimeout } from "timers";
 import useAddFriend from "@/components/Profile/useAddFriend";
 import { useGlobalContext } from "@/providers/GlobalContext";
+
 
 export default function FindFriendsPage() {
   const [distance, setDistance] = useState<number>(50);
@@ -14,7 +14,7 @@ export default function FindFriendsPage() {
   const [animate, setAnimate] = useState<string[]>([]);
   const [hide, setHide] = useState<boolean[]>([]);
 
-  const { data: sessionData, status } = useSession();
+  const { status } = useSession();
   const { addFriend } = useAddFriend();
   const { setDisplayLoginModal } = useGlobalContext();
 

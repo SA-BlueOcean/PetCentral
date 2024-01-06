@@ -1,6 +1,5 @@
 import { api } from "@/utils/api";
-import { PenSquare } from "lucide-react";
-import { Trash2 } from "lucide-react";
+import { PenSquare, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
@@ -31,6 +30,10 @@ export default function PetCard({
   profileId: string;
   handleEditPet: (pet: Pet, animalId: number) => void;
 }) {
+  const user = api.profile.get.useQuery(
+    { profileId },
+    { enabled: !!profileId },
+  );
   const mutation = api.pets.removePet.useMutation();
   const utils = api.useUtils();
 
@@ -75,7 +78,7 @@ export default function PetCard({
           unoptimized
           fill
           className="object-cover"
-        ></Image>
+        />
       </div>
       <div className="flex w-full flex-col justify-between py-3">
         <div className="flex justify-between">

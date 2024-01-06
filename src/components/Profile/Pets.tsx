@@ -1,9 +1,9 @@
 import { api } from "@/utils/api";
-import { PlusCircle } from "lucide-react";
+import { Loader, PlusCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
-import PetCard from "./PetCard";
 import { useState } from "react";
 import EditPets from "./EditPets";
+import PetCard from "./PetCard";
 
 export default function Pets({ profileId }: { profileId: string }) {
   type Pet = {
@@ -24,6 +24,10 @@ export default function Pets({ profileId }: { profileId: string }) {
     };
   };
 
+  const user = api.profile.get.useQuery(
+    { profileId },
+    { enabled: !!profileId },
+  );
   const pets = api.profile.get.useQuery({ profileId }).data?.pets;
 
   const [currPet, setCurrPet] = useState<Pet | null>(null);
@@ -59,16 +63,22 @@ export default function Pets({ profileId }: { profileId: string }) {
           ""
         )}
       </div>
-      <div className="flex flex-col divide-y divide-neutral-400">
-        {pets?.map((pet) => (
-          <PetCard
-            key={pet.id}
-            pet={pet}
-            profileId={profileId}
-            handleEditPet={handleEditPet}
-          />
-        ))}
-      </div>
+      {user.isLoading ? (
+        <div className="flex justify-center">
+          <Loader className="animate-spin" />
+        </div>
+      ) : (
+        <div className="flex flex-col divide-y divide-neutral-400">
+          {pets?.map((pet) => (
+            <PetCard
+              key={pet.id}
+              pet={pet}
+              profileId={profileId}
+              handleEditPet={handleEditPet}
+            />
+          ))}
+        </div>
+      )}
       <EditPets pet={currPet} animalId={animalId} profileId={profileId} />
     </div>
   );

@@ -1,11 +1,11 @@
 import { useGlobalContext } from "@/providers/GlobalContext";
 import { api, type RouterOutputs } from "@/utils/api";
 import { cn } from "@/utils/cn";
-import { ThumbsUp, ThumbsDown } from "lucide-react";
+import { useQueryClient, type InfiniteData } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { useQueryClient, InfiniteData } from "@tanstack/react-query";
-import { getQueryKey } from "@trpc/react-query";
 
 type VotesProps = {
   upvotes: number;
@@ -36,6 +36,7 @@ export default function Votes({
       queryClient.setQueriesData<InfiniteData<FeedQuery>>(queryKey, (prev) => {
         const update = prev?.pages.map((page) => ({
           ...page,
+          props: page.props,
           posts: page.posts.map((post) => {
             if (post.id === postId) {
               return {
@@ -96,7 +97,7 @@ export default function Votes({
       voteMutation.mutate(
         { postId, vote: direction },
         {
-          onError(error, variables, context) {
+          onError(error) {
             if (error.message === "UNAUTHORIZED") {
               setDisplayLoginModal(true);
             }

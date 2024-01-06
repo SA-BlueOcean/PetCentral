@@ -1,13 +1,13 @@
 import { api } from "@/utils/api";
 import { Fragment } from "react";
 import Comment from "./Comment";
-import PlaceholderComment from "./PlaceholderComment";
 import CreateComment from "./CreateComment";
+import PlaceholderComment from "./PlaceholderComment";
 
 export default function Comments({
   postId,
   initialCount = 0,
-  onAddComment
+  onAddComment,
 }: {
   postId: number;
   initialCount?: number;
@@ -34,7 +34,7 @@ export default function Comments({
           </>
         ) : (
           <>
-            {comments.data?.pages.map((page, i) => (
+            {comments.data?.pages.map((page) => (
               <Fragment key={page.nextCursor}>
                 {page.comments.map((c) => (
                   <li key={c.id}>

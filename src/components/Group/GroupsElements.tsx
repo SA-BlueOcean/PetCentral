@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function GroupsElements() {
   const groupsList = api.groups.findAllGroups.useQuery();

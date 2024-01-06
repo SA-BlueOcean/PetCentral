@@ -1,11 +1,6 @@
-import { z } from "zod";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import zipcodes from "zipcodes";
-
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
+import { z } from "zod";
 
 export const friendsRouter = createTRPCRouter({
   findFriends: protectedProcedure

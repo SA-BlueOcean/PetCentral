@@ -74,6 +74,8 @@ export default function PostCard({ data }: PostCardProps) {
                 id={data.createdBy.id}
                 profilePhotoUrl={data.createdBy.profilePhotoUrl}
                 name={data.createdBy.name}
+                firstName={data.createdBy.firstName}
+                lastName={data.createdBy.lastName}
                 createdAt={data.createdAt}
               />
             </div>

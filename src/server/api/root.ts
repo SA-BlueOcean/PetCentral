@@ -1,15 +1,14 @@
 import { createTRPCRouter } from "@/server/api/trpc";
+import { chatRouter } from "./routers/chat";
+import { commentRouter } from "./routers/comments";
 import { exampleRouter } from "./routers/example";
 import { feedRouter } from "./routers/feed";
-import { profileRouter } from "./routers/profile";
-import { authRouter } from "./routers/auth";
-import { petsRouter } from "./routers/pets";
-import { commentRouter } from "./routers/comments";
-import { chatRouter } from "./routers/chat";
 import { friendsRouter } from "./routers/friends";
 import { groupRouter } from "./routers/groups";
-import { userRouter } from "./routers/users";
+import { petsRouter } from "./routers/pets";
 import { postRouter } from "./routers/posts";
+import { profileRouter } from "./routers/profile";
+import { userRouter } from "./routers/users";
 
 /**
  * This is the primary router for your server.
@@ -23,7 +22,6 @@ export const appRouter = createTRPCRouter({
   posts: postRouter,
   groups: groupRouter,
   profile: profileRouter,
-  auth: authRouter,
   comments: commentRouter,
   chat: chatRouter,
   pets: petsRouter,

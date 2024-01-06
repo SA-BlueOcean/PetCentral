@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
-import { Friend } from "@prisma/client";
-import type { RealtimeChannel } from "@supabase/supabase-js";
+import { type Friend } from "@prisma/client";
+import { type RealtimeChannel } from "@supabase/supabase-js";
 import { supabase } from "lib/supabase";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -8,9 +8,9 @@ import { useEffect, useState } from "react";
 export default function FriendsMonitor() {
   const session = useSession();
   const utils = api.useUtils();
-  const [newFriends, setNewFriends] = useState<{ name: string; id: string }[]>(
-    [],
-  );
+  const [newFriends, setNewFriends] = useState<
+    { name: string; id: string; firstName?: string; lastName?: string }[]
+  >([]);
 
   useEffect(() => {
     const removeFirstElement = () => {
@@ -42,14 +42,19 @@ export default function FriendsMonitor() {
             if (newPayload && newPayload.friendBId === session.data.user.id) {
               const newFriendId = newPayload.friendAId;
               const update = async () => {
-                const { data, error } = await supabase
+                const { data } = await supabase
                   .from("User")
                   .select("name, firstName, lastName, id")
                   .eq("id", newFriendId);
                 if (data && data?.[0] && data[0].id && data[0].name) {
                   setNewFriends((f) => [
                     ...f,
-                    { id: (data as any[])[0].id as string, name: (data as any[])[0].name as string },
+                    {
+                      id: (data as any[])[0].id as string,
+                      name: (data as any[])[0].name as string,
+                      firstName: (data as any[])[0]?.firstName as string,
+                      lastName: (data as any[])[0]?.lastName as string,
+                    },
                   ]);
                 }
               };
@@ -75,7 +80,12 @@ export default function FriendsMonitor() {
             setNewFriends((p) => p?.filter((n) => n.id !== f.id));
           }}
         >
-          <span>{f.name} added as friend!</span>
+          <span>
+            {f.firstName
+              ? `${f.firstName}${f.lastName ? ` ${f.lastName}` : ""}`
+              : `${f.name ?? "?"}`}{" "}
+            added as friend!
+          </span>
         </div>
       ))}
     </div>

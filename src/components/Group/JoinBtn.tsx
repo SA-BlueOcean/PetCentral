@@ -34,6 +34,7 @@ export default function JoinButton({ id }: { id: string }) {
           onSuccess() {
             void utils.groups.fetchMembers.invalidate({ groupId: id });
             void utils.groups.fetchIsMember.invalidate({ groupId: id });
+            void utils.groups.fetchGroups.invalidate();
           },
         },
       );
@@ -44,6 +45,7 @@ export default function JoinButton({ id }: { id: string }) {
           onSuccess() {
             void utils.groups.fetchMembers.invalidate({ groupId: id });
             void utils.groups.fetchIsMember.invalidate({ groupId: id });
+            void utils.groups.fetchGroups.invalidate();
           },
         },
       );
@@ -66,7 +68,10 @@ export default function JoinButton({ id }: { id: string }) {
           )}
           onClick={() => updateUserGroups()}
         >
-          {mutation.isLoading || disconnect.isLoading || userIsMember.isFetching || userIsMember.isLoading ? (
+          {mutation.isLoading ||
+          disconnect.isLoading ||
+          userIsMember.isFetching ||
+          userIsMember.isLoading ? (
             <Loader size={12} className="animate-spin" />
           ) : userIsMember.data === true ? (
             "Leave"

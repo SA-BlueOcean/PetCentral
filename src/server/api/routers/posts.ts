@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { z } from "zod";
 
 export const postRouter = createTRPCRouter({
   createPost: protectedProcedure
@@ -16,11 +16,13 @@ export const postRouter = createTRPCRouter({
           content: input.content,
           groupId: input.groupId ? input.groupId : null,
           createdById: ctx.session.user.id,
-          photos: input.photoUrl ? {
-            create: {
-              url: input.photoUrl,
-            },
-          } : undefined,
+          photos: input.photoUrl
+            ? {
+                create: {
+                  url: input.photoUrl,
+                },
+              }
+            : undefined,
         },
       });
     }),
