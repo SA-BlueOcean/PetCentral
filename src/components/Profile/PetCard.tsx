@@ -31,6 +31,10 @@ export default function PetCard({
   profileId: string;
   handleEditPet: (pet: Pet, animalId: number) => void;
 }) {
+  const user = api.profile.get.useQuery(
+    { profileId },
+    { enabled: !!profileId },
+  );
   const mutation = api.pets.removePet.useMutation();
   const utils = api.useUtils();
 
