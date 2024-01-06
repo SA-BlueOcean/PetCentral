@@ -97,6 +97,9 @@ Some of our key features are:
     </li>
     <li>
       Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
+      <video width="1280" height="720" controls>
+       <source src="./public/find-friends.webm" type="video/webm">
+      </video>
     </li>
   </ol>
 </p>
@@ -229,10 +232,9 @@ information.
 </h4>
 <h3 align='center'> Clay</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.clay.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/clay-gibson-dev/">Linkedin</a> |
+  <a href="https://www.clay-gibson-dev.com/">Portoflio</a> |
+  <a href="https://www.github.com/sawyer1776">Github</a>
 </h4>
 <h3 align='center'> Derek</h3>
 <h4 align='center'>
