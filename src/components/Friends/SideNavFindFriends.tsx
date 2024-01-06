@@ -4,7 +4,6 @@ import { api } from "@/utils/api";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { setTimeout } from "timers";
-import Link from "next/link";
 import useAddFriend from "@/components/Profile/useAddFriend";
 import { useGlobalContext } from "@/providers/GlobalContext";
 
@@ -17,6 +16,8 @@ const ProfileCard = ({
 }: {
   user: {
     name: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
     id: string;
     profilePhotoUrl: string | null;
     location: { locationName: string | null } | undefined | null;
@@ -32,7 +33,7 @@ const ProfileCard = ({
       className={`card absolute left-0 top-0 h-[384px] w-[320px] rounded-lg border-4 border-primary-content bg-primary-content
       ${fly === "left" ? "animate-flyL" : null} ${
         fly === "right" ? "animate-flyR" : null
-      } ${hide ? "hidden" : null} overflow-hidden bg-base-500`}
+      } ${hide ? "hidden" : null} bg-base-500 overflow-hidden`}
     >
       <Image
         className="card-body h-[320px] w-[320px] object-cover p-0"
@@ -53,7 +54,11 @@ const ProfileCard = ({
         <div className="flex w-full justify-between">
           <div className=" flex flex-col text-base-100">
             <h2>
-              {user.name}{" "}
+              {user?.firstName
+                ? `${user?.firstName}${
+                    user?.lastName ? ` ${user.lastName}` : ""
+                  }`
+                : `${user?.name ?? "?"}`}{" "}
               {loading ? (
                 <span className="loading loading-dots loading-sm"></span>
               ) : null}
@@ -148,7 +153,7 @@ export default function SideNavFindFriends() {
   return (
     <aside className="mb-2 flex w-full items-center justify-between rounded-lg bg-primary-content">
       <div className="relative h-[384px] w-[320px]">
-        <p className="mt-48 text-center text-base-500">
+        <p className="text-base-500 mt-48 text-center">
           No more friends for now.
         </p>
 
