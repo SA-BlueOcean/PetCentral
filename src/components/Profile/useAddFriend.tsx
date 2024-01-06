@@ -29,7 +29,7 @@ export default function useAddFriend() {
           }
           onErrorCb && onErrorCb(error, variables, context);
         },
-        onSuccess(data, variables, context) {
+        onSuccess(data, variables) {
           onSuccessCb && onSuccessCb(data, variables);
         },
       },
