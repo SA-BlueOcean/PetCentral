@@ -105,7 +105,7 @@ Some of our key features are:
 </p>
 <br />
       <!-- ![](<./public/2024-01-06 11-38-22.gif>) -->
-![Alt text](<public/2024-01-06 11-38-22.gif>)
+![Alt text](<./public/2024-01-06 11-38-22.gif>)
 <br />
 ### Built With
 
