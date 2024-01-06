@@ -101,7 +101,7 @@ Some of our key features are:
     <li>
       Search Bar:
       <video width="1280" height="720" controls>
-       <source src="./public/2024-01-06 11-38-22.gif" type="video/gif">
+        <source src="./public/2024-01-06 11-38-22.gif" type="video/gif">
       </video>
     </li>
   </ol>
