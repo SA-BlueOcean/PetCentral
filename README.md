@@ -92,7 +92,7 @@ Some of our key features are:
     </li>
     <li>
       <span>Profile Page: Curate your pet's story and your own, showcasing cherished moments and forming connections within our vibrant community of pet enthusiasts!</span>
-        <img src="./demo/PetPalsProfileDemo.gif" alt="profile demo" width="1080">
+        <img src="./demo/PetPalsProfileDemo.gif" alt="profile demo" width="1080" />
     </li>
      <li>
       Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
