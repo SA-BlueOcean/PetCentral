@@ -73,6 +73,7 @@
 </details>
 
 ## About
+
 <div align="center">
     <!-- TODO: Add landing page image -->
 
@@ -88,6 +89,10 @@ Some of our key features are:
   <ul>
     <li>
       Secure Sign-in:  Rest easy knowing that your pet's safety and privacy are our priorities too!
+    </li>
+    <li>
+      <span>Profile Page: Curate your pet's story and your own, showcasing cherished moments and forming connections within our vibrant community of pet enthusiasts!</span>
+        <img src="./demo/PetPalsProfileDemo.gif" alt="profile demo" width="1080" />
     </li>
      <li>
       Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
@@ -272,7 +277,6 @@ information.
 <h3 align='center'> Thomas Harbert </h3>
 <h4 align='center'>
   <a href="https://www.linkedin.com/in/thomasgharbert/">Linkedin</a> |
-  <a href="https://www.thomasharbert.com/">Portoflio</a> |
   <a href="https://github.com/tgharbert">Github</a>
 </h4>
 
