@@ -103,6 +103,11 @@ Some of our key features are:
       <span>Posts: Create posts to your profile or a forum with images, vote and comment!</span>
       <img src="./demo/PetPalsPostDemo.gif" alt="post demo" width="1154px" />
     </li>
+    <li>
+      <span>Search Bar: Filter through groups and posts for dynamically rendered content.</span>
+      <br />
+      <img src="./demo/searchdemo.gif" alt="post demo" width="200px" />
+    </li>
   </ul>
 </p>
 
@@ -239,10 +244,9 @@ information.
 </h4>
 <h3 align='center'> Derek</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.derek.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/derek-williams33/">Linkedin</a> |
+  <a href="https://github.com/squeakypickles33?tab=repositories">Portoflio</a> |
+  <a href="https://github.com/squeakypickles33">Github</a>
 </h4>
 <h3 align='center'> Hazel</h3>
 <h4 align='center'>
