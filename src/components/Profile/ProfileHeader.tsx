@@ -14,7 +14,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
     { enabled: !!profileId },
   );
   const session = useSession();
-  const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
+  const friendsList = user.data?.friendsA;
 
   return (
     <>

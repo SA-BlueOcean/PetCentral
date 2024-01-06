@@ -11,6 +11,7 @@ export default function EditProfileModal() {
 
   // setup mutations for updating profile at Profile ID
   const mutation = api.profile.updateInfo.useMutation();
+
   const onUpdateClick = () => {
     mutation.mutate({ firstName, lastName, about, zip });
   };
@@ -77,7 +78,7 @@ export default function EditProfileModal() {
             <button
               disabled={mutation.isLoading}
               className="btn mt-6 bg-primary px-3 text-white"
-              onClick={() => onUpdateClick()}
+              onClick={onUpdateClick}
             >
               {mutation.isLoading ? (
                 <Loader size={12} className="animate-spin" />
