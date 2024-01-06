@@ -22,7 +22,7 @@ export default function AddChat({ userId }: { userId?: string }) {
                 }
               },
               onSuccess(data, variables, context) {
-                triggerOpenChat();
+                triggerOpenChat(userId);
               },
             },
           )
