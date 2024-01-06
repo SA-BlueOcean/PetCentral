@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
-import { Friend } from "@prisma/client";
-import type { RealtimeChannel } from "@supabase/supabase-js";
+import { type Friend } from "@prisma/client";
+import { type RealtimeChannel } from "@supabase/supabase-js";
 import { supabase } from "lib/supabase";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -42,7 +42,7 @@ export default function FriendsMonitor() {
             if (newPayload && newPayload.friendBId === session.data.user.id) {
               const newFriendId = newPayload.friendAId;
               const update = async () => {
-                const { data, error } = await supabase
+                const { data } = await supabase
                   .from("User")
                   .select("name, firstName, lastName, id")
                   .eq("id", newFriendId);

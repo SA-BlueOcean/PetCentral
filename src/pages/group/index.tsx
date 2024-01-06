@@ -1,9 +1,9 @@
-import Head from "next/head";
-import Link from "next/link";
-import { api } from "@/utils/api";
-import Image from "next/image";
 import CreateGroupModal from "@/components/Group/CreateGroupModal";
 import JoinButton from "@/components/Group/JoinBtn";
+import { api } from "@/utils/api";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function GroupsSearch() {
   const groupsList = api.groups.findAllGroups.useQuery();

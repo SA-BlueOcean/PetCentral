@@ -1,9 +1,9 @@
-import { z } from "zod";
 import {
   createTRPCRouter,
-  publicProcedure,
   protectedProcedure,
+  publicProcedure,
 } from "@/server/api/trpc";
+import { z } from "zod";
 
 // create tRPC router
 export const groupRouter = createTRPCRouter({
@@ -137,25 +137,23 @@ export const groupRouter = createTRPCRouter({
     };
   }),
   searchGroups: publicProcedure
-  .input(
-    z
-    .object({
-      searchTerm: z.string().optional(),
-    })
-  )
-  .query(async ({ ctx, input }) => {
-    const searchGroups = await ctx.db.group.findMany({
-      where: {
-        name: {
-          contains: input.searchTerm,
-          mode: "insensitive",
+    .input(
+      z.object({
+        searchTerm: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const searchGroups = await ctx.db.group.findMany({
+        where: {
+          name: {
+            contains: input.searchTerm,
+            mode: "insensitive",
+          },
         },
-      },
-    });
+      });
 
-    return {
-      groups: searchGroups,
-    };
-  }),
-
+      return {
+        groups: searchGroups,
+      };
+    }),
 });

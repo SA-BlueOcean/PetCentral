@@ -16,12 +16,10 @@ export default function PhotoInput({
     }
     const filename = `${uuidv4()}`;
     const address = `${env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
-    const { data, error } = await supabase.storage
-      .from("images")
-      .upload(filename, file, {
-        cacheControl: "3600",
-        upsert: true,
-      });
+    await supabase.storage.from("images").upload(filename, file, {
+      cacheControl: "3600",
+      upsert: true,
+    });
     update(address);
   };
 

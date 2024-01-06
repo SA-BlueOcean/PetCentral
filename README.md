@@ -73,9 +73,9 @@
 </details>
 
 ## About
-
 <div align="center">
     <!-- TODO: Add landing page image -->
+
   <!-- <img src="" alt="project landing page image" width="700px" /> -->
 </div>
 
@@ -85,25 +85,30 @@
 
 Some of our key features are:
 
-  <ol>
+  <ul>
     <li>
       Secure Sign-in:  Rest easy knowing that your pet's safety and privacy are our priorities too!
     </li>
-    <li>
-      Messaging Platform: Stay connected with fellow pet lovers through our intiuative messaging system.
+     <li>
+      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
     </li>
     <li>
+      <span>Messaging Platform: Stay connected with fellow pet lovers through our intuitive realtime messaging system.</span>
+        <img src="./demo/PetPalsChatDemo.gif" alt="chat demo" width="1154px" />
+    </li>
+     <li>
       Forums: Dive into dedicated forums tailored to your pet's specific needs and characteristics.
     </li>
     <li>
-      Friend-Finding: Discover new friends for both you and your pet! Utilize our advanced friend-finding features to connect with local pet owners!
+      <span>Posts: Create posts to your profile or a forum with images, vote and comment!</span>
+      <img src="./demo/PetPalsPostDemo.gif" alt="post demo" width="1154px" />
     </li>
     <li>
       <span>Search Bar: Filter through groups and posts for dynamically rendered content.</span>
       <br />
       <img src="./demo/searchdemo.gif" alt="post demo" width="200px" />
     </li>
-  </ol>
+  </ul>
 </p>
 
 ### Built With
@@ -227,10 +232,8 @@ information.
 
 <h3 align='center'> Burhan</h3>
 <h4 align='center'>
-  <a href="https://www.linkedin.com/in//">Linkedin</a> |
-  <a href="https://www.burhan.com/">Portoflio</a> |
-  <a href="https://www.twitter.com/">Twitter</a> |
-  <a href="https://www.github.com/">Github</a>
+  <a href="https://www.linkedin.com/in/burhan-syed/">Linkedin</a> |
+  <a href="https://www.github.com/burhan-syed">Github</a>
 </h4>
 <h3 align='center'> Clay</h3>
 <h4 align='center'>

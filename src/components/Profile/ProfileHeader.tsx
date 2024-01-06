@@ -1,12 +1,11 @@
-import { api } from "@/utils/api";
-import Image from "next/image";
 import Avatar from "@/components/Feed/Avatar";
-import { PenSquare } from "lucide-react";
-import { Camera } from "lucide-react";
-import { useSession } from "next-auth/react";
-import AddFriend from "./AddFriend";
-import AddChat from "../Chat/AddChat";
+import { api } from "@/utils/api";
 import { cn } from "@/utils/cn";
+import { Camera, PenSquare } from "lucide-react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import AddChat from "../Chat/AddChat";
+import AddFriend from "./AddFriend";
 
 export function ProfileHeader({ profileId }: { profileId: string }) {
   const user = api.profile.get.useQuery(
@@ -14,7 +13,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
     { enabled: !!profileId },
   );
   const session = useSession();
-  const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
+  const friendsList = user.data?.friendsA;
 
   return (
     <>
@@ -94,7 +93,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
                 : user.data?.name}
               {session.data?.user?.id === user.data?.id ? (
                 <button
-                  className="absolute right-0 top-0 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+                  className="absolute right-0 top-0 mr-5 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
                   onClick={() =>
                     (
                       document.getElementById(
@@ -103,7 +102,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
                     )?.showModal?.()
                   }
                 >
-                  <PenSquare size={18} strokeWidth={0.75} absoluteStrokeWidth />
+                  <PenSquare size={25} strokeWidth={1} absoluteStrokeWidth />
                 </button>
               ) : (
                 ""
