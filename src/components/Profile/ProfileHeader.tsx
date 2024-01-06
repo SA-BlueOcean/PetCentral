@@ -14,7 +14,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
     { enabled: !!profileId },
   );
   const session = useSession();
-  const friendsList = user.data?.friendsA.concat(user.data?.friendsB);
+  const friendsList = user.data?.friendsA;
 
   return (
     <>
@@ -94,7 +94,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
                 : user.data?.name}
               {session.data?.user?.id === user.data?.id ? (
                 <button
-                  className="absolute right-0 top-0 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
+                  className="absolute right-0 top-0 mr-5 rounded-lg border-none bg-neutral p-1 hover:bg-accent"
                   onClick={() =>
                     (
                       document.getElementById(
@@ -103,7 +103,7 @@ export function ProfileHeader({ profileId }: { profileId: string }) {
                     )?.showModal?.()
                   }
                 >
-                  <PenSquare size={18} strokeWidth={0.75} absoluteStrokeWidth />
+                  <PenSquare size={25} strokeWidth={1} absoluteStrokeWidth />
                 </button>
               ) : (
                 ""
