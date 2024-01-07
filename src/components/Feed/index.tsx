@@ -1,10 +1,10 @@
 import { api } from "@/utils/api";
-import PostCard from "./PostCard";
 import { cn } from "@/utils/cn";
-import useInfiniteScroll from "./useInfiniteScroll";
-import { useCallback, useRef, Fragment } from "react";
 import { Loader } from "lucide-react";
+import { Fragment, useCallback, useRef } from "react";
 import CreatePost from "./CreatePost";
+import PostCard from "./PostCard";
+import useInfiniteScroll from "./useInfiniteScroll";
 
 type FeedProps = {
   mode: "PROFILE" | "GROUP" | "ALL" | "SUBS" | "FRIENDS";
@@ -31,7 +31,7 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       enabled: enabled,
       keepPreviousData: true,
-      refetchInterval: 20000
+      refetchInterval: 20000,
     },
   );
 
@@ -67,7 +67,7 @@ export default function Feed({ mode, profileId, groupId }: FeedProps) {
       <ul className="flex w-full flex-col gap-4">
         {enabled &&
           matchProps &&
-          posts.data?.pages.map((page, i) => (
+          posts.data?.pages.map((page) => (
             <Fragment key={page.nextCursor}>
               {page.posts.map((p) => (
                 <li key={p.id}>

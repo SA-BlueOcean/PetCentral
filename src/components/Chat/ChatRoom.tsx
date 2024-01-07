@@ -1,9 +1,9 @@
 import { cn } from "@/utils/cn";
-import type { Messages } from "@prisma/client";
+import { type Messages } from "@prisma/client";
 import { supabase } from "lib/supabase";
 import { SendHorizontal } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { type FormEvent, useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 export default function ChatRoom({
   chatId,
@@ -56,7 +56,7 @@ export default function ChatRoom({
     e.preventDefault();
     if (message.length > 0 && !loading) {
       setLoading(true);
-      const { data, error } = await supabase.from("Messages").insert([
+      const { error } = await supabase.from("Messages").insert([
         {
           chatsId: chatId,
           userId: session.data?.user.id,
@@ -132,7 +132,7 @@ export default function ChatRoom({
           }}
           value={message}
           type="text"
-          className="join-item h-12 flex-grow rounded-none disabled:rounded-none px-2 focus:outline-none"
+          className="join-item h-12 flex-grow rounded-none px-2 focus:outline-none disabled:rounded-none"
         ></input>
         <button
           disabled={initialLoading || loading}

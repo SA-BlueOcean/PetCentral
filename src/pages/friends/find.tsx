@@ -1,10 +1,12 @@
-import useAddFriend from "@/components/Profile/useAddFriend";
 import { api } from "@/utils/api";
 import { Check, PawPrint, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import { setTimeout } from "timers";
+import useAddFriend from "@/components/Profile/useAddFriend";
+import { useGlobalContext } from "@/providers/GlobalContext";
+
 
 export default function FindFriendsPage() {
   const [distance, setDistance] = useState<number>(50);
@@ -14,6 +16,7 @@ export default function FindFriendsPage() {
 
   const { status } = useSession();
   const { addFriend } = useAddFriend();
+  const { setDisplayLoginModal } = useGlobalContext();
 
   const handleNext = (dir: string) => {
     if (users?.data) {
@@ -48,6 +51,24 @@ export default function FindFriendsPage() {
     { distance: distance },
     { onError: errorHandle, enabled: status === "authenticated" },
   );
+
+  if (status === "unauthenticated" || status === "loading") {
+    return (
+      <aside className="relative mt-32 flex flex-col items-center justify-center rounded-lg ">
+        <h2 className="text mb-8 pl-16 pr-16 text-center text-base-900">
+          To see friends in your area, please sign in
+        </h2>
+        <button
+          onClick={() => {
+            setDisplayLoginModal(true);
+          }}
+          className="btn btn-accent btn-wide rounded-full text-lg text-base-100"
+        >
+          Sign In
+        </button>
+      </aside>
+    );
+  }
 
   return (
     <div className="flex w-full flex-col  justify-center gap-3">
