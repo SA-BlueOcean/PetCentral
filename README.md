@@ -181,7 +181,18 @@ node --version
 npx prisma generate
 ```
 
-1. Run the development server
+5. Push schema to the database
+
+```sh
+npm run db:push
+```
+
+Optionally, seed the database
+```sh
+npm run db:seed
+```
+
+6. Run the development server
 
 ```sh
 npm run dev
