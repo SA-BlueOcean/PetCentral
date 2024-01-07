@@ -77,6 +77,12 @@ Some of our key features are:
     </li>
     <br/>
     <li>
+      <h3>Pet Management</h3>
+      <p>Show off all of your furry or feathered friends! Have new information about your pet? No problem! Edit and personalize their details effortlessly to keep their records up-to-date. Feel free to remove pets as your circumstances change. Our pet management feature offers a comprehensive and user-friendly platform for all your pet-related needs.</p>
+        <img src="./demo/PetPalsPetManagementDemo.gif" alt="profile pet demo" width="1080" />
+    </li>
+    <br/>
+    <li>
       <h3>Messaging Platform</h3>
       <p>Stay connected with fellow pet lovers through our intuitive realtime messaging system.</p>
       <img src="./demo/PetPalsChatDemo.gif" alt="chat demo" width="1154px" />
@@ -188,6 +194,7 @@ npm run db:push
 ```
 
 Optionally, seed the database
+
 ```sh
 npm run db:seed
 ```
@@ -199,7 +206,6 @@ npm run dev
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ## Contributing
 
@@ -263,6 +269,6 @@ information.
 
 ## Attribution
 
-Project bootstrapped with <a target="_blank" href="https://create.t3.gg/">T3 Stack  
+Project bootstrapped with <a target="_blank" href="https://create.t3.gg/">T3 Stack
 
 <a target="_blank" href="https://icons8.com/icon/NI-py7EAFhDr/animal-shelter">Animal Shelter</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
