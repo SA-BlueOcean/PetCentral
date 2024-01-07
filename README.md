@@ -79,7 +79,7 @@ Some of our key features are:
     <li>
       <h3>Pet Management</h3>
       <p>Show off all of your furry or feathered friends! Have new information about your pet? No problem! Edit and personalize their details effortlessly to keep their records up-to-date. Feel free to remove pets as your circumstances change. Our pet management feature offers a comprehensive and user-friendly platform for all your pet-related needs.</p>
-        <img src="./demo/PetPalsProfile-PetDemo.gif" alt="profile pet demo" width="1080" />
+        <img src="./demo/PetPalsPetManagementDemo.gif" alt="profile pet demo" width="1080" />
     </li>
     <br/>
     <li>
