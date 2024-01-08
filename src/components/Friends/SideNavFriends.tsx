@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
 import { api } from "@/utils/api";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function SideNavFriends() {
   const friends = api.friends.getFriends.useQuery();
@@ -15,7 +15,7 @@ export default function SideNavFriends() {
       </Link>
       <div className="relative max-h-[40vh] w-full overflow-y-auto">
         {friends.isLoading ? (
-          <ul className="divide-base-700 flex flex-col divide-y-2 px-3">
+          <ul className="flex flex-col divide-y-2 divide-base-700 px-3">
             {new Array(3).fill(0).map((_, i) => (
               <li key={i} className="flex w-full items-center gap-3 py-2">
                 <div className="skeleton h-10 w-10 rounded-full bg-secondary ring-1 ring-base-200"></div>
@@ -24,7 +24,7 @@ export default function SideNavFriends() {
             ))}
           </ul>
         ) : (
-          <ul className="divide-base-700 flex flex-col divide-y-2 px-3">
+          <ul className="flex flex-col divide-y-2 divide-base-700 px-3">
             {(friends?.data?.friends?.length ?? 0) > 0 ? (
               <>
                 {friends.data?.friends.map((friend) => (
