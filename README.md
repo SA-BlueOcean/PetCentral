@@ -90,7 +90,7 @@ Some of our key features are:
     <br/>
      <li>
      <h3>Forums</h3>
-      <p>Dive into dedicated forums tailored to your pet's specific needs and characteristics.</p>
+      <p>Step into our lively community forum, where the joy of connecting with fellow pet lovers knows no bounds!  Our dynamic group browsing feature makes exploring and joining diverse groups effortless, and allows you to discover and join diverse groups tailored specifically to your furry friend's needs with a simple click of a button.   Immerse yourself in communities that resonate with your pet's unique interests and quirks and dive deeper into compelling conversations on dedicated forum pages, where each thread serves as a gateway to in-depth exchanges, creating a haven for sharing experiences and valuable advice.</p>
     </li>
         <br/>
     <li>
